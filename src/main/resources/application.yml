@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: ENC(djzZRML0RLEnH/NSP0kxGHyAB3vXqHMYGFvLfHWE+MulWRrVLNsRCWa4xXnDGt2ZbarqtaTMPKBTZwahB3h5IMa3efXCfWlL5+ckECWmo/yd0bmzWXKVE2Iikjki5kNlMbm0tl/t/SoOWW0LptZLsOhwd0jpDJ3W)
+    username: ENC(qorzR6+QwgBlbvIbE7cUag==)
+    password: ENC(2LdWPq+vN7MvxeCIb5DsKPRmfSetDhLs)
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    password: ${JASYPT_PASSWORD}
