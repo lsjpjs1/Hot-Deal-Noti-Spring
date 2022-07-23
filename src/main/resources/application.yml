@@ -4,6 +4,11 @@ spring:
     username: ENC(qorzR6+QwgBlbvIbE7cUag==)
     password: ENC(2LdWPq+vN7MvxeCIb5DsKPRmfSetDhLs)
     driver-class-name: org.postgresql.Driver
+  rabbitmq:
+    host: ENC(Bq5J5icpRMeR1pS5JZ36T/hHAeDjAsBt)
+    port: 5672
+    username: ENC(Fh/ZsnqAK+fQuORD/JNqsA==)
+    password: ENC(nsM1itGQWPBdBosvDENCCQ==)
 
   jpa:
     hibernate:
