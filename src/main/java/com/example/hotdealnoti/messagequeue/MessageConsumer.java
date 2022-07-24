@@ -19,7 +19,7 @@ public class MessageConsumer {
 
     private final HotDealRepository hotDealRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
-    @RabbitListener(queues = "test")
+    @RabbitListener(queues = "hotDeal")
     public void receiveMessage(String message) {
         try {
             HotDealMessageDto.HotDealMessageWrapper hotDealMessageWrapper = objectMapper.readValue(message, HotDealMessageDto.HotDealMessageWrapper.class);
