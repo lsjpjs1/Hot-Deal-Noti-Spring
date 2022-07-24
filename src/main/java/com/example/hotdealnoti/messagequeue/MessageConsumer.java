@@ -26,6 +26,7 @@ public class MessageConsumer {
             for(HotDealMessageDto.HotDealMessageContent hotDealMessageContent: hotDealMessageWrapper.getHotDealMessages()) {
                 hotDealRepository.save(HotDeal.from(hotDealMessageContent));
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
