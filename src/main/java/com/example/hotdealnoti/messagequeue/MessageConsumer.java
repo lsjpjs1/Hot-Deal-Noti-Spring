@@ -24,6 +24,9 @@ public class MessageConsumer {
         try {
             HotDealMessageDto.HotDealMessageWrapper hotDealMessageWrapper = objectMapper.readValue(message, HotDealMessageDto.HotDealMessageWrapper.class);
             for(HotDealMessageDto.HotDealMessageContent hotDealMessageContent: hotDealMessageWrapper.getHotDealMessages()) {
+                if(hotDealRepository.findByHotDealTitleAndHotDealLink(hotDealMessageContent.getTitle(),hotDealMessageContent.getUrl()).isPresent()){
+                    continue;
+                }
                 hotDealRepository.save(HotDeal.from(hotDealMessageContent));
             }
 

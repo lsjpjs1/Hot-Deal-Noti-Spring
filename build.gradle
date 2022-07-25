@@ -26,8 +26,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3'
     compileOnly 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.1.Final'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.amqp:spring-rabbit-test'
     testImplementation 'org.springframework.security:spring-security-test'
@@ -36,4 +38,8 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+compileJava {
+    options.compilerArgs += [ '-Amapstruct.defaultComponentModel=spring' ]
 }
