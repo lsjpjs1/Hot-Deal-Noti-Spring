@@ -5,7 +5,7 @@ spring:
     password: ENC(2LdWPq+vN7MvxeCIb5DsKPRmfSetDhLs)
     driver-class-name: org.postgresql.Driver
   rabbitmq:
-    host: ENC(niTXuEDcpUmP7WR4RCBgXtzFETI6TqsT)
+    host: ENC()
     port: 5672
     username: ENC(Fh/ZsnqAK+fQuORD/JNqsA==)
     password: ENC(nsM1itGQWPBdBosvDENCCQ==)
