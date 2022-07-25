@@ -6,7 +6,6 @@ import com.example.hotdealnoti.messagequeue.repository.HotDealRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.message.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +23,7 @@ public class MessageConsumer {
         try {
             HotDealMessageDto.HotDealMessageWrapper hotDealMessageWrapper = objectMapper.readValue(message, HotDealMessageDto.HotDealMessageWrapper.class);
             for(HotDealMessageDto.HotDealMessageContent hotDealMessageContent: hotDealMessageWrapper.getHotDealMessages()) {
-                if(hotDealRepository.findByHotDealTitleAndHotDealLink(hotDealMessageContent.getTitle(),hotDealMessageContent.getUrl()).isPresent()){
+                if(hotDealRepository.findTopByHotDealTitleAndHotDealLink(hotDealMessageContent.getTitle(),hotDealMessageContent.getUrl()).isPresent()){
                     continue;
                 }
                 hotDealRepository.save(HotDeal.from(hotDealMessageContent));
