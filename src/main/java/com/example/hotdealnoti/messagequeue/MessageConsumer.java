@@ -2,7 +2,7 @@ package com.example.hotdealnoti.messagequeue;
 
 import com.example.hotdealnoti.messagequeue.domain.HotDeal;
 import com.example.hotdealnoti.messagequeue.dto.HotDealMessageDto;
-import com.example.hotdealnoti.messagequeue.repository.HotDealRepository;
+import com.example.hotdealnoti.hotdeal.repository.HotDealRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
