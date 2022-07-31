@@ -13,17 +13,10 @@ public class HotDealDto {
     @ToString
     @Builder
     public static class GetHotDealsRequest {
-        private HotDealsQueryFilter queryFilter;
-    }
-
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    @ToString
-    @Builder
-    public static class HotDealsQueryFilter {
         private String searchBody;
     }
+
+
 
 
     @Getter

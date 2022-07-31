@@ -20,13 +20,11 @@ public class GetHotDealController {
     private final GetHotDealService getHotDealService;
 
     @GetMapping(value = "/hot-deals")
-    public ResponseEntity<Page<HotDealDto.HotDealPreview>> getParties(@ModelAttribute HotDealDto.GetHotDealsRequest getHotDealsRequest, Pageable pageable) {
+    public ResponseEntity<Page<HotDealDto.HotDealPreview>> getHotDeals(@ModelAttribute HotDealDto.GetHotDealsRequest getHotDealsRequest, Pageable pageable) {
 
-        log.info(String.valueOf(pageable.getPageNumber()));
-        log.info(String.valueOf(pageable.getPageSize()));
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(getHotDealService.getPartyDetail(getHotDealsRequest,pageable));
+                .body(getHotDealService.getHotDeals(getHotDealsRequest,pageable));
 
     }
 }

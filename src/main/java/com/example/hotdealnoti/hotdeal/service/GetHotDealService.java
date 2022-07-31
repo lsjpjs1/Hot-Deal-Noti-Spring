@@ -14,7 +14,7 @@ public class GetHotDealService {
     private final HotDealQueryRepository hotDealQueryRepository;
 
     @Transactional
-    public Page<HotDealDto.HotDealPreview> getPartyDetail(HotDealDto.GetHotDealsRequest getHotDealsRequest, Pageable pageable) {
+    public Page<HotDealDto.HotDealPreview> getHotDeals(HotDealDto.GetHotDealsRequest getHotDealsRequest, Pageable pageable) {
         return hotDealQueryRepository.findHotDeals(getHotDealsRequest, pageable);
     }
 }
