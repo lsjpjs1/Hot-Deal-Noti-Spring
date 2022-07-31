@@ -39,7 +39,7 @@ public class HotDealQueryRepository {
                         )
                 )
                 .from(hotDeal)
-                .where(getCondition(getHotDealsRequest))
+                .where(getCondition(getHotDealsRequest.getQueryFilter()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(getAllOrderSpecifiers(pageable).stream().toArray(OrderSpecifier[]::new))
@@ -48,18 +48,18 @@ public class HotDealQueryRepository {
         Long count = jpaQueryFactory
                 .select(hotDeal.count())
                 .from(hotDeal)
-                .where(getCondition(getHotDealsRequest))
+                .where(getCondition(getHotDealsRequest.getQueryFilter()))
                 .fetchOne();
 
         return new PageImpl(hotDealPreviews,pageable,count);
 
     }
 
-    private BooleanExpression getCondition(HotDealDto.GetHotDealsRequest getHotDealsRequest){
-        if (getHotDealsRequest == null){
+    private BooleanExpression getCondition(HotDealDto.HotDealsQueryFilter hotDealsQueryFilter){
+        if (hotDealsQueryFilter == null){
             return null;
         }
-        return null;
+        return hotDeal.hotDealTitle.toLowerCase().contains(hotDealsQueryFilter.getSearchBody().toLowerCase());
     }
 
     private List<OrderSpecifier> getAllOrderSpecifiers(Pageable pageable){

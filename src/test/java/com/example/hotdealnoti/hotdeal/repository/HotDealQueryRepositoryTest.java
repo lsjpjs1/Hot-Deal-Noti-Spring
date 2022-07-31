@@ -21,7 +21,12 @@ class HotDealQueryRepositoryTest {
     private HotDealQueryRepository hotDealQueryRepository;
     @Test
     void findHotDeals() {
-        HotDealDto.GetHotDealsRequest getHotDealsRequest = HotDealDto.GetHotDealsRequest.builder().build();
+        HotDealDto.GetHotDealsRequest getHotDealsRequest = HotDealDto.GetHotDealsRequest.builder().queryFilter(
+                HotDealDto.HotDealsQueryFilter
+                        .builder()
+                        .searchBody("")
+                        .build()
+        ).build();
         PageRequest pageRequest = PageRequest.of(0, 20, Sort.Direction.DESC, "DISCOUNT_RATE");
         Page<HotDealDto.HotDealPreview> hotDeals = hotDealQueryRepository.findHotDeals(getHotDealsRequest, pageRequest);
         hotDeals.getContent().stream()
