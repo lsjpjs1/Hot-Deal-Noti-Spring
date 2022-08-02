@@ -20,7 +20,6 @@ class MessageConsumerTest {
     private MessageConsumer messageConsumer;
 
     @Test
-    @Transactional
     void receiveMessage() throws JsonProcessingException {
         String hotDeals = objectMapper.writeValueAsString(HotDealMessageDto.HotDealMessageWrapper.builder()
                 .hotDealMessages(

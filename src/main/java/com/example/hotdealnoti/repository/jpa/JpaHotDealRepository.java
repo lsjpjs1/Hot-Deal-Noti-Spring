@@ -1,7 +1,8 @@
-package com.example.hotdealnoti.hotdeal.repository;
+package com.example.hotdealnoti.repository.jpa;
 
 import com.example.hotdealnoti.messagequeue.domain.HotDeal;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 

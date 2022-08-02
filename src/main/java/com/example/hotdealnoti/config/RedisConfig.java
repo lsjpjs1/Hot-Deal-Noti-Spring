@@ -9,8 +9,8 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 
 @Configuration
-@EnableRedisRepositories(repositoryImplementationPostfix = "Redis")
-@EnableJpaRepositories(repositoryImplementationPostfix = "JPA")
+@EnableRedisRepositories(basePackages = "com.example.hotdealnoti.repository.redis")
+@EnableJpaRepositories(basePackages = "com.example.hotdealnoti.repository.jpa")
 public class RedisConfig {
     @Value("${spring.redis.host}")
     private String host;
