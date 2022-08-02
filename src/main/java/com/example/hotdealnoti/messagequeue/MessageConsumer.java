@@ -2,7 +2,7 @@ package com.example.hotdealnoti.messagequeue;
 
 import com.example.hotdealnoti.messagequeue.domain.HotDeal;
 import com.example.hotdealnoti.messagequeue.dto.HotDealMessageDto;
-import com.example.hotdealnoti.hotdeal.repository.HotDealRepository;
+import com.example.hotdealnoti.hotdeal.repository.JpaHotDealRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class MessageConsumer {
 
-    private final HotDealRepository hotDealRepository;
+    private final JpaHotDealRepository hotDealRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
     @RabbitListener(queues = "hotDeal")
     public void receiveMessage(String message) {

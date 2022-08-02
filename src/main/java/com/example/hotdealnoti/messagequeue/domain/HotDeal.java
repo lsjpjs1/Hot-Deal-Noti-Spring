@@ -3,6 +3,7 @@ package com.example.hotdealnoti.messagequeue.domain;
 import com.example.hotdealnoti.messagequeue.dto.HotDealMessageDto;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
+import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -15,8 +16,11 @@ import java.sql.Timestamp;
 @Builder
 @Setter
 @DynamicInsert
+@ToString
+@RedisHash(value = "hotDeals", timeToLive = 30)
 public class HotDeal {
     @Id
+    @org.springframework.data.annotation.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long hotDealId;
 
