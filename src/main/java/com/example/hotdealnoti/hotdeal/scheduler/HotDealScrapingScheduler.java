@@ -13,10 +13,10 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class HotDealScrapingScheduler {
 
-    @Scheduled(cron = "59 40 * * * ?")
+    @Scheduled(cron = "0 0/2 * * * ?")
     public void scrapingSchedule() throws IOException {
         ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.command("ls",">", "ls.txt");
+        processBuilder.command("nohup", "python3", "-u", "-m", "python.scraper.StartScraping", ">", "scraperLog.txt", "2>&1", "&");
         processBuilder.directory(new File(System.getProperty("user.home")));
         processBuilder.start();
         log.info("success");
