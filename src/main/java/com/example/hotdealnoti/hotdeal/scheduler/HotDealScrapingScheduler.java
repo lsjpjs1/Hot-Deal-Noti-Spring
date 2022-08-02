@@ -20,6 +20,7 @@ public class HotDealScrapingScheduler {
         processBuilder.directory(new File(System.getProperty("user.home")));
         processBuilder.start();
         log.info("success");
+        log.info(System.getProperty("user.home"));
 
     }
 }
