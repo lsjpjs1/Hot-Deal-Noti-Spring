@@ -17,10 +17,9 @@ public class HotDealScrapingScheduler {
     public void scrapingSchedule() throws IOException {
         ProcessBuilder processBuilder = new ProcessBuilder();
         processBuilder.command("nohup", "python3", "-u", "-m", "python.scraper.StartScraping", ">", "scraperLog.txt", "2>&1", "&");
-        processBuilder.directory(new File(System.getProperty("user.home")));
+        processBuilder.directory(new File("/home/ubuntu"));
         processBuilder.start();
         log.info("success");
-        log.info(System.getProperty("user.home"));
 
     }
 }
