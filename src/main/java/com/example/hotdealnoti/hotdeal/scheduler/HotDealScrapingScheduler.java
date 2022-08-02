@@ -15,11 +15,11 @@ import java.io.InputStreamReader;
 @RequiredArgsConstructor
 public class HotDealScrapingScheduler {
 
-    @Scheduled(cron = "0 0/2 * * * ?")
+    @Scheduled(cron = "0 0/1 * * * ?")
     public void scrapingSchedule() throws IOException {
         log.info("success");
         ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.command("nohup","sh", "/home/ubuntu/startScraping.sh","&");
+        processBuilder.command("sh", "/home/ubuntu/startScraping.sh","&");
         processBuilder.directory(new File(System.getProperty("user.home")));
         java.lang.Process p = processBuilder.start();
         BufferedReader std = new BufferedReader(new InputStreamReader(p.getErrorStream()));
