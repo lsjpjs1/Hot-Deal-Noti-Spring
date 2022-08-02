@@ -13,7 +13,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class HotDealScrapingScheduler {
 
-    @Scheduled(cron = "35 37 * * * ?")
+    @Scheduled(cron = "59 40 * * * ?")
     public void scrapingSchedule() throws IOException {
         ProcessBuilder processBuilder = new ProcessBuilder();
         processBuilder.command("ls",">", "ls.txt");
