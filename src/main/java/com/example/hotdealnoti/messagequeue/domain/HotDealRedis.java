@@ -1,15 +1,9 @@
 package com.example.hotdealnoti.messagequeue.domain;
 
-import com.example.hotdealnoti.messagequeue.dto.HotDealMessageDto;
 import lombok.*;
-import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Table;
 import java.sql.Timestamp;
 
 @Getter
@@ -22,7 +16,7 @@ import java.sql.Timestamp;
 public class HotDealRedis {
 
     @Id
-    private Long hotDealId;
+    private String hotDealId;
 
     private String hotDealTitle;
 
@@ -38,4 +32,16 @@ public class HotDealRedis {
 
     private Integer hotDealViewCount;
 
+    public static HotDealRedis from(HotDeal hotDeal){
+        return HotDealRedis.builder()
+                .hotDealId(hotDeal.getHotDealId().toString())
+                .hotDealTitle(hotDeal.getHotDealTitle())
+                .hotDealOriginalPrice(hotDeal.getHotDealOriginalPrice())
+                .hotDealDiscountPrice(hotDeal.getHotDealDiscountPrice())
+                .hotDealDiscountRate(hotDeal.getHotDealDiscountRate())
+                .hotDealLink(hotDeal.getHotDealLink())
+                .hotDealUploadTime(hotDeal.getHotDealUploadTime())
+                .hotDealViewCount(hotDeal.getHotDealViewCount())
+                .build();
+    }
 }
