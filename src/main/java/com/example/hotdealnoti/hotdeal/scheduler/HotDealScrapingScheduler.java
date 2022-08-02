@@ -20,7 +20,7 @@ public class HotDealScrapingScheduler {
         log.info("success");
         ProcessBuilder processBuilder = new ProcessBuilder();
 //        processBuilder.command("sh", "/home/ubuntu/startScraping.sh","&");
-        processBuilder.command("export");
+        processBuilder.command("ls");
         processBuilder.directory(new File("/home/ubuntu"));
         Process p = processBuilder.start();
 //        java.lang.Process p = Runtime.getRuntime().exec("cd /home/ubuntu;export");
@@ -35,5 +35,6 @@ public class HotDealScrapingScheduler {
            log.info(outputLine);
         }
 
+        processBuilder.environment().forEach((k,v)->System.out.println(k+" : "+v));
     }
 }
