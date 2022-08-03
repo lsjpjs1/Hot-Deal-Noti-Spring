@@ -45,4 +45,17 @@ public class HotDeal {
                 .hotDealOriginalPrice(hotDealMessageContent.getOriginalPrice())
                 .build();
     }
+
+    public static HotDeal from(HotDealRedis hotDealRedis){
+        return HotDeal.builder()
+                .hotDealDiscountPrice(hotDealRedis.getHotDealDiscountPrice())
+                .hotDealDiscountRate(hotDealRedis.getHotDealDiscountRate())
+                .hotDealLink(hotDealRedis.getHotDealLink())
+                .hotDealTitle(hotDealRedis.getHotDealTitle())
+                .hotDealOriginalPrice(hotDealRedis.getHotDealOriginalPrice())
+                .hotDealUploadTime(hotDealRedis.getHotDealUploadTime())
+                .hotDealViewCount(hotDealRedis.getHotDealViewCount())
+                .hotDealId(Long.parseLong(hotDealRedis.getHotDealId()))
+                .build();
+    }
 }
