@@ -18,7 +18,7 @@ public class HotDealRedisScheduler {
     private final RedisHotDealRepository redisHotDealRepository;
     private final JpaHotDealRepository jpaHotDealRepository;
 
-    @Scheduled(cron = "0 0/15 * * * ?")
+    @Scheduled(cron = "0 0/10 * * * ?")
     @Transactional
     public void viewCountUpdateSchedule() {
         Iterable<HotDealRedis> hotDealRepositoryAll = redisHotDealRepository.findAll();
