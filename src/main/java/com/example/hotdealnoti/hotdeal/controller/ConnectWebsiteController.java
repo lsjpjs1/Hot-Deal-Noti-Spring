@@ -22,18 +22,14 @@ public class ConnectWebsiteController {
     public ResponseEntity   connectWebsite(HttpServletRequest request){
 
         String ip = request.getHeader("X-Forwarded-For");
-        log.info("> X-Forwarded-For : " + ip);
 
         if (ip == null) {
             ip = request.getHeader("X-FORWARDED-FOR");
-            log.info("> X-FORWARDED-FOR : " + ip);
         }
         // X-FORWARDED-FOR 가 비어있다면 요청한 IP를 로드
         if (ip == null) {
             ip = request.getRemoteAddr();
-            log.info("> getRemoteAddr : "+ip);
         }
-        log.info("> Result : IP Address : "+ip);
 
         connectWebsiteService.postConnectionHistory(ip);
         return ResponseEntity
