@@ -24,7 +24,8 @@ public class HotDealRedisScheduler {
         Iterable<HotDealRedis> hotDealRepositoryAll = redisHotDealRepository.findAll();
         hotDealRepositoryAll.forEach(
                 hotDealRedis -> {
-                    HotDeal hotDeal = HotDeal.from(hotDealRedis);
+                    HotDeal hotDeal = jpaHotDealRepository.findById(Long.parseLong(hotDealRedis.getHotDealId())).get();
+                    hotDeal.setHotDealViewCount(hotDealRedis.getHotDealViewCount());
                     jpaHotDealRepository.save(hotDeal);
                 }
         );

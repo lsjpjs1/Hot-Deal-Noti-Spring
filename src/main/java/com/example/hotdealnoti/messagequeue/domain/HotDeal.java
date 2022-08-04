@@ -3,6 +3,7 @@ package com.example.hotdealnoti.messagequeue.domain;
 import com.example.hotdealnoti.messagequeue.dto.HotDealMessageDto;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ import java.sql.Timestamp;
 @Builder
 @Setter
 @DynamicInsert
+@DynamicUpdate
 @ToString
 public class HotDeal {
     @Id
@@ -35,6 +37,10 @@ public class HotDeal {
     private Timestamp hotDealUploadTime;
 
     private Integer hotDealViewCount;
+
+    private Timestamp hotDealScrapingTime;
+
+    private Boolean isDelete;
 
     public static HotDeal from(HotDealMessageDto.HotDealMessageContent hotDealMessageContent){
         return HotDeal.builder()
