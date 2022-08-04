@@ -39,7 +39,10 @@ public class HotDealQueryRepository {
                         )
                 )
                 .from(hotDeal)
-                .where(getCondition(getHotDealsRequest))
+                .where(
+                        getCondition(getHotDealsRequest),
+                        hotDeal.isDelete.eq(Boolean.FALSE)
+                )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(getAllOrderSpecifiers(pageable).stream().toArray(OrderSpecifier[]::new))
