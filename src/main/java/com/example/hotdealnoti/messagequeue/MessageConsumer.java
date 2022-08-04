@@ -10,6 +10,8 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Optional;
 
 @Component
 @Slf4j
@@ -23,7 +25,11 @@ public class MessageConsumer {
         try {
             HotDealMessageDto.HotDealMessageWrapper hotDealMessageWrapper = objectMapper.readValue(message, HotDealMessageDto.HotDealMessageWrapper.class);
             for(HotDealMessageDto.HotDealMessageContent hotDealMessageContent: hotDealMessageWrapper.getHotDealMessages()) {
-                if(hotDealRepository.findTopByHotDealTitleAndHotDealLink(hotDealMessageContent.getTitle(),hotDealMessageContent.getUrl()).isPresent()){
+                Optional<HotDeal> optionalHotDeal = hotDealRepository.findTopByHotDealTitleAndHotDealLink(hotDealMessageContent.getTitle(), hotDealMessageContent.getUrl());
+                if(optionalHotDeal.isPresent()){
+                    HotDeal hotDeal = optionalHotDeal.get();
+                    hotDeal.setHotDealScrapingTime(new Timestamp(System.currentTimeMillis()));
+                    hotDealRepository.save(hotDeal);
                     continue;
                 }
                 hotDealRepository.save(HotDeal.from(hotDealMessageContent));
