@@ -1,0 +1,38 @@
+spring:
+  redis:
+    host: localhost
+    port: 6379
+  datasource:
+    #testDB
+    url: ENC(+SEh/U7QaeBUnxdxCmrIj4D+UCrbI4HxejYXPNIBOyY9rCiN1YWojxzYW7f/rr45+Gnro2N86+Pr8OSkQxLgcFcdCi+lxRcqwyJxLo14ALix0EylyJhgqi4z5XlvGZI716uNPRLNUXL1dlNPY11YGNtOT7RWahAR)
+    username: ENC(rcILBfyt8M2JPyyZeogz+g==)
+    password: ENC(lL0dZlizG6+fbhx2v60oC4C8ks94PCUH)
+    driver-class-name: org.postgresql.Driver
+  rabbitmq:
+    #testRabbitMQ
+    host: ENC(HfI3Mh8Ws+tqJ3oi+8hZsqET/RxpRQ0T)
+    port: 5672
+    username: ENC(Fh/ZsnqAK+fQuORD/JNqsA==)
+    password: ENC(nsM1itGQWPBdBosvDENCCQ==)
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+      show-sql: true
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    password: ${JASYPT_PASSWORD}
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
+
