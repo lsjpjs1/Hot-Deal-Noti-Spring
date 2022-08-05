@@ -19,7 +19,7 @@ public class ConnectionHistoryScheduler {
     private final JpaConnectionHistoryRepository jpaConnectionHistoryRepository;
     private final RedisConnectionHistoryRepository redisConnectionHistoryRepository;
 
-    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0 0 15 * * ?")
     @Transactional
     public void viewCountUpdateSchedule() {
         Iterable<ConnectionHistoryRedis> connectionHistoryRepositoryAll = redisConnectionHistoryRepository.findAll();
