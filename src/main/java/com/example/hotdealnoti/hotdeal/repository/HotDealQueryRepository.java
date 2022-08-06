@@ -51,7 +51,8 @@ public class HotDealQueryRepository {
         Long count = jpaQueryFactory
                 .select(hotDeal.count())
                 .from(hotDeal)
-                .where(getCondition(getHotDealsRequest))
+                .where(getCondition(getHotDealsRequest),
+                        hotDeal.isDelete.eq(Boolean.FALSE))
                 .fetchOne();
 
         return new PageImpl(hotDealPreviews,pageable,count);
