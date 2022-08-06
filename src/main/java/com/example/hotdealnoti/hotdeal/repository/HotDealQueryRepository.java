@@ -65,6 +65,9 @@ public class HotDealQueryRepository {
         if (getHotDealsRequest.getSearchBody()==null){
             return null;
         }
+        if (getHotDealsRequest.getSearchBody()==""){
+            return null;
+        }
         return hotDeal.hotDealTitle.toLowerCase().contains(getHotDealsRequest.getSearchBody().toLowerCase());
     }
 
