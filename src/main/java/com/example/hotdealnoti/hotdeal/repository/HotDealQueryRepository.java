@@ -80,6 +80,12 @@ public class HotDealQueryRepository {
                 case "DISCOUNT_RATE":
                     orderSpecifiers.add(new OrderSpecifier(direction, hotDeal.hotDealDiscountRate));
                     break;
+                case "VIEW_COUNT":
+                    orderSpecifiers.add(new OrderSpecifier(direction, hotDeal.hotDealViewCount));
+                    break;
+                case "PRICE":
+                    orderSpecifiers.add(new OrderSpecifier(direction, hotDeal.hotDealDiscountPrice));
+                    break;
                 default:
                     break;
             }
