@@ -29,6 +29,7 @@ public class MessageConsumer {
                 if(optionalHotDeal.isPresent()){
                     HotDeal hotDeal = optionalHotDeal.get();
                     hotDeal.setHotDealScrapingTime(new Timestamp(System.currentTimeMillis()));
+                    hotDeal.setIsDelete(false);
                     hotDealRepository.save(hotDeal);
                     continue;
                 }
