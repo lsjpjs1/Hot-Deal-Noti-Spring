@@ -20,7 +20,7 @@ public class DeleteHotDealScheduler {
     private final RedisHotDealRepository redisHotDealRepository;
     private final JpaHotDealRepository jpaHotDealRepository;
 
-    @Scheduled(cron = "0 0 20 * * ?")
+    @Scheduled(cron = "0 50 0/3 * * ?")
     @Transactional
     public void deleteHotDeals() {
         Calendar calendar = Calendar.getInstance();
