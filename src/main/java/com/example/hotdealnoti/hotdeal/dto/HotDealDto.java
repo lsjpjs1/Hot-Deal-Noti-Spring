@@ -43,5 +43,15 @@ public class HotDealDto {
         private Timestamp uploadTime;
     }
 
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @ToString
+    @Builder
+    public static class GetInitialDataResponse {
+        private String notice;
+        private Timestamp recentUpdateTime;
+    }
+
 
 }
