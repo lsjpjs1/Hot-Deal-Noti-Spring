@@ -90,6 +90,9 @@ public class HotDealQueryRepository {
                 case "PRICE":
                     orderSpecifiers.add(new OrderSpecifier(direction, hotDeal.hotDealDiscountPrice));
                     break;
+                case "UPLOAD_TIME":
+                    orderSpecifiers.add(new OrderSpecifier(direction, hotDeal.hotDealUploadTime));
+                    break;
                 default:
                     break;
             }
