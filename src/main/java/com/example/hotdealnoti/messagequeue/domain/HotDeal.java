@@ -42,6 +42,8 @@ public class HotDeal {
 
     private Boolean isDelete;
 
+    private String sourceSite;
+
     public static HotDeal from(HotDealMessageDto.HotDealMessageContent hotDealMessageContent){
         return HotDeal.builder()
                 .hotDealDiscountPrice(hotDealMessageContent.getDiscountPrice())
@@ -49,6 +51,7 @@ public class HotDeal {
                 .hotDealLink(hotDealMessageContent.getUrl())
                 .hotDealTitle(hotDealMessageContent.getTitle())
                 .hotDealOriginalPrice(hotDealMessageContent.getOriginalPrice())
+                .sourceSite(hotDealMessageContent.getSourceSite())
                 .build();
     }
 

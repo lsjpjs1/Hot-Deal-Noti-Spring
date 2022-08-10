@@ -28,6 +28,7 @@ public class HotDealMessageDto {
         private Integer originalPrice;
         private String title;
         private String url;
+        private String sourceSite;
     }
 
 }
