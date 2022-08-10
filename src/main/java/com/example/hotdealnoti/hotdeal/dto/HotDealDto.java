@@ -14,6 +14,7 @@ public class HotDealDto {
     @Builder
     public static class GetHotDealsRequest {
         private String searchBody;
+        private List<String> sourceSites;
     }
 
 

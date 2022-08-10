@@ -42,9 +42,8 @@ public class HotDealQueryRepository {
                 )
                 .from(hotDeal)
                 .where(
-                        getCondition(getHotDealsRequest),
-                        hotDeal.isDelete.eq(Boolean.FALSE)
-                )
+                        getCondition(getHotDealsRequest)
+                        )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(getAllOrderSpecifiers(pageable).stream().toArray(OrderSpecifier[]::new))
@@ -53,33 +52,50 @@ public class HotDealQueryRepository {
         Long count = jpaQueryFactory
                 .select(hotDeal.count())
                 .from(hotDeal)
-                .where(getCondition(getHotDealsRequest),
-                        hotDeal.isDelete.eq(Boolean.FALSE))
+                .where(getCondition(getHotDealsRequest))
                 .fetchOne();
 
-        return new PageImpl(hotDealPreviews,pageable,count);
+        return new PageImpl(hotDealPreviews, pageable, count);
 
     }
 
-    private BooleanExpression getCondition(HotDealDto.GetHotDealsRequest getHotDealsRequest){
-        if (getHotDealsRequest == null){
-            return null;
+    private BooleanExpression getCondition(HotDealDto.GetHotDealsRequest getHotDealsRequest) {
+        if (getHotDealsRequest == null) {
+            return hotDeal.isDelete.eq(Boolean.FALSE);
         }
-        if (getHotDealsRequest.getSearchBody()==null){
-            return null;
-        }
-        if (getHotDealsRequest.getSearchBody()==""){
-            return null;
-        }
-        return hotDeal.hotDealTitle.toLowerCase().contains(getHotDealsRequest.getSearchBody().toLowerCase());
+
+        return hotDeal.isDelete.eq(Boolean.FALSE)
+                .and(getSearchCondition(getHotDealsRequest.getSearchBody()))
+                .and(getSourceSitesCondition(getHotDealsRequest.getSourceSites()));
     }
 
-    private List<OrderSpecifier> getAllOrderSpecifiers(Pageable pageable){
-        if(pageable.getSort().isEmpty()){
+    private BooleanExpression getSearchCondition(String searchBody) {
+        if (searchBody == null) {
+            return null;
+        }
+        if (searchBody == "") {
+            return null;
+        }
+
+        return hotDeal.hotDealTitle.toLowerCase().contains(searchBody.toLowerCase());
+    }
+
+    private BooleanExpression getSourceSitesCondition(List<String> sourceSites) {
+        if (sourceSites == null) {
+            return null;
+        }
+        if (sourceSites.size() <= 0) {
+            return null;
+        }
+        return hotDeal.sourceSite.in(sourceSites);
+    }
+
+    private List<OrderSpecifier> getAllOrderSpecifiers(Pageable pageable) {
+        if (pageable.getSort().isEmpty()) {
             return null;
         }
         List<OrderSpecifier> orderSpecifiers = new ArrayList<>();
-        for(Sort.Order order: pageable.getSort()){
+        for (Sort.Order order : pageable.getSort()) {
             Order direction = order.getDirection().isAscending() ? Order.ASC : Order.DESC;
 
             switch (order.getProperty()) {
