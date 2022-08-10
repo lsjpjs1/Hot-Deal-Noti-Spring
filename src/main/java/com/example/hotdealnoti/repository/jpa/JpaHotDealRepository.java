@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface JpaHotDealRepository extends JpaRepository<HotDeal, Long> {
     Optional<HotDeal> findTopByHotDealTitleAndHotDealLink(String hotDealTitle, String hotDealLink);
-    List<HotDeal> findByHotDealScrapingTimeBefore(Timestamp timestamp);
+    List<HotDeal> findByHotDealScrapingTimeBeforeAndIsDelete(Timestamp timestamp, Boolean isDelete);
     HotDeal findFirstByOrderByHotDealScrapingTimeDesc();
 }
