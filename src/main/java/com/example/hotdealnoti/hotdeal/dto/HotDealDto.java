@@ -41,6 +41,8 @@ public class HotDealDto {
         private Integer discountRate;
         private String link;
         private Timestamp uploadTime;
+        private Integer viewCount;
+        private String sourceSite;
     }
 
     @Getter

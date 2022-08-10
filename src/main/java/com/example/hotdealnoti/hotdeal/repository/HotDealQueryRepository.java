@@ -35,7 +35,9 @@ public class HotDealQueryRepository {
                                 hotDeal.hotDealDiscountPrice,
                                 hotDeal.hotDealDiscountRate,
                                 hotDeal.hotDealLink,
-                                hotDeal.hotDealUploadTime
+                                hotDeal.hotDealUploadTime,
+                                hotDeal.hotDealViewCount,
+                                hotDeal.sourceSite
                         )
                 )
                 .from(hotDeal)
