@@ -52,7 +52,8 @@ public enum ErrorCode {
     PARTY_ALREADY_EXIST(HttpStatus.CONFLICT, "Party already exists on that date."),
 
     SEND_EMAIL_FAIL(HttpStatus.INTERNAL_SERVER_ERROR,"Fail to send email"),
-    PAYMENT_FAIL(HttpStatus.INTERNAL_SERVER_ERROR,"Fail to payment")
+    PAYMENT_FAIL(HttpStatus.INTERNAL_SERVER_ERROR,"Fail to payment"),
+    LOGIN_FAIL(HttpStatus.INTERNAL_SERVER_ERROR,"로그인 실패")
         ;
     private final HttpStatus httpStatus;
     private final String message;

@@ -1,4 +1,6 @@
-
+oauth:
+  kakao:
+    rest-api-key: ENC(mulQBCl2Wl58huvJFH1hrgssYz6XaDG9EFIdCeltjjADafMYVodvB0t8dU8vt5NR)
 
 ---
 
