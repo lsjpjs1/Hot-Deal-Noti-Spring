@@ -30,4 +30,6 @@ public class Account {
 
     @Convert(converter = RoleConverter.class)
     private Role accountRole;
+
+    private String notificationToken;
 }
