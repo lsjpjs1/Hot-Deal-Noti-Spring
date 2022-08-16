@@ -2,6 +2,7 @@ package com.example.hotdealnoti.auth.service;
 
 import com.example.hotdealnoti.auth.domain.Account;
 import com.example.hotdealnoti.auth.dto.AuthDto;
+import com.example.hotdealnoti.auth.security.TokenProvider;
 import com.example.hotdealnoti.enums.AccountType;
 import com.example.hotdealnoti.exception.CustomException;
 import com.example.hotdealnoti.exception.ErrorCode;
@@ -21,6 +22,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.sql.Timestamp;
 import java.util.Optional;
 
@@ -34,10 +37,13 @@ public class KakaoLoginService {
 
     private final ObjectMapper objectMapper;
     private final JpaAccountRepository jpaAccountRepository;
+    private final TokenProvider tokenProvider;
 
     private final String frontendRedirectUrl = "http://localhost:3000/oauth/callback/kakao";
 
     private final RestTemplate restTemplate = new RestTemplate();
+    @PersistenceContext
+    private final EntityManager entityManager;
 
     @Transactional
     public AuthDto.LoginResponse kakaoLogin(AuthDto.KakaoLoginRequest kakaoLoginRequest) {
@@ -45,12 +51,15 @@ public class KakaoLoginService {
         AuthDto.KakaoUserInfo kakaoUserInfo = getKakaoUserInfo(accessToken);
         Optional<Account> optionalAccount = jpaAccountRepository.findByAccountTypeAndOauthId(AccountType.KAKAO, kakaoUserInfo.getId());
         if(optionalAccount.isPresent()){
-            log.info(optionalAccount.get().toString());
-            return null;
+            Account account = optionalAccount.get();
+            String token = tokenProvider.generateToken(AuthDto.TokenRequest.builder().accountType(account.getAccountType()).oauthId(account.getOauthId()).build());
+            return AuthDto.LoginResponse.builder().token(token).build();
         }else{
             Account account = Account.builder().accountType(AccountType.KAKAO).oauthId(kakaoUserInfo.getId()).build();
             jpaAccountRepository.save(account);
-            return null;
+            entityManager.refresh(account);
+            String token = tokenProvider.generateToken(AuthDto.TokenRequest.builder().accountType(account.getAccountType()).oauthId(account.getOauthId()).build());
+            return AuthDto.LoginResponse.builder().token(token).build();
         }
     }
 

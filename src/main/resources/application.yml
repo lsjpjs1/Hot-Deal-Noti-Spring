@@ -2,6 +2,9 @@ oauth:
   kakao:
     rest-api-key: ENC(mulQBCl2Wl58huvJFH1hrgssYz6XaDG9EFIdCeltjjADafMYVodvB0t8dU8vt5NR)
 
+jwt:
+  secret: ENC(YwBliokjkdmTR8ZBhwtrQDyDyy8NDIIeOKC1Xsff5VHwtmZ2F9HT3g4CILYHQigYzAF8JTPAogNlYhkRyyljbcu10iuEvRWBtjeMUIolKJNOZhdJ5HJ5pwhX1GO/uMm4TRq8EcJnUN1sFNVhEnnz1Q==)
+
 ---
 
 spring:

@@ -1,5 +1,6 @@
 package com.example.hotdealnoti.auth.dto;
 
+import com.example.hotdealnoti.enums.AccountType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -51,5 +52,15 @@ public class AuthDto {
     @Builder
     public static class LoginResponse {
         private String token;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @ToString
+    @Builder
+    public static class TokenRequest {
+        private AccountType accountType;
+        private Long oauthId;
     }
 }

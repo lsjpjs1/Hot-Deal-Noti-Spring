@@ -13,7 +13,8 @@ class KakaoLoginServiceTest {
 private KakaoLoginService kakaoLoginService;
     @Test
     void kakaoLogin() {
-        AuthDto.KakaoLoginRequest kakaoLoginRequest = AuthDto.KakaoLoginRequest.builder().code("49jd3vbRTg5hQU5jggtxMMZzr3nyanTAFXmT1cfCXrnYosrI9wC9jtMSIkKHCU-F0e5QsgopcBQAAAGCl0aZPg").build();
-        kakaoLoginService.kakaoLogin(kakaoLoginRequest);
+        AuthDto.KakaoLoginRequest kakaoLoginRequest = AuthDto.KakaoLoginRequest.builder().code("8LOUlF6yVZrhPjE9aIih_iHN6FsPBgnnh99o4ghFsLTgB_PibFyx2-iOdOgxBDZPo9ntaAo9dNoAAAGComwV8g").build();
+        AuthDto.LoginResponse loginResponse = kakaoLoginService.kakaoLogin(kakaoLoginRequest);
+        System.out.println(loginResponse);
     }
 }
