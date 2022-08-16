@@ -22,7 +22,7 @@ public class GetInitialDataService {
 
         return HotDealDto.GetInitialDataResponse.builder()
                 .recentUpdateTime(jpaHotDealRepository.findFirstByOrderByHotDealScrapingTimeDesc().getHotDealScrapingTime())
-                .notice("롯데온, 옥션 특가 목록이 추가되었습니다.")
+                .notice("현재 알림이 가능한 안드로이드 앱을 개발 중입니다.\n빠른 시일 내에 개발 완료하여 배포하도록 하겠습니다. 감사합니다.")
                 .build();
     }
 }
