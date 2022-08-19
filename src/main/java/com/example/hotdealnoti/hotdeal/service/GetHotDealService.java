@@ -31,4 +31,16 @@ public class GetHotDealService {
         redisHotDealViewHistoryRepository.save(hotDealViewHistoryRedis);
         return hotDealQueryRepository.findHotDeals(getHotDealsRequest, pageable);
     }
+
+    @Transactional
+    public Page<HotDealDto.HotDealPreview> getWeeklyPopularHotDeals(HotDealDto.GetHotDealsRequest getHotDealsRequest, Pageable pageable, String userIp) {
+        HotDealViewHistoryRedis hotDealViewHistoryRedis = HotDealViewHistoryRedis.builder()
+                .userIp(userIp)
+                .searchBody(getHotDealsRequest.getSearchBody())
+                .sortCondition("이번 주 인기 상품")
+                .hotDealViewTime(new Timestamp(System.currentTimeMillis()))
+                .build();
+        redisHotDealViewHistoryRepository.save(hotDealViewHistoryRedis);
+        return hotDealQueryRepository.findWeeklyPopularHotDeals(getHotDealsRequest, pageable);
+    }
 }

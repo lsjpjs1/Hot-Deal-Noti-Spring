@@ -2,6 +2,7 @@ package com.example.hotdealnoti.hotdeal.repository;
 
 import com.example.hotdealnoti.hotdeal.dto.HotDealDto;
 import com.example.hotdealnoti.messagequeue.domain.QHotDeal;
+import com.querydsl.core.types.ConstructorExpression;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
@@ -15,7 +16,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Repository
@@ -28,17 +31,7 @@ public class HotDealQueryRepository {
     public Page<HotDealDto.HotDealPreview> findHotDeals(HotDealDto.GetHotDealsRequest getHotDealsRequest, Pageable pageable) {
         List<HotDealDto.HotDealPreview> hotDealPreviews = jpaQueryFactory
                 .select(
-                        Projections.constructor(HotDealDto.HotDealPreview.class,
-                                hotDeal.hotDealId,
-                                hotDeal.hotDealTitle,
-                                hotDeal.hotDealOriginalPrice,
-                                hotDeal.hotDealDiscountPrice,
-                                hotDeal.hotDealDiscountRate,
-                                hotDeal.hotDealLink,
-                                hotDeal.hotDealUploadTime,
-                                hotDeal.hotDealViewCount,
-                                hotDeal.sourceSite
-                        )
+                        getHotDealPreviewConstructorExpression()
                 )
                 .from(hotDeal)
                 .where(
@@ -58,6 +51,54 @@ public class HotDealQueryRepository {
         return new PageImpl(hotDealPreviews, pageable, count);
 
     }
+
+    public Page<HotDealDto.HotDealPreview> findWeeklyPopularHotDeals(HotDealDto.GetHotDealsRequest getHotDealsRequest, Pageable pageable) {
+
+        List<HotDealDto.HotDealPreview> hotDealPreviews = jpaQueryFactory
+                .select(
+                        getHotDealPreviewConstructorExpression()
+                )
+                .from(hotDeal)
+                .where(
+                        getWeeklyPopularCondition()
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(getAllOrderSpecifiers(pageable).stream().toArray(OrderSpecifier[]::new))
+                .fetch();
+
+        Long count = jpaQueryFactory
+                .select(hotDeal.count())
+                .from(hotDeal)
+                .where(getWeeklyPopularCondition())
+                .fetchOne();
+
+        return new PageImpl(hotDealPreviews, pageable, count);
+
+    }
+
+    private BooleanExpression getWeeklyPopularCondition() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_WEEK,-7);
+        return hotDeal.isDelete.eq(Boolean.FALSE)
+                .and(hotDeal.hotDealViewCount.goe(4))
+                .and(hotDeal.hotDealUploadTime.after(new Timestamp(calendar.getTimeInMillis())));
+    }
+
+    private ConstructorExpression<HotDealDto.HotDealPreview> getHotDealPreviewConstructorExpression() {
+        return Projections.constructor(HotDealDto.HotDealPreview.class,
+                hotDeal.hotDealId,
+                hotDeal.hotDealTitle,
+                hotDeal.hotDealOriginalPrice,
+                hotDeal.hotDealDiscountPrice,
+                hotDeal.hotDealDiscountRate,
+                hotDeal.hotDealLink,
+                hotDeal.hotDealUploadTime,
+                hotDeal.hotDealViewCount,
+                hotDeal.sourceSite
+        );
+    }
+
 
     private BooleanExpression getCondition(HotDealDto.GetHotDealsRequest getHotDealsRequest) {
         if (getHotDealsRequest == null) {

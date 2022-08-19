@@ -31,6 +31,16 @@ public class GetHotDealController {
 
     }
 
+    @GetMapping(value = "/hot-deals/weekly-popular")
+    public ResponseEntity<Page<HotDealDto.HotDealPreview>> getWeeklyPopularHotDeals(@ModelAttribute HotDealDto.GetHotDealsRequest getHotDealsRequest, Pageable pageable, HttpServletRequest httpServletRequest) {
+
+        String ip = getIpFromRequest(httpServletRequest);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(getHotDealService.getWeeklyPopularHotDeals(getHotDealsRequest,pageable,ip));
+
+    }
+
     private String getIpFromRequest(HttpServletRequest httpServletRequest) {
         String ip = httpServletRequest.getHeader("X-Forwarded-For");
 
