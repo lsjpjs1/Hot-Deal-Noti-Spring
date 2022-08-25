@@ -1,6 +1,9 @@
 package com.example.hotdealnoti.messagequeue.domain;
 
 import com.example.hotdealnoti.messagequeue.dto.HotDealMessageDto;
+import com.example.hotdealnoti.product.domain.Product;
+import com.example.hotdealnoti.product.domain.ProductPurpose;
+import com.example.hotdealnoti.product.domain.ProductType;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -43,6 +46,10 @@ public class HotDeal {
     private Boolean isDelete;
 
     private String sourceSite;
+
+    @ManyToOne(targetEntity = Product.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     public static HotDeal from(HotDealMessageDto.HotDealMessageContent hotDealMessageContent){
         return HotDeal.builder()
