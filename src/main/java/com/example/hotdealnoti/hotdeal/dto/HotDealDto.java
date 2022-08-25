@@ -1,6 +1,7 @@
 package com.example.hotdealnoti.hotdeal.dto;
 
 import com.example.hotdealnoti.hotdeal.repository.HotDealQueryRepository;
+import com.example.hotdealnoti.messagequeue.domain.HotDeal;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -27,6 +28,15 @@ public class HotDealDto {
     @Builder
     public static class GetHotDealsResponse {
         private List<HotDealPreview> hotDeals;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @ToString
+    @Builder
+    public static class GetNotClassifiedHotDealsResponse {
+        private List<HotDeal> hotDeals;
     }
 
     @Getter

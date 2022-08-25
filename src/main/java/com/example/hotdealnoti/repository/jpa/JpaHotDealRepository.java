@@ -1,6 +1,7 @@
 package com.example.hotdealnoti.repository.jpa;
 
 import com.example.hotdealnoti.messagequeue.domain.HotDeal;
+import com.example.hotdealnoti.product.domain.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.sql.Timestamp;
@@ -10,5 +11,7 @@ import java.util.Optional;
 public interface JpaHotDealRepository extends JpaRepository<HotDeal, Long> {
     Optional<HotDeal> findTopByHotDealTitleAndHotDealLink(String hotDealTitle, String hotDealLink);
     List<HotDeal> findByHotDealScrapingTimeBeforeAndIsDelete(Timestamp timestamp, Boolean isDelete);
+    List<HotDeal> findByProductAndIsDelete(Product product, Boolean isDelete);
     HotDeal findFirstByOrderByHotDealScrapingTimeDesc();
+
 }

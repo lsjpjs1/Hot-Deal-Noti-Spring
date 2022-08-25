@@ -41,6 +41,15 @@ public class GetHotDealController {
 
     }
 
+    @GetMapping(value = "/hot-deals/not-classified")
+    public ResponseEntity<HotDealDto.GetNotClassifiedHotDealsResponse> getNotClassifiedHotDeals() {
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(getHotDealService.getNotClassifiedHotDeals());
+
+    }
+
     private String getIpFromRequest(HttpServletRequest httpServletRequest) {
         String ip = httpServletRequest.getHeader("X-Forwarded-For");
 

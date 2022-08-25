@@ -4,6 +4,7 @@ import com.example.hotdealnoti.hotdeal.domain.HotDealViewHistory;
 import com.example.hotdealnoti.hotdeal.domain.HotDealViewHistoryRedis;
 import com.example.hotdealnoti.hotdeal.dto.HotDealDto;
 import com.example.hotdealnoti.hotdeal.repository.HotDealQueryRepository;
+import com.example.hotdealnoti.repository.jpa.JpaHotDealRepository;
 import com.example.hotdealnoti.repository.jpa.JpaHotDealViewHistoryRepository;
 import com.example.hotdealnoti.repository.redis.RedisHotDealViewHistoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.sql.Timestamp;
 public class GetHotDealService {
     private final HotDealQueryRepository hotDealQueryRepository;
     private final RedisHotDealViewHistoryRepository redisHotDealViewHistoryRepository;
+    private final JpaHotDealRepository jpaHotDealRepository;
 
     @Transactional
     public Page<HotDealDto.HotDealPreview> getHotDeals(HotDealDto.GetHotDealsRequest getHotDealsRequest, Pageable pageable, String userIp) {
@@ -42,5 +44,12 @@ public class GetHotDealService {
                 .build();
         redisHotDealViewHistoryRepository.save(hotDealViewHistoryRedis);
         return hotDealQueryRepository.findWeeklyPopularHotDeals(getHotDealsRequest, pageable);
+    }
+
+    @Transactional
+    public HotDealDto.GetNotClassifiedHotDealsResponse getNotClassifiedHotDeals() {
+        return HotDealDto.GetNotClassifiedHotDealsResponse.builder()
+                .hotDeals(jpaHotDealRepository.findByProductAndIsDelete(null,false))
+                .build();
     }
 }
