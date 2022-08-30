@@ -26,7 +26,8 @@ public class ProductQueryRepository {
                         product.productId,
                         product.modelName,
                         product.productType.productTypeName,
-                        product.manufacturer.manufacturerName
+                        product.manufacturer.manufacturerName,
+                        product.manufacturer.manufacturerId
                         ))
                 .from(product)
                 .where(getCondition(getProductRequest))
