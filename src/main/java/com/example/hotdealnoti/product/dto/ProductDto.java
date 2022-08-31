@@ -36,6 +36,22 @@ public class ProductDto {
     @NoArgsConstructor
     @Builder
     @ToString
+    public static class ClassifyHotDealRequest{
+        private Long hotDealId;
+        private Long productId;
+        private String modelName;
+        private Long manufacturerId;
+        private String manufacturer;
+        private Long productPurposeId;
+        private Long productTypeId;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @ToString
     public static class GetProductResponse{
         private List<GetProductDTO> products;
     }

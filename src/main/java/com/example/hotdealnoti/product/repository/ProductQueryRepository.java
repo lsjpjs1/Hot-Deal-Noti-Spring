@@ -24,7 +24,7 @@ public class ProductQueryRepository {
         return jpaQueryFactory
                 .select(Projections.constructor(ProductDto.GetProductDTO.class,
                         product.productId,
-                        product.modelName,
+                        product.modelNameSearch,
                         product.productType.productTypeName,
                         product.manufacturer.manufacturerName,
                         product.manufacturer.manufacturerId
@@ -37,7 +37,7 @@ public class ProductQueryRepository {
     private BooleanExpression getCondition(ProductDto.GetProductRequest getProductRequest) {
         if (getProductRequest == null) return null;
         log.info(getProductRequest.getModelName());
-        return product.modelName.toLowerCase().contains(getProductRequest.getModelName()!=null? getProductRequest.getModelName().toLowerCase() : "")
+        return product.modelNameSearch.toLowerCase().contains(getProductRequest.getModelName()!=null? getProductRequest.getModelName().toLowerCase().replace(" ","") : "")
                 .and(product.manufacturer.manufacturerName.toLowerCase().contains(getProductRequest.getManufacturer()!=null? getProductRequest.getManufacturer().toLowerCase() : ""));
 
     }

@@ -22,6 +22,7 @@ public class Product {
     private Long productId;
 
     private String modelName;
+    private String modelNameSearch;
 
     @ManyToOne(targetEntity = ProductPurpose.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "product_purpose_id")

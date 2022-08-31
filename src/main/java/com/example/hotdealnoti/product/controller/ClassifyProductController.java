@@ -9,9 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,6 +26,16 @@ public class ClassifyProductController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(classifyProductService.getClassifyProductInitData());
+
+    }
+
+    @PatchMapping(value = "/hot-deals/classify")
+    public ResponseEntity classifyHotDeal(@RequestBody ProductDto.ClassifyHotDealRequest classifyHotDealRequest) {
+        log.info(classifyHotDealRequest.toString());
+        classifyProductService.classifyHotDeal(classifyHotDealRequest);
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
 
     }
 }
