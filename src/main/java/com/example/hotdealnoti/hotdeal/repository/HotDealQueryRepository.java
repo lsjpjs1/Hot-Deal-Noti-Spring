@@ -95,7 +95,12 @@ public class HotDealQueryRepository {
                 hotDeal.hotDealLink,
                 hotDeal.hotDealUploadTime,
                 hotDeal.hotDealViewCount,
-                hotDeal.sourceSite
+                hotDeal.sourceSite,
+
+                hotDeal.product.productId,
+                hotDeal.product.modelName,
+                hotDeal.product.manufacturer.manufacturerName,
+                hotDeal.product.productPurpose.productPurposeName
         );
     }
 

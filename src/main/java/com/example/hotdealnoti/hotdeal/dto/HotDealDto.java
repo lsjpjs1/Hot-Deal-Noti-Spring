@@ -54,7 +54,13 @@ public class HotDealDto {
         private Timestamp uploadTime;
         private Integer viewCount;
         private String sourceSite;
+
+        private Long productId;
+        private String modelName;
+        private String manufacturer;
+        private String productPurpose;
     }
+
 
     @Getter
     @Setter
