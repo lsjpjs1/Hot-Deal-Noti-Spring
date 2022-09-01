@@ -4,6 +4,7 @@ import com.example.hotdealnoti.messagequeue.dto.HotDealMessageDto;
 import com.example.hotdealnoti.product.domain.Product;
 import com.example.hotdealnoti.product.domain.ProductPurpose;
 import com.example.hotdealnoti.product.domain.ProductType;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -47,6 +48,7 @@ public class HotDeal {
 
     private String sourceSite;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(targetEntity = Product.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;

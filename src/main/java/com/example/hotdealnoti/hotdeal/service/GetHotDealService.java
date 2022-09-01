@@ -4,6 +4,7 @@ import com.example.hotdealnoti.hotdeal.domain.HotDealViewHistory;
 import com.example.hotdealnoti.hotdeal.domain.HotDealViewHistoryRedis;
 import com.example.hotdealnoti.hotdeal.dto.HotDealDto;
 import com.example.hotdealnoti.hotdeal.repository.HotDealQueryRepository;
+import com.example.hotdealnoti.product.domain.Product;
 import com.example.hotdealnoti.repository.jpa.JpaHotDealRepository;
 import com.example.hotdealnoti.repository.jpa.JpaHotDealViewHistoryRepository;
 import com.example.hotdealnoti.repository.redis.RedisHotDealViewHistoryRepository;
@@ -49,7 +50,7 @@ public class GetHotDealService {
     @Transactional
     public HotDealDto.GetNotClassifiedHotDealsResponse getNotClassifiedHotDeals() {
         return HotDealDto.GetNotClassifiedHotDealsResponse.builder()
-                .hotDeals(jpaHotDealRepository.findTop30ByProductAndIsDelete(null,false))
+                .hotDeals(jpaHotDealRepository.findTop30ByProductAndIsDelete(Product.builder().productId(0l).build(),false))
                 .build();
     }
 }
