@@ -50,7 +50,7 @@ public class GetHotDealService {
     @Transactional
     public HotDealDto.GetNotClassifiedHotDealsResponse getNotClassifiedHotDeals() {
         return HotDealDto.GetNotClassifiedHotDealsResponse.builder()
-                .hotDeals(jpaHotDealRepository.findTop30ByProductAndIsDelete(Product.builder().productId(0l).build(),false))
+                .hotDeals(jpaHotDealRepository.findTop30ByProductAndIsDelete(Product.builder().productId(1l).build(),false))
                 .build();
     }
 }
