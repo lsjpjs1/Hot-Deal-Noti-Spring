@@ -36,7 +36,7 @@ public class HotDealQueryRepository {
                 .from(hotDeal)
                 .where(
                         getCondition(getHotDealsRequest)
-                        )
+                )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(getAllOrderSpecifiers(pageable).stream().toArray(OrderSpecifier[]::new))
@@ -51,6 +51,41 @@ public class HotDealQueryRepository {
         return new PageImpl(hotDealPreviews, pageable, count);
 
     }
+
+    public Page<HotDealDto.HotDealPreview> findHotDealsByProductId(Long productId, Pageable pageable) {
+        List<HotDealDto.HotDealPreview> hotDealPreviews = jpaQueryFactory
+                .select(
+                        getHotDealPreviewConstructorExpression()
+                )
+                .from(hotDeal)
+                .where(
+                        getProductIdCondition(productId)
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(getAllOrderSpecifiers(pageable).stream().toArray(OrderSpecifier[]::new))
+                .fetch();
+
+        Long count = jpaQueryFactory
+                .select(hotDeal.count())
+                .from(hotDeal)
+                .where(getProductIdCondition(productId))
+                .fetchOne();
+
+        return new PageImpl(hotDealPreviews, pageable, count);
+
+    }
+
+
+    private BooleanExpression getProductIdCondition(Long productId) {
+        if (productId == null) {
+            return hotDeal.isDelete.eq(Boolean.FALSE);
+        }
+
+        return hotDeal.isDelete.eq(Boolean.FALSE)
+                .and(hotDeal.product.productId.eq(productId));
+    }
+
 
     public Page<HotDealDto.HotDealPreview> findWeeklyPopularHotDeals(HotDealDto.GetHotDealsRequest getHotDealsRequest, Pageable pageable) {
 

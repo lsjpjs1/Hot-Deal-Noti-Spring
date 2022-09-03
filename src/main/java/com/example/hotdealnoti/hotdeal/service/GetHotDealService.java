@@ -7,6 +7,7 @@ import com.example.hotdealnoti.hotdeal.repository.HotDealQueryRepository;
 import com.example.hotdealnoti.product.domain.Product;
 import com.example.hotdealnoti.repository.jpa.JpaHotDealRepository;
 import com.example.hotdealnoti.repository.jpa.JpaHotDealViewHistoryRepository;
+import com.example.hotdealnoti.repository.jpa.JpaProductRepository;
 import com.example.hotdealnoti.repository.redis.RedisHotDealViewHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,7 @@ public class GetHotDealService {
     private final HotDealQueryRepository hotDealQueryRepository;
     private final RedisHotDealViewHistoryRepository redisHotDealViewHistoryRepository;
     private final JpaHotDealRepository jpaHotDealRepository;
+    private final JpaProductRepository jpaProductRepository;
 
     @Transactional
     public Page<HotDealDto.HotDealPreview> getHotDeals(HotDealDto.GetHotDealsRequest getHotDealsRequest, Pageable pageable, String userIp) {
@@ -33,6 +35,18 @@ public class GetHotDealService {
                 .build();
         redisHotDealViewHistoryRepository.save(hotDealViewHistoryRedis);
         return hotDealQueryRepository.findHotDeals(getHotDealsRequest, pageable);
+    }
+
+    @Transactional
+    public Page<HotDealDto.HotDealPreview> getHotDealsByProductId(Long productId, Pageable pageable, String userIp) {
+        HotDealViewHistoryRedis hotDealViewHistoryRedis = HotDealViewHistoryRedis.builder()
+                .userIp(userIp)
+                .searchBody(jpaProductRepository.findById(productId).get().getModelName())
+                .sortCondition(pageable.getSort().toString())
+                .hotDealViewTime(new Timestamp(System.currentTimeMillis()))
+                .build();
+        redisHotDealViewHistoryRepository.save(hotDealViewHistoryRedis);
+        return hotDealQueryRepository.findHotDealsByProductId(productId, pageable);
     }
 
     @Transactional
