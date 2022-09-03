@@ -27,10 +27,12 @@ public class ProductQueryRepository {
                         product.modelNameSearch,
                         product.productType.productTypeName,
                         product.manufacturer.manufacturerName,
-                        product.manufacturer.manufacturerId
+                        product.manufacturer.manufacturerId,
+                        product.modelName
                         ))
                 .from(product)
                 .where(getCondition(getProductRequest))
+                .orderBy(product.modelNameSearch.desc())
                 .fetch();
     }
 
