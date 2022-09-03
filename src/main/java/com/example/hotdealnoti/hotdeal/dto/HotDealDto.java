@@ -61,6 +61,8 @@ public class HotDealDto {
         private String modelName;
         private String manufacturer;
         private String productPurpose;
+
+        private Boolean isDelete;
     }
 
 

@@ -79,11 +79,10 @@ public class HotDealQueryRepository {
 
     private BooleanExpression getProductIdCondition(Long productId) {
         if (productId == null) {
-            return hotDeal.isDelete.eq(Boolean.FALSE);
+            return null;
         }
 
-        return hotDeal.isDelete.eq(Boolean.FALSE)
-                .and(hotDeal.product.productId.eq(productId));
+        return hotDeal.product.productId.eq(productId);
     }
 
 
@@ -135,7 +134,9 @@ public class HotDealQueryRepository {
                 hotDeal.product.productId,
                 hotDeal.product.modelName,
                 hotDeal.product.manufacturer.manufacturerName,
-                hotDeal.product.productPurpose.productPurposeName
+                hotDeal.product.productPurpose.productPurposeName,
+
+                hotDeal.isDelete
         );
     }
 
