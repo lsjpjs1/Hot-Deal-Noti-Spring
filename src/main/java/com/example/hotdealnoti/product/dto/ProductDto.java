@@ -68,6 +68,7 @@ public class ProductDto {
         private String productType;
         private String manufacturer;
         private Long manufacturerId;
+        private String fullModelName;
     }
 }
 
