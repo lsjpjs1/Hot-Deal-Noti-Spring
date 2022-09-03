@@ -112,7 +112,25 @@ public class HotDealQueryRepository {
 
         return hotDeal.isDelete.eq(Boolean.FALSE)
                 .and(getSearchCondition(getHotDealsRequest.getSearchBody()))
-                .and(getSourceSitesCondition(getHotDealsRequest.getSourceSites()));
+                .and(getSourceSitesCondition(getHotDealsRequest.getSourceSites()))
+                .and(getManufacturerCondition(getHotDealsRequest.getManufacturerId()))
+                .and(getProductPurposeCondition(getHotDealsRequest.getProductPurposeId()));
+    }
+
+    private BooleanExpression getManufacturerCondition(Long manufacturerId) {
+        if (manufacturerId == null) {
+            return null;
+        }
+
+        return hotDeal.product.manufacturer.manufacturerId.eq(manufacturerId);
+    }
+
+    private BooleanExpression getProductPurposeCondition(Long productPurposeId) {
+        if (productPurposeId == null) {
+            return null;
+        }
+
+        return hotDeal.product.productPurpose.productPurposeId.eq(productPurposeId);
     }
 
     private BooleanExpression getSearchCondition(String searchBody) {

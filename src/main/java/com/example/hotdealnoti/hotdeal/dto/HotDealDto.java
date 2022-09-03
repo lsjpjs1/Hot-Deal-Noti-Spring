@@ -16,6 +16,8 @@ public class HotDealDto {
     public static class GetHotDealsRequest {
         private String searchBody;
         private List<String> sourceSites;
+        private Long manufacturerId;
+        private Long productPurposeId;
     }
 
 
