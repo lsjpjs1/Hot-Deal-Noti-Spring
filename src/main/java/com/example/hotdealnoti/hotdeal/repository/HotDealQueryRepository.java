@@ -123,7 +123,8 @@ public class HotDealQueryRepository {
             return null;
         }
 
-        return hotDeal.hotDealTitle.toLowerCase().contains(searchBody.toLowerCase());
+        return hotDeal.hotDealTitle.toLowerCase().contains(searchBody.toLowerCase())
+                .or(hotDeal.product.modelNameSearch.toLowerCase().contains(searchBody.toLowerCase()));
     }
 
     private BooleanExpression getSourceSitesCondition(List<String> sourceSites) {
