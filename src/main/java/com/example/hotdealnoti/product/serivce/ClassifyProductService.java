@@ -30,6 +30,7 @@ public class ClassifyProductService {
         return ProductDto.ClassifyProductInitDataResponse.builder()
                 .productPurposes(jpaProductPurposeRepository.findAll())
                 .productTypes(jpaProductTypeRepository.findAll())
+                .manufacturers(jpaManufacturerRepository.findAll())
                 .build();
     }
 

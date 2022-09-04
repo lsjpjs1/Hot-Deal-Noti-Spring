@@ -1,6 +1,7 @@
 package com.example.hotdealnoti.product.dto;
 
 import com.example.hotdealnoti.messagequeue.dto.HotDealMessageDto;
+import com.example.hotdealnoti.product.domain.Manufacturer;
 import com.example.hotdealnoti.product.domain.ProductPurpose;
 import com.example.hotdealnoti.product.domain.ProductType;
 import lombok.*;
@@ -17,6 +18,7 @@ public class ProductDto {
     public static class ClassifyProductInitDataResponse{
         private List<ProductType> productTypes;
         private List<ProductPurpose> productPurposes;
+        private List<Manufacturer> manufacturers;
     }
 
     @Getter
