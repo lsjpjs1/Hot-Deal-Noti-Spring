@@ -14,6 +14,8 @@ public class AuthDto {
     @Builder
     public static class KakaoLoginRequest {
         private String code;
+        private String accessToken;
+
     }
 
     @Getter

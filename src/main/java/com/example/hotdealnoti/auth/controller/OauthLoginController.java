@@ -17,10 +17,9 @@ public class OauthLoginController {
     private final KakaoLoginService kakaoLoginService;
     @GetMapping("/oauth/callback/kakao")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity kakaoLogin(@ModelAttribute AuthDto.KakaoLoginRequest kakaoLoginRequest){
-
+    public ResponseEntity<AuthDto.LoginResponse> kakaoLogin(@ModelAttribute AuthDto.KakaoLoginRequest kakaoLoginRequest){
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
-                .build();
+                .body(kakaoLoginService.kakaoLogin(kakaoLoginRequest));
     }
 }

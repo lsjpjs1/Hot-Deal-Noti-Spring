@@ -47,7 +47,10 @@ public class KakaoLoginService {
 
     @Transactional
     public AuthDto.LoginResponse kakaoLogin(AuthDto.KakaoLoginRequest kakaoLoginRequest) {
-        String accessToken = getAccessToken(kakaoLoginRequest.getCode());
+
+        String accessToken = kakaoLoginRequest.getAccessToken()==null?
+                getAccessToken(kakaoLoginRequest.getCode()): kakaoLoginRequest.getAccessToken();
+
         AuthDto.KakaoUserInfo kakaoUserInfo = getKakaoUserInfo(accessToken);
         Optional<Account> optionalAccount = jpaAccountRepository.findByAccountTypeAndOauthId(AccountType.KAKAO, kakaoUserInfo.getId());
         if(optionalAccount.isPresent()){
