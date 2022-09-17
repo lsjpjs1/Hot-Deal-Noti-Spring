@@ -1,5 +1,7 @@
 package com.example.hotdealnoti.config;
 
+import com.example.hotdealnoti.auth.security.JwtSecurityConfig;
+import com.example.hotdealnoti.auth.security.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,19 +17,29 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig{
+@RequiredArgsConstructor
+public class SecurityConfig {
 
+    private final TokenProvider tokenProvider;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.httpBasic().disable()
+        httpSecurity
+                .httpBasic().disable()
                 .cors().configurationSource(corsConfigurationSource())
                 .and()
                 .csrf().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeHttpRequests((author)-> author
+                        .antMatchers("/notification-keywords").authenticated()
+                )
+                .apply(new JwtSecurityConfig(tokenProvider))
         ;
         return httpSecurity.build();
     }
+
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

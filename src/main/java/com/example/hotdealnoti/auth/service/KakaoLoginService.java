@@ -55,10 +55,15 @@ public class KakaoLoginService {
         Optional<Account> optionalAccount = jpaAccountRepository.findByAccountTypeAndOauthId(AccountType.KAKAO, kakaoUserInfo.getId());
         if(optionalAccount.isPresent()){
             Account account = optionalAccount.get();
+
+            //fcm 알림 토큰 업데이트
+            account.setNotificationToken(kakaoLoginRequest.getNotificationToken());
+            jpaAccountRepository.save(account);
+
             String token = tokenProvider.generateToken(AuthDto.TokenRequest.builder().accountType(account.getAccountType()).oauthId(account.getOauthId()).build());
             return AuthDto.LoginResponse.builder().token(token).build();
         }else{
-            Account account = Account.builder().accountType(AccountType.KAKAO).oauthId(kakaoUserInfo.getId()).build();
+            Account account = Account.builder().accountType(AccountType.KAKAO).oauthId(kakaoUserInfo.getId()).notificationToken(kakaoLoginRequest.getNotificationToken()).build();
             jpaAccountRepository.save(account);
             entityManager.refresh(account);
             String token = tokenProvider.generateToken(AuthDto.TokenRequest.builder().accountType(account.getAccountType()).oauthId(account.getOauthId()).build());

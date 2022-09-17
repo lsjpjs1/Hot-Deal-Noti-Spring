@@ -19,7 +19,7 @@ public class OauthLoginController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<AuthDto.LoginResponse> kakaoLogin(@ModelAttribute AuthDto.KakaoLoginRequest kakaoLoginRequest){
         return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
+                .status(HttpStatus.OK)
                 .body(kakaoLoginService.kakaoLogin(kakaoLoginRequest));
     }
 }

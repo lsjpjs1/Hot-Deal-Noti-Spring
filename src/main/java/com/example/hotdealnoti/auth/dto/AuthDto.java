@@ -15,6 +15,7 @@ public class AuthDto {
     public static class KakaoLoginRequest {
         private String code;
         private String accessToken;
+        private String notificationToken;
 
     }
 
