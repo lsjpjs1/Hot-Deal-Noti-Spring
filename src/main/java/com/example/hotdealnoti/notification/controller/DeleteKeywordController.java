@@ -13,17 +13,18 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class GetKeywordController {
+public class DeleteKeywordController {
 
     private final KeywordService keywordService;
 
-    @GetMapping("/notification-keywords")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<NotificationDto.GetKeywordsResponse> getKeywords() {
+    @DeleteMapping("/notification-keywords/{keywordNotificationId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity deleteKeyword(@PathVariable Long keywordNotificationId) {
 
         Account accountFromToken = CustomSecurityContextHolder.getAccountFromToken();
+        keywordService.deleteKeyword(accountFromToken, keywordNotificationId);
         return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(keywordService.getKeywords(accountFromToken));
+                .status(HttpStatus.NO_CONTENT)
+                .build();
     }
 }

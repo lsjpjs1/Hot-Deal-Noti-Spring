@@ -12,7 +12,7 @@ public enum ErrorCode {
 
     NOT_CLUB_MEMBER(HttpStatus.FORBIDDEN, "This post can read just club member"),
     NOT_SCHOOL_MEMBER(HttpStatus.FORBIDDEN, "This post can read just school member"),
-    NO_PERMISSION(HttpStatus.FORBIDDEN, "You don't have permission"),
+    NO_PERMISSION(HttpStatus.FORBIDDEN, "권한이 없습니다."),
 
     USER_INFO_NOT_FOUND(HttpStatus.NOT_FOUND, "User information cannot found from token. Please sign in again."),
     USER_ID_NOT_FOUND(HttpStatus.NOT_FOUND,"UserId cannot found."),
@@ -35,6 +35,7 @@ public enum ErrorCode {
     PARTY_MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND,"PartyMember cannot found."),
     PARTY_APPLY_GROUP_NOT_FOUND(HttpStatus.NOT_FOUND,"PartyApplyGroup cannot found."),
     HOT_DEAL_ID_NOT_FOUND(HttpStatus.NOT_FOUND,"HotDeal cannot found."),
+    KEYWORD_NOTIFICATION_ID_NOT_FOUND(HttpStatus.NOT_FOUND,"존재하지 않는 키워드입니다."),
 
     BAD_REQUEST_CONTENT(HttpStatus.NOT_ACCEPTABLE,"Please check params or body"),
     WRONG_EMAIL_FORM(HttpStatus.NOT_ACCEPTABLE,"Email form is wrong"),

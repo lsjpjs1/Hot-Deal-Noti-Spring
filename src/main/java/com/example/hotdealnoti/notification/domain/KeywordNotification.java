@@ -27,4 +27,6 @@ public class KeywordNotification {
     private Long accountId;
 
     private Timestamp keywordNotificationTime;
+
+    private Boolean isDelete;
 }

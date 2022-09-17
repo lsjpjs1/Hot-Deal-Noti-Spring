@@ -9,5 +9,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface JpaKeywordNotificationRepository extends JpaRepository<KeywordNotification,Long> {
-    List<KeywordNotification> findByAccountId(Long accountId);
+    List<KeywordNotification> findByAccountIdAndIsDelete(Long accountId,Boolean isDelete);
 }
