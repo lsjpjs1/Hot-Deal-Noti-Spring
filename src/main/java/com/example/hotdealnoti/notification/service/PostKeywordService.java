@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,5 +27,19 @@ public class PostKeywordService {
                 .accountId(account.getAccountId())
                 .build();
         jpaKeywordNotificationRepository.save(keywordNotification);
+    }
+
+    @Transactional
+    public NotificationDto.GetKeywordsResponse getKeywords(Account account) {
+        List<KeywordNotification> keywordNotifications = jpaKeywordNotificationRepository.findByAccountId(account.getAccountId());
+        List<NotificationDto.KeywordNotificationDto> keywords = keywordNotifications.stream()
+                .map(keywordNotification ->
+                        NotificationDto.KeywordNotificationDto.builder()
+                                .keywordNotificationId(keywordNotification.getKeywordNotificationId())
+                                .keywordNotificationTime(keywordNotification.getKeywordNotificationTime())
+                                .keywordNotificationBody(keywordNotification.getKeywordNotificationBody())
+                                .build()
+                ).toList();
+        return NotificationDto.GetKeywordsResponse.builder().keywords(keywords).build();
     }
 }
