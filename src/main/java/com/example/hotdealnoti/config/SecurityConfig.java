@@ -33,6 +33,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests((author)-> author
                         .antMatchers("/notification-keywords").authenticated()
+                        .antMatchers("/notification-keywords/**").authenticated()
                 )
                 .apply(new JwtSecurityConfig(tokenProvider))
         ;
