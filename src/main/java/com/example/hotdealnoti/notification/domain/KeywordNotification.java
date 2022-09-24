@@ -29,4 +29,6 @@ public class KeywordNotification {
     private Timestamp keywordNotificationTime;
 
     private Boolean isDelete;
+
+    private Boolean isOnRedis;
 }
