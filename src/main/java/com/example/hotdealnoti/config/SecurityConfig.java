@@ -34,6 +34,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((author)-> author
                         .antMatchers("/notification-keywords").authenticated()
                         .antMatchers("/notification-keywords/**").authenticated()
+                        .antMatchers("/notifications").authenticated()
+                        .antMatchers("/notifications/**").authenticated()
                 )
                 .apply(new JwtSecurityConfig(tokenProvider))
         ;
