@@ -1,4 +1,4 @@
-buildscript {
+    buildscript {
     ext {
         queryDslVersion = "5.0.0"
     }
@@ -51,6 +51,12 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.amqp:spring-rabbit-test'
     testImplementation 'org.springframework.security:spring-security-test'
+
+    // FCM push
+    implementation 'com.google.firebase:firebase-admin:9.0.0'
+
+    //okhttp3
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.2.2'
 
 }
 

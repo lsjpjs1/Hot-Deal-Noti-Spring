@@ -1,5 +1,6 @@
 package com.example.hotdealnoti.messagequeue;
 
+import com.example.hotdealnoti.notification.service.SendNotificationService;
 import com.example.hotdealnoti.messagequeue.domain.HotDeal;
 import com.example.hotdealnoti.messagequeue.dto.HotDealMessageDto;
 import com.example.hotdealnoti.repository.jpa.JpaHotDealRepository;
@@ -20,6 +21,7 @@ public class MessageConsumer {
 
     private final JpaHotDealRepository hotDealRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final SendNotificationService sendNotificationService;
     @RabbitListener(queues = "hotDeal")
     public void receiveMessage(String message) {
         try {
@@ -33,7 +35,9 @@ public class MessageConsumer {
                     hotDealRepository.save(hotDeal);
                     continue;
                 }
-                hotDealRepository.save(HotDeal.from(hotDealMessageContent));
+
+                HotDeal hotDeal = hotDealRepository.save(HotDeal.from(hotDealMessageContent));
+                sendNotificationService.sendKeywordNotificationAsync(hotDeal);
             }
 
         } catch (IOException e) {

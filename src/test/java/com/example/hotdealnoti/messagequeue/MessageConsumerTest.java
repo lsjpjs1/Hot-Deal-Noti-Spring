@@ -26,11 +26,12 @@ class MessageConsumerTest {
                         Arrays.asList(
                                 HotDealMessageDto.HotDealMessageContent.builder()
                                         .url("http://item.gmarket.co.kr/Item?goodscode=2379255209")
-                                        .title("HP 빅터스 16-d1120TX i5-12500H RTX3050Ti 113만")
+                                        .title("초특가Redis    Test")
                                         .build()
                         )
                 )
                 .build());
+        System.out.println(hotDeals);
         messageConsumer.receiveMessage(hotDeals);
     }
 }

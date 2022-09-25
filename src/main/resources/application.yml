@@ -5,6 +5,11 @@ oauth:
 jwt:
   secret: ENC(YwBliokjkdmTR8ZBhwtrQDyDyy8NDIIeOKC1Xsff5VHwtmZ2F9HT3g4CILYHQigYzAF8JTPAogNlYhkRyyljbcu10iuEvRWBtjeMUIolKJNOZhdJ5HJ5pwhX1GO/uMm4TRq8EcJnUN1sFNVhEnnz1Q==)
 
+fcm:
+  key:
+    path: ENC(0TCRkOi5eUEzbUL0tOqMhINTiK3s2PaOtMo9D5OPy4B6FoLqBBqhnVEEXwMj7GAO)
+    scope: ENC(2CFLGnS625H8FB2S5LwE7FNlv/fh+C2JlUtYhmplgJSQvRgvp0ejzAABQMR/7s9jxTu51GRMvUg=)
+
 ---
 
 spring:
