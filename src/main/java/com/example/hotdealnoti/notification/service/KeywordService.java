@@ -24,6 +24,9 @@ public class KeywordService {
     private final JpaKeywordNotificationRepository jpaKeywordNotificationRepository;
     @Transactional
     public void postKeyword(Account account, NotificationDto.PostKeywordRequest postKeywordRequest) {
+        if(jpaKeywordNotificationRepository.findByAccountIdAndIsDelete(account.getAccountId(), false).size()>=5){
+            throw new CustomException(ErrorCode.NOTIFICATION_KEYWORD_COUNT_LIMIT);
+        }
         KeywordNotification keywordNotification = KeywordNotification.builder()
                 .keywordNotificationBody(postKeywordRequest.getKeyword())
                 .accountId(account.getAccountId())

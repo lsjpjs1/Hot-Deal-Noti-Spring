@@ -44,6 +44,7 @@ public enum ErrorCode {
     NOT_CLUB_CATEGORY(HttpStatus.NOT_ACCEPTABLE,"CategoryId does not club"),
     PARTY_MEMBER_TOO_SMALL(HttpStatus.NOT_ACCEPTABLE,"The number of people should be more than 5."),
     PARTY_CANCELED(HttpStatus.NOT_ACCEPTABLE,"This party was canceled"),
+    NOTIFICATION_KEYWORD_COUNT_LIMIT(HttpStatus.NOT_ACCEPTABLE,"키워드는 최대 5개까지만 등록할 수 있습니다."),
 
 
     DUPLICATE_RESOURCE(HttpStatus.CONFLICT, "Data already exists."),
