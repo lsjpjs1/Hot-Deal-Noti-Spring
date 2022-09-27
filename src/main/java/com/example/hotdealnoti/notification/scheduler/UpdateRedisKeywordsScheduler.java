@@ -33,6 +33,13 @@ public class UpdateRedisKeywordsScheduler {
             keywordNotification.setIsOnRedis(true);
             jpaKeywordNotificationRepository.save(keywordNotification);
         });
+
+        Iterable<KeywordNotificationRedis> allKeywords = redisKeywordNotificationRepository.findAll();
+        allKeywords.forEach(keywordNotificationRedis -> {
+            if (keywordNotificationRedis.getIsDelete()){
+                redisKeywordNotificationRepository.delete(keywordNotificationRedis);
+            }
+        });
     }
 
 }

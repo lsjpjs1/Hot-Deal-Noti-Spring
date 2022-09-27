@@ -7,5 +7,4 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface RedisKeywordNotificationRepository extends CrudRepository<KeywordNotificationRedis,String> {
-    List<KeywordNotificationRedis> findByIsDelete(Boolean isDelete);
 }

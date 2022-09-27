@@ -12,6 +12,7 @@ import com.example.hotdealnoti.repository.jpa.JpaNotificationRepository;
 import com.example.hotdealnoti.repository.redis.RedisConnectionHistoryRepository;
 import com.example.hotdealnoti.repository.redis.RedisKeywordNotificationRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SendNotificationService {
 
     private final JpaNotificationRepository jpaNotificationRepository;
@@ -32,11 +34,11 @@ public class SendNotificationService {
     @Async
     @Transactional
     public void sendKeywordNotificationAsync(HotDeal hotDeal) {
-
         //해당 핫딜 키워드로 등록해놓은 user 찾기
-        Iterable<KeywordNotificationRedis> keywordNotificationRedisAll = redisKeywordNotificationRepository.findByIsDelete(false);
+        Iterable<KeywordNotificationRedis> keywordNotificationRedisAll = redisKeywordNotificationRepository.findAll();
 
         keywordNotificationRedisAll.forEach(keywordNotificationRedis -> {
+
             if (hotDeal.getHotDealTitle().toLowerCase().replace(" ","").contains(keywordNotificationRedis.getKeywordNotificationBody().toLowerCase().replace(" ",""))){
 
                 String notificationTitle = new StringBuilder()
