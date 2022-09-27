@@ -61,6 +61,15 @@ public class GetHotDealController {
 
     }
 
+    @GetMapping(value = "/hot-deals/hot-deal/{hotDealId}")
+    public ResponseEntity<HotDealDto.HotDealPreview> getHotDealByHotDealId(@PathVariable Long hotDealId) {
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(getHotDealService.getHotDealByHotDealId(hotDealId));
+
+    }
+
     private String getIpFromRequest(HttpServletRequest httpServletRequest) {
         String ip = httpServletRequest.getHeader("X-Forwarded-For");
 

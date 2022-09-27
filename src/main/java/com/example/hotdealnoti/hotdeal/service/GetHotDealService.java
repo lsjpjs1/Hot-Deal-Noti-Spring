@@ -50,6 +50,12 @@ public class GetHotDealService {
     }
 
     @Transactional
+    public HotDealDto.HotDealPreview getHotDealByHotDealId(Long hotDealId) {
+
+        return hotDealQueryRepository.findHotDealByHotDealId(hotDealId);
+    }
+
+    @Transactional
     public Page<HotDealDto.HotDealPreview> getWeeklyPopularHotDeals(HotDealDto.GetHotDealsRequest getHotDealsRequest, Pageable pageable, String userIp) {
         HotDealViewHistoryRedis hotDealViewHistoryRedis = HotDealViewHistoryRedis.builder()
                 .userIp(userIp)

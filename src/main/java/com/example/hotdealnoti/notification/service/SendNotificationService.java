@@ -34,7 +34,7 @@ public class SendNotificationService {
     public void sendKeywordNotificationAsync(HotDeal hotDeal) {
 
         //해당 핫딜 키워드로 등록해놓은 user 찾기
-        Iterable<KeywordNotificationRedis> keywordNotificationRedisAll = redisKeywordNotificationRepository.findAll();
+        Iterable<KeywordNotificationRedis> keywordNotificationRedisAll = redisKeywordNotificationRepository.findByIsDelete(false);
 
         keywordNotificationRedisAll.forEach(keywordNotificationRedis -> {
             if (hotDeal.getHotDealTitle().toLowerCase().replace(" ","").contains(keywordNotificationRedis.getKeywordNotificationBody().toLowerCase().replace(" ",""))){

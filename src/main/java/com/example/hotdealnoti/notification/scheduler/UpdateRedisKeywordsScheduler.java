@@ -27,7 +27,7 @@ public class UpdateRedisKeywordsScheduler {
     @Scheduled(cron = "0 0/5 * * * ?")
     @Transactional
     public void updateRedisKeywords() {
-        List<KeywordNotification> keywordNotifications = jpaKeywordNotificationRepository.findByIsDeleteAndIsOnRedis(false, false);
+        List<KeywordNotification> keywordNotifications = jpaKeywordNotificationRepository.findByIsOnRedis( false);
         keywordNotifications.forEach(keywordNotification -> {
             redisKeywordNotificationRepository.save(KeywordNotificationRedis.from(keywordNotification));
             keywordNotification.setIsOnRedis(true);

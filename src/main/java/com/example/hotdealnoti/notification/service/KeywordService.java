@@ -54,6 +54,7 @@ public class KeywordService {
             throw new CustomException(ErrorCode.NO_PERMISSION);
         }
         keywordNotification.setIsDelete(true);
+        keywordNotification.setIsOnRedis(false);
         jpaKeywordNotificationRepository.save(keywordNotification);
     }
 }

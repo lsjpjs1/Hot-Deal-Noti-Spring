@@ -52,6 +52,21 @@ public class HotDealQueryRepository {
 
     }
 
+    public HotDealDto.HotDealPreview findHotDealByHotDealId(Long hotDealId) {
+        return jpaQueryFactory
+                .select(
+                        getHotDealPreviewConstructorExpression()
+                )
+                .from(hotDeal)
+                .where(
+                        hotDeal.hotDealId.eq(hotDealId)
+                )
+                .fetchOne();
+
+
+
+    }
+
     public Page<HotDealDto.HotDealPreview> findHotDealsByProductId(Long productId, Pageable pageable) {
         List<HotDealDto.HotDealPreview> hotDealPreviews = jpaQueryFactory
                 .select(
