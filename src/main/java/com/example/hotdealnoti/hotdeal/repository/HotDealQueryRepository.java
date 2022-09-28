@@ -80,7 +80,7 @@ public class HotDealQueryRepository {
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(Arrays.asList(new OrderSpecifier(Order.ASC, hotDeal.hotDealDiscountRate)).stream().toArray(OrderSpecifier[]::new))
+                .orderBy(Arrays.asList(new OrderSpecifier(Order.ASC, hotDeal.isDelete)).stream().toArray(OrderSpecifier[]::new))
                 .fetch();
 
         Long count = jpaQueryFactory
