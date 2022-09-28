@@ -37,7 +37,7 @@ public class MessageConsumer {
                 }
 
                 HotDeal hotDeal = hotDealRepository.save(HotDeal.from(hotDealMessageContent));
-                sendNotificationService.sendKeywordNotificationAsync(hotDeal);
+                sendNotificationService.sendKeywordNotification(hotDeal);
             }
 
         } catch (IOException e) {

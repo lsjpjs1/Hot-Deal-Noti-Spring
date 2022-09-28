@@ -31,9 +31,8 @@ public class SendNotificationService {
     private final JpaAccountRepository jpaAccountRepository;
     private final FCMNotificationService fcmNotificationService;
 
-    @Async
     @Transactional
-    public void sendKeywordNotificationAsync(HotDeal hotDeal) {
+    public void sendKeywordNotification(HotDeal hotDeal) {
         //해당 핫딜 키워드로 등록해놓은 user 찾기
         Iterable<KeywordNotificationRedis> keywordNotificationRedisAll = redisKeywordNotificationRepository.findAll();
 
@@ -57,6 +56,7 @@ public class SendNotificationService {
 
 
                 //해당 유저들에게 알림 보내기
+                fcmNotificationService.sendMessage(account.getNotificationToken(),notification,notification.getNotificationTitle(),notification.getNotificationBody());
                 fcmNotificationService.sendMessage(account.getNotificationToken(),notification,notification.getNotificationTitle(),notification.getNotificationBody());
 
 
