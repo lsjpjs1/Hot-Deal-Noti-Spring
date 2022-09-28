@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -68,6 +69,7 @@ public class HotDealQueryRepository {
     }
 
     public Page<HotDealDto.HotDealPreview> findHotDealsByProductId(Long productId, Pageable pageable) {
+
         List<HotDealDto.HotDealPreview> hotDealPreviews = jpaQueryFactory
                 .select(
                         getHotDealPreviewConstructorExpression()
@@ -78,7 +80,7 @@ public class HotDealQueryRepository {
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(getAllOrderSpecifiers(pageable).stream().toArray(OrderSpecifier[]::new))
+                .orderBy(Arrays.asList(new OrderSpecifier(Order.ASC, hotDeal.hotDealDiscountRate)).stream().toArray(OrderSpecifier[]::new))
                 .fetch();
 
         Long count = jpaQueryFactory
