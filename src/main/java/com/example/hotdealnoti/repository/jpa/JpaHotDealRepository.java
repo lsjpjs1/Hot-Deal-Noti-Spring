@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface JpaHotDealRepository extends JpaRepository<HotDeal, Long> {
-    Optional<HotDeal> findTopByHotDealTitleAndHotDealLink(String hotDealTitle, String hotDealLink);
+    Optional<HotDeal> findTopByHotDealTitle(String hotDealTitle);
     List<HotDeal> findByHotDealScrapingTimeBeforeAndIsDelete(Timestamp timestamp, Boolean isDelete);
     List<HotDeal> findTop30ByProductAndIsDelete(Product product, Boolean isDelete);
     HotDeal findFirstByOrderByHotDealScrapingTimeDesc();

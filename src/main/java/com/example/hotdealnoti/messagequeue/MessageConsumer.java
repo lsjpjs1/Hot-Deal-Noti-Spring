@@ -27,12 +27,17 @@ public class MessageConsumer {
         try {
             HotDealMessageDto.HotDealMessageWrapper hotDealMessageWrapper = objectMapper.readValue(message, HotDealMessageDto.HotDealMessageWrapper.class);
             for(HotDealMessageDto.HotDealMessageContent hotDealMessageContent: hotDealMessageWrapper.getHotDealMessages()) {
-                Optional<HotDeal> optionalHotDeal = hotDealRepository.findTopByHotDealTitleAndHotDealLink(hotDealMessageContent.getTitle(), hotDealMessageContent.getUrl());
+                Optional<HotDeal> optionalHotDeal = hotDealRepository.findTopByHotDealTitle(hotDealMessageContent.getTitle());
                 if(optionalHotDeal.isPresent()){
                     HotDeal hotDeal = optionalHotDeal.get();
-                    hotDeal.setHotDealScrapingTime(new Timestamp(System.currentTimeMillis()));
-                    hotDeal.setIsDelete(false);
-                    hotDealRepository.save(hotDeal);
+
+                    //영구삭제된 경우
+                    if (!hotDeal.getIsPermanentDelete()){
+                        hotDeal.setHotDealScrapingTime(new Timestamp(System.currentTimeMillis()));
+                        hotDeal.setIsDelete(false);
+                        hotDealRepository.save(hotDeal);
+                    }
+
                     continue;
                 }
 

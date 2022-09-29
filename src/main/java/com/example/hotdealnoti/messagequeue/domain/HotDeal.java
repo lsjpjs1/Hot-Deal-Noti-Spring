@@ -46,6 +46,8 @@ public class HotDeal {
 
     private Boolean isDelete;
 
+    private Boolean isPermanentDelete;
+
     private String sourceSite;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
