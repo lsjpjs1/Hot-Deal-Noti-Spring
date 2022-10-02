@@ -58,6 +58,8 @@ dependencies {
     //okhttp3
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.2.2'
 
+    implementation 'com.cebglobal:xpresso:0.9.0'
+
 }
 
 /*

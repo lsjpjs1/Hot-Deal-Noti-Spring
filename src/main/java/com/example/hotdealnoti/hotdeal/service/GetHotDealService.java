@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -69,8 +70,10 @@ public class GetHotDealService {
 
     @Transactional
     public HotDealDto.GetNotClassifiedHotDealsResponse getNotClassifiedHotDeals() {
+        List<HotDealDto.NotClassifiedHotDeal> notClassifiedHotDeals = hotDealQueryRepository.findNotClassifiedHotDeals();
         return HotDealDto.GetNotClassifiedHotDealsResponse.builder()
-                .hotDeals(jpaHotDealRepository.findTop30ByProductAndIsDelete(Product.builder().productId(1l).build(),false))
+                .hotDeals(notClassifiedHotDeals)
                 .build();
+
     }
 }

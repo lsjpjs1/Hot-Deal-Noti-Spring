@@ -1,5 +1,7 @@
 package com.example.hotdealnoti.messagequeue;
 
+import com.example.hotdealnoti.hotdeal.dto.HotDealDto;
+import com.example.hotdealnoti.hotdeal.service.InsertClassifyQueueService;
 import com.example.hotdealnoti.notification.service.SendNotificationService;
 import com.example.hotdealnoti.messagequeue.domain.HotDeal;
 import com.example.hotdealnoti.messagequeue.dto.HotDealMessageDto;
@@ -22,6 +24,7 @@ public class MessageConsumer {
     private final JpaHotDealRepository hotDealRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final SendNotificationService sendNotificationService;
+    private final InsertClassifyQueueService insertClassifyQueueService;
     @RabbitListener(queues = "hotDeal")
     public void receiveMessage(String message) {
         try {
@@ -42,6 +45,15 @@ public class MessageConsumer {
                 }
 
                 HotDeal hotDeal = hotDealRepository.save(HotDeal.from(hotDealMessageContent));
+
+                // 지동 분류 큐에 추가하는 로직
+                insertClassifyQueueService.insertClassifyQueue(
+                        HotDealDto.InsertClassifyQueueRequest.builder()
+                                .hotDealId(hotDeal.getHotDealId())
+                                .hotDealTitle(hotDealMessageContent.getTitle())
+                                .build()
+                );
+
                 sendNotificationService.sendKeywordNotification(hotDeal);
             }
 

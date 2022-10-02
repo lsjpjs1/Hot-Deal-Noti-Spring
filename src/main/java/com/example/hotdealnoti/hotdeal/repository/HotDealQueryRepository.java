@@ -2,6 +2,8 @@ package com.example.hotdealnoti.hotdeal.repository;
 
 import com.example.hotdealnoti.hotdeal.dto.HotDealDto;
 import com.example.hotdealnoti.messagequeue.domain.QHotDeal;
+import com.example.hotdealnoti.messagequeue.domain.QHotDealCandidate;
+import com.example.hotdealnoti.product.domain.QProduct;
 import com.querydsl.core.types.ConstructorExpression;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
@@ -28,7 +30,8 @@ import java.util.List;
 public class HotDealQueryRepository {
     private final JPAQueryFactory jpaQueryFactory;
     private final QHotDeal hotDeal = QHotDeal.hotDeal;
-
+    private final QHotDealCandidate hotDealCandidate = QHotDealCandidate.hotDealCandidate;
+    private final QProduct product = QProduct.product;
     public Page<HotDealDto.HotDealPreview> findHotDeals(HotDealDto.GetHotDealsRequest getHotDealsRequest, Pageable pageable) {
         List<HotDealDto.HotDealPreview> hotDealPreviews = jpaQueryFactory
                 .select(
@@ -50,6 +53,34 @@ public class HotDealQueryRepository {
                 .fetchOne();
 
         return new PageImpl(hotDealPreviews, pageable, count);
+
+    }
+
+    public List<HotDealDto.NotClassifiedHotDeal> findNotClassifiedHotDeals(){
+
+        return jpaQueryFactory
+                .select(
+                        Projections.constructor(HotDealDto.NotClassifiedHotDeal.class,
+                                hotDeal.hotDealId,
+                                hotDeal.hotDealTitle,
+                                hotDeal.hotDealOriginalPrice,
+                                hotDeal.hotDealDiscountPrice,
+                                hotDeal.hotDealDiscountRate,
+                                hotDeal.hotDealLink,
+                                hotDeal.hotDealUploadTime,
+                                product.modelName
+                                )
+                )
+                .from(hotDeal)
+                .where(
+                        hotDeal.isDelete.eq(false),
+                        hotDeal.product.productId.eq(1l)
+                )
+                .leftJoin(hotDealCandidate).on(hotDealCandidate.hotDealId.eq(hotDeal.hotDealId))
+                .leftJoin(product).on(product.productId.eq(hotDealCandidate.candidateProductId))
+                .orderBy(hotDeal.hotDealId.desc())
+                .limit(30)
+                .fetch();
 
     }
 

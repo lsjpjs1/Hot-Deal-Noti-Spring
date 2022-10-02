@@ -2,6 +2,7 @@ package com.example.hotdealnoti.hotdeal.dto;
 
 import com.example.hotdealnoti.hotdeal.repository.HotDealQueryRepository;
 import com.example.hotdealnoti.messagequeue.domain.HotDeal;
+import com.example.hotdealnoti.product.domain.Product;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -18,6 +19,26 @@ public class HotDealDto {
         private List<String> sourceSites;
         private Long manufacturerId;
         private Long productPurposeId;
+    }
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @ToString
+    @Builder
+    @NoArgsConstructor
+    public static class InsertClassifyQueueRequest {
+        private Long hotDealId;
+        private String hotDealTitle;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @ToString
+    @Builder
+    public static class ProductWithSimilarity {
+        private Double similarity;
+        private Product product;
     }
 
 
@@ -38,7 +59,7 @@ public class HotDealDto {
     @ToString
     @Builder
     public static class GetNotClassifiedHotDealsResponse {
-        private List<HotDeal> hotDeals;
+        private List<NotClassifiedHotDeal> hotDeals;
     }
 
     @Getter
@@ -74,6 +95,22 @@ public class HotDealDto {
     public static class GetInitialDataResponse {
         private String notice;
         private Timestamp recentUpdateTime;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @ToString
+    @Builder
+    public static class NotClassifiedHotDeal {
+        private Long hotDealId;
+        private String hotDealTitle;
+        private Integer hotDealOriginalPrice;
+        private Integer hotDealDiscountPrice;
+        private Integer hotDealDiscountRate;
+        private String hotDealLink;
+        private Timestamp hotDealUploadTime;
+        private String candidateProductName;
     }
 
 

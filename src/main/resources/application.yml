@@ -10,6 +10,10 @@ fcm:
     path: ENC(0TCRkOi5eUEzbUL0tOqMhINTiK3s2PaOtMo9D5OPy4B6FoLqBBqhnVEEXwMj7GAO)
     scope: ENC(2CFLGnS625H8FB2S5LwE7FNlv/fh+C2JlUtYhmplgJSQvRgvp0ejzAABQMR/7s9jxTu51GRMvUg=)
 
+mq:
+  routing-key:
+    classify-queue: ENC(96zbAHLH+BS3+ZkqrR+g3b59wICY6Rc7j98SVKNDce0=)
+
 ---
 
 spring:
