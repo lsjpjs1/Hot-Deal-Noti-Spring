@@ -29,6 +29,24 @@ public class HotDealMessageDto {
         private String title;
         private String url;
         private String sourceSite;
+
+        public Boolean nullCheck(){
+            if (discountRate==null) return true;
+            if (discountPrice==null) return true;
+            if (originalPrice==null) return true;
+
+            if (title==null) return true;
+            else if (title.equals("")) return true;
+
+            if (sourceSite==null) return true;
+            else if (sourceSite.equals("")) return true;
+
+            if (url==null) return true;
+            else if (url.equals("")) return true;
+
+
+            return false;
+        }
     }
 
 }

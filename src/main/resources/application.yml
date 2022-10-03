@@ -13,6 +13,7 @@ fcm:
 mq:
   routing-key:
     classify-queue: ENC(96zbAHLH+BS3+ZkqrR+g3b59wICY6Rc7j98SVKNDce0=)
+    hot-deal-queue: ENC(r9eisc/OmDuVTXdni5HT617fttinfgeo)
 
 ---
 
