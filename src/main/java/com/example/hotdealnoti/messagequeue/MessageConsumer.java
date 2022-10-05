@@ -30,7 +30,7 @@ public class MessageConsumer {
         try {
             HotDealMessageDto.HotDealMessageWrapper hotDealMessageWrapper = objectMapper.readValue(message, HotDealMessageDto.HotDealMessageWrapper.class);
             for(HotDealMessageDto.HotDealMessageContent hotDealMessageContent: hotDealMessageWrapper.getHotDealMessages()) {
-                Optional<HotDeal> optionalHotDeal = hotDealRepository.findTopByHotDealTitle(hotDealMessageContent.getTitle());
+                Optional<HotDeal> optionalHotDeal = hotDealRepository.findTopByHotDealTitleAndHotDealDiscountPrice(hotDealMessageContent.getTitle(),hotDealMessageContent.getDiscountPrice());
                 if(optionalHotDeal.isPresent()){
                     HotDeal hotDeal = optionalHotDeal.get();
 
