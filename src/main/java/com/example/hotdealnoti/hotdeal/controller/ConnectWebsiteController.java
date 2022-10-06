@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,5 +36,25 @@ public class ConnectWebsiteController {
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .build();
+    }
+
+    @GetMapping("/heyhey")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity   test(HttpServletRequest request){
+
+        String ip = request.getHeader("X-Forwarded-For");
+
+        if (ip == null) {
+            ip = request.getHeader("X-FORWARDED-FOR");
+        }
+        // X-FORWARDED-FOR 가 비어있다면 요청한 IP를 로드
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
+        log.info(ip);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ip);
     }
 }
