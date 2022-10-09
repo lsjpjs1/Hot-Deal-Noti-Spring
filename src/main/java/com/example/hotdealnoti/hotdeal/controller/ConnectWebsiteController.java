@@ -52,6 +52,9 @@ public class ConnectWebsiteController {
             ip = request.getRemoteAddr();
         }
         log.info(ip);
+        request.getHeaderNames().asIterator().forEachRemaining( s->
+                {log.info("'"+s+"'"+" : "+"'"+request.getHeader(s)+"'");}
+        );
 
         return ResponseEntity
                 .status(HttpStatus.OK)
