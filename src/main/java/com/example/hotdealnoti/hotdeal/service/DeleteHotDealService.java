@@ -24,11 +24,19 @@ public class DeleteHotDealService {
 
 
     @Transactional
-    public void deleteHotDeal(Long hotDealId) {
+    public void deletePermanentHotDeal(Long hotDealId) {
 
         HotDeal hotDeal = jpaHotDealRepository.findById(hotDealId).get();
         hotDeal.setIsDelete(true);
         hotDeal.setIsPermanentDelete(true);
+        jpaHotDealRepository.save(hotDeal);
+    }
+
+    @Transactional
+    public void deleteHotDeal(Long hotDealId) {
+
+        HotDeal hotDeal = jpaHotDealRepository.findById(hotDealId).get();
+        hotDeal.setIsDelete(true);
         jpaHotDealRepository.save(hotDeal);
     }
 
