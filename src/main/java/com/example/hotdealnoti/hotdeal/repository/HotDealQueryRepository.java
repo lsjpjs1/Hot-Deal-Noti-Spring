@@ -111,7 +111,7 @@ public class HotDealQueryRepository {
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(Arrays.asList(new OrderSpecifier(Order.ASC, hotDeal.isDelete)).stream().toArray(OrderSpecifier[]::new))
+                .orderBy(Arrays.asList(new OrderSpecifier(Order.ASC, hotDeal.isDelete),new OrderSpecifier(Order.ASC,hotDeal.hotDealDiscountPrice)).stream().toArray(OrderSpecifier[]::new))
                 .fetch();
 
         Long count = jpaQueryFactory
