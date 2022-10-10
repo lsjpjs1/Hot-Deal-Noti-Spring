@@ -34,7 +34,7 @@ public class MessageConsumer {
                 if(optionalHotDeal.isPresent()){
                     HotDeal hotDeal = optionalHotDeal.get();
 
-                    //영구삭제된 경우
+                    //영구삭제 아닌 경우
                     if (!hotDeal.getIsPermanentDelete()){
                         hotDeal.setHotDealScrapingTime(new Timestamp(System.currentTimeMillis()));
                         hotDeal.setIsDelete(false);
@@ -44,7 +44,10 @@ public class MessageConsumer {
                     continue;
                 }
 
-                HotDeal hotDeal = hotDealRepository.save(HotDeal.from(hotDealMessageContent));
+                HotDeal beforeHotDeal = HotDeal.from(hotDealMessageContent);
+                hotDealRepository.findTopByHotDealTitle(hotDealMessageContent.getTitle())
+                        .ifPresent(hotDeal -> beforeHotDeal.setProduct(hotDeal.getProduct()));
+                HotDeal hotDeal = hotDealRepository.save(beforeHotDeal);
 
                 // 지동 분류 큐에 추가하는 로직
                 insertClassifyQueueService.insertClassifyQueue(
