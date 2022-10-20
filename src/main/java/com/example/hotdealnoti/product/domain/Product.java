@@ -35,4 +35,8 @@ public class Product {
     @ManyToOne(targetEntity = Manufacturer.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "manufacturer_id")
     private Manufacturer manufacturer;
+
+    @ManyToOne(targetEntity = ProductFamily.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_family_id")
+    private ProductFamily productFamily;
 }
