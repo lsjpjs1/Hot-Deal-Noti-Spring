@@ -20,6 +20,35 @@ public class RecommendationDto {
     public static class GetRecommendationsResponse{
         private List<Recommendation> recommendations;
     }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @ToString
+    public static class GetProductFamiliesRequest{
+        private String productFamilyName;
+    }
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @ToString
+    public static class GetProductFamiliesResponse{
+        private List<ProductFamily> productFamilies;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @ToString
+    public static class GetProductPurposeDetailsResponse{
+        private List<ProductPurposeDetail> productPurposeDetails;
+    }
     @Getter
     @Setter
     @AllArgsConstructor
@@ -40,6 +69,39 @@ public class RecommendationDto {
     public static class ProductFamilyDto{
         private ProductFamily productFamily;
         private List<RecommendationProduct> products;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @ToString
+    public static class PostProductFamilyRequest{
+        private String productFamilyName;
+        private String productFamilyDescription;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @ToString
+    public static class PostRecommendationProductFamilyRequest{
+        private Long productPurposeDetailId;
+        private Long productFamilyId;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @ToString
+    public static class SetProductFamilyRequest{
+        private Long productId;
+        private Long productFamilyId;
     }
 
     @Getter

@@ -35,6 +35,9 @@ public enum ErrorCode {
     PARTY_MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND,"PartyMember cannot found."),
     PARTY_APPLY_GROUP_NOT_FOUND(HttpStatus.NOT_FOUND,"PartyApplyGroup cannot found."),
     HOT_DEAL_ID_NOT_FOUND(HttpStatus.NOT_FOUND,"HotDeal cannot found."),
+    PRODUCT_ID_NOT_FOUND(HttpStatus.NOT_FOUND,"Product cannot found."),
+    PRODUCT_FAMILY_ID_NOT_FOUND(HttpStatus.NOT_FOUND,"Product family cannot found."),
+    PRODUCT_PURPOSE_DETAIL_ID_NOT_FOUND(HttpStatus.NOT_FOUND,"Product purpose detail cannot found."),
     KEYWORD_NOTIFICATION_ID_NOT_FOUND(HttpStatus.NOT_FOUND,"존재하지 않는 키워드입니다."),
 
     BAD_REQUEST_CONTENT(HttpStatus.NOT_ACCEPTABLE,"Please check params or body"),
