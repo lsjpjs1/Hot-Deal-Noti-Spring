@@ -57,14 +57,13 @@ public class ProductQueryRepository {
                                         )
                                         .gt(0l)).then(Boolean.TRUE)
                                 .otherwise(Boolean.FALSE),
-                        JPAExpressions.select(hotDeal.hotDealDiscountPrice)
+                        JPAExpressions.select(hotDeal.hotDealDiscountPrice.min())
                                 .from(hotDeal)
                                 .where(
                                         hotDeal.product.productId.eq(product.productId),
                                         hotDeal.isDelete.eq(false)
                                 )
-                                .orderBy(hotDeal.hotDealDiscountPrice.asc())
-                                .limit(1L)
+                                .groupBy(hotDeal.product.productId)
                 ))
                 .from(product)
                 .where(product.productFamily.productFamilyId.eq(productFamily.getProductFamilyId()))

@@ -110,6 +110,17 @@ public class RecommendationDto {
     @NoArgsConstructor
     @Builder
     @ToString
+    public static class UpdateProductFamilyRequest{
+        private Long productFamilyId;
+        private String productFamilyDescription;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @ToString
     public static class RecommendationProduct{
         private Long productId;
         private String modelName;

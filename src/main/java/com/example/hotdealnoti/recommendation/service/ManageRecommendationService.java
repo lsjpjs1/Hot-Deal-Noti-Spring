@@ -59,4 +59,13 @@ public class ManageRecommendationService {
         product.setProductFamily(ProductFamily.builder().productFamilyId(setProductFamilyRequest.getProductFamilyId()).build());
         jpaProductRepository.save(product);
     }
+
+    @Transactional
+    public void updateProductFamily(RecommendationDto.UpdateProductFamilyRequest updateProductFamilyRequest) {
+
+        ProductFamily productFamily = jpaProductFamilyRepository.findById(updateProductFamilyRequest.getProductFamilyId())
+                .orElseThrow(() -> new CustomException(ErrorCode.PRODUCT_FAMILY_ID_NOT_FOUND));
+        productFamily.setProductFamilyDescription(updateProductFamilyRequest.getProductFamilyDescription());
+        jpaProductFamilyRepository.save(productFamily);
+    }
 }
