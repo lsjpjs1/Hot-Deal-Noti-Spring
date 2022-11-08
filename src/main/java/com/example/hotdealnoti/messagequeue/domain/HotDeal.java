@@ -50,6 +50,8 @@ public class HotDeal {
 
     private String sourceSite;
 
+    private String hotDealThumbnailUrl;
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(targetEntity = Product.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
@@ -63,6 +65,7 @@ public class HotDeal {
                 .hotDealTitle(hotDealMessageContent.getTitle())
                 .hotDealOriginalPrice(hotDealMessageContent.getOriginalPrice())
                 .sourceSite(hotDealMessageContent.getSourceSite())
+                .hotDealThumbnailUrl(hotDealMessageContent.getHotDealThumbnailUrl())
                 .build();
     }
 

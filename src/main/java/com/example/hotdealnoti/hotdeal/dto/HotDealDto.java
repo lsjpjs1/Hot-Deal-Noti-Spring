@@ -84,6 +84,8 @@ public class HotDealDto {
         private String productPurpose;
 
         private Boolean isDelete;
+
+        private String hotDealThumbnailUrl;
     }
 
 

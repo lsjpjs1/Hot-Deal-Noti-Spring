@@ -184,7 +184,9 @@ public class HotDealQueryRepository {
                 hotDeal.product.manufacturer.manufacturerName,
                 hotDeal.product.productPurpose.productPurposeName,
 
-                hotDeal.isDelete
+                hotDeal.isDelete,
+
+                hotDeal.hotDealThumbnailUrl
         );
     }
 

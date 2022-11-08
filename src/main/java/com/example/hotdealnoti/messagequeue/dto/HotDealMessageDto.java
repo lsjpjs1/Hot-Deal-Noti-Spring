@@ -29,6 +29,7 @@ public class HotDealMessageDto {
         private String title;
         private String url;
         private String sourceSite;
+        private String hotDealThumbnailUrl;
 
         public Boolean nullCheck(){
             if (discountRate==null) return true;
@@ -44,6 +45,7 @@ public class HotDealMessageDto {
             if (url==null) return true;
             else if (url.equals("")) return true;
 
+            if (hotDealThumbnailUrl==null) return true;
 
             return false;
         }
