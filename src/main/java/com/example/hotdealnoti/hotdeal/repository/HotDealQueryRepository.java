@@ -1,5 +1,6 @@
 package com.example.hotdealnoti.hotdeal.repository;
 
+import com.example.hotdealnoti.hotdeal.domain.QRecommendationHotDeal;
 import com.example.hotdealnoti.hotdeal.dto.HotDealDto;
 import com.example.hotdealnoti.messagequeue.domain.QHotDeal;
 import com.example.hotdealnoti.messagequeue.domain.QHotDealCandidate;
@@ -32,6 +33,7 @@ public class HotDealQueryRepository {
     private final QHotDeal hotDeal = QHotDeal.hotDeal;
     private final QHotDealCandidate hotDealCandidate = QHotDealCandidate.hotDealCandidate;
     private final QProduct product = QProduct.product;
+    private final QRecommendationHotDeal recommendationHotDeal = QRecommendationHotDeal.recommendationHotDeal;
     public Page<HotDealDto.HotDealPreview> findHotDeals(HotDealDto.GetHotDealsRequest getHotDealsRequest, Pageable pageable) {
         List<HotDealDto.HotDealPreview> hotDealPreviews = jpaQueryFactory
                 .select(
@@ -53,6 +55,21 @@ public class HotDealQueryRepository {
                 .fetchOne();
 
         return new PageImpl(hotDealPreviews, pageable, count);
+
+    }
+
+    public List<HotDealDto.HotDealPreview> findRecommendationHotDeals() {
+        return jpaQueryFactory
+                .select(
+                        getHotDealPreviewConstructorExpression()
+                )
+                .from(recommendationHotDeal)
+                .leftJoin(hotDeal).on(recommendationHotDeal.hotDeal.hotDealId.eq(hotDeal.hotDealId))
+                .where(
+                    hotDeal.isDelete.eq(false)
+                )
+                .fetch();
+
 
     }
 

@@ -39,6 +39,12 @@ public class GetHotDealService {
     }
 
     @Transactional
+    public List<HotDealDto.HotDealPreview> getRecommendationHotDeals() {
+
+        return hotDealQueryRepository.findRecommendationHotDeals();
+    }
+
+    @Transactional
     public Page<HotDealDto.HotDealPreview> getHotDealsByProductId(Long productId, Pageable pageable, String userIp) {
         HotDealViewHistoryRedis hotDealViewHistoryRedis = HotDealViewHistoryRedis.builder()
                 .userIp(userIp)
