@@ -11,6 +11,7 @@ import com.example.hotdealnoti.repository.jpa.JpaAccountRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -57,8 +58,10 @@ public class KakaoLoginService {
             Account account = optionalAccount.get();
 
             //fcm 알림 토큰 업데이트
-            account.setNotificationToken(kakaoLoginRequest.getNotificationToken());
-            jpaAccountRepository.save(account);
+            if (StringUtils.isNotBlank(kakaoLoginRequest.getNotificationToken())){
+                account.setNotificationToken(kakaoLoginRequest.getNotificationToken());
+                jpaAccountRepository.save(account);
+            }
 
             String token = tokenProvider.generateToken(AuthDto.TokenRequest.builder().accountType(account.getAccountType()).oauthId(account.getOauthId()).build());
             return AuthDto.LoginResponse.builder().token(token).build();

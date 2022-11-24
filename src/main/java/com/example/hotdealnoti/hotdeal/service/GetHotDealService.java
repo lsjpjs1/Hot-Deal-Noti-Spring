@@ -1,5 +1,6 @@
 package com.example.hotdealnoti.hotdeal.service;
 
+import com.example.hotdealnoti.auth.domain.Account;
 import com.example.hotdealnoti.hotdeal.domain.HotDealViewHistory;
 import com.example.hotdealnoti.hotdeal.domain.HotDealViewHistoryRedis;
 import com.example.hotdealnoti.hotdeal.dto.HotDealDto;
@@ -42,6 +43,12 @@ public class GetHotDealService {
     public List<HotDealDto.HotDealPreview> getRecommendationHotDeals() {
 
         return hotDealQueryRepository.findRecommendationHotDeals();
+    }
+
+    @Transactional
+    public List<HotDealDto.HotDealPreview> getFavoriteHotDeals(Account account) {
+
+        return hotDealQueryRepository.findFavoriteHotDeals(account);
     }
 
     @Transactional

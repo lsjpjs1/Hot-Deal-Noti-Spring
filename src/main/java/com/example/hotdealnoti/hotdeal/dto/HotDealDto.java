@@ -20,6 +20,26 @@ public class HotDealDto {
         private Long manufacturerId;
         private Long productPurposeId;
     }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @ToString
+    @Builder
+    public static class PostFavoriteHotDealRequest {
+        private Long hotDealId;
+        private Long accountId;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @ToString
+    @Builder
+    public static class DeleteFavoriteHotDealRequest {
+        private Long hotDealId;
+        private Long accountId;
+    }
     @Getter
     @Setter
     @AllArgsConstructor

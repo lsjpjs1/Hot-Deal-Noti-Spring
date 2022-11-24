@@ -39,6 +39,7 @@ public enum ErrorCode {
     PRODUCT_FAMILY_ID_NOT_FOUND(HttpStatus.NOT_FOUND,"Product family cannot found."),
     PRODUCT_PURPOSE_DETAIL_ID_NOT_FOUND(HttpStatus.NOT_FOUND,"Product purpose detail cannot found."),
     KEYWORD_NOTIFICATION_ID_NOT_FOUND(HttpStatus.NOT_FOUND,"존재하지 않는 키워드입니다."),
+    FAVORITE_HOT_DEAL_NOT_FOUND(HttpStatus.NOT_FOUND,"존재하지 않는 즐겨찾기 입니다."),
 
     BAD_REQUEST_CONTENT(HttpStatus.NOT_ACCEPTABLE,"Please check params or body"),
     WRONG_EMAIL_FORM(HttpStatus.NOT_ACCEPTABLE,"Email form is wrong"),

@@ -36,6 +36,8 @@ public class SecurityConfig {
                         .antMatchers("/notification-keywords/**").authenticated()
                         .antMatchers("/notifications").authenticated()
                         .antMatchers("/notifications/**").authenticated()
+                        .antMatchers("/hot-deals/**/favorite").authenticated()
+                        .antMatchers("/hot-deals/favorite").authenticated()
                 )
                 .apply(new JwtSecurityConfig(tokenProvider))
         ;

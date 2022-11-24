@@ -1,5 +1,7 @@
 package com.example.hotdealnoti.hotdeal.controller;
 
+import com.example.hotdealnoti.auth.domain.Account;
+import com.example.hotdealnoti.auth.security.CustomSecurityContextHolder;
 import com.example.hotdealnoti.hotdeal.dto.HotDealDto;
 import com.example.hotdealnoti.hotdeal.service.GetHotDealService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -67,6 +70,17 @@ public class GetHotDealController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(getHotDealService.getHotDealByHotDealId(hotDealId));
+
+    }
+
+    @GetMapping(value = "/hot-deals/favorite")
+    public ResponseEntity<List<HotDealDto.HotDealPreview>> getFavoriteHotDeals() {
+
+        Account accountFromToken = CustomSecurityContextHolder.getAccountFromToken();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(getHotDealService.getFavoriteHotDeals(accountFromToken));
 
     }
 
