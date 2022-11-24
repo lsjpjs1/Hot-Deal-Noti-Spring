@@ -40,8 +40,6 @@ public class KakaoLoginService {
     private final JpaAccountRepository jpaAccountRepository;
     private final TokenProvider tokenProvider;
 
-    private final String frontendRedirectUrl = "http://localhost:3000/oauth/callback/kakao";
-
     private final RestTemplate restTemplate = new RestTemplate();
     @PersistenceContext
     private final EntityManager entityManager;
@@ -50,7 +48,7 @@ public class KakaoLoginService {
     public AuthDto.LoginResponse kakaoLogin(AuthDto.KakaoLoginRequest kakaoLoginRequest) {
 
         String accessToken = kakaoLoginRequest.getAccessToken()==null?
-                getAccessToken(kakaoLoginRequest.getCode()): kakaoLoginRequest.getAccessToken();
+                getAccessToken(kakaoLoginRequest): kakaoLoginRequest.getAccessToken();
 
         AuthDto.KakaoUserInfo kakaoUserInfo = getKakaoUserInfo(accessToken);
         Optional<Account> optionalAccount = jpaAccountRepository.findByAccountTypeAndOauthId(AccountType.KAKAO, kakaoUserInfo.getId());
@@ -92,7 +90,7 @@ public class KakaoLoginService {
         }
     }
 
-    private String getAccessToken(String code){
+    private String getAccessToken(AuthDto.KakaoLoginRequest kakaoLoginRequest){
         String grantType = "authorization_code";
 
         HttpHeaders headers = new HttpHeaders();
@@ -101,8 +99,8 @@ public class KakaoLoginService {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", grantType);
         params.add("client_id", restApiKey);
-        params.add("redirect_uri", frontendRedirectUrl);
-        params.add("code", code);
+        params.add("redirect_uri", kakaoLoginRequest.getCallBackUrl());
+        params.add("code", kakaoLoginRequest.getCode());
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
