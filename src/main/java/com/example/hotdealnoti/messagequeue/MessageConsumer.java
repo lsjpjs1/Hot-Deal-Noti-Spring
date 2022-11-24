@@ -46,7 +46,7 @@ public class MessageConsumer {
                 }
 
                 HotDeal beforeHotDeal = HotDeal.from(hotDealMessageContent);
-                hotDealRepository.findTopByHotDealTitle(hotDealMessageContent.getTitle())
+                hotDealRepository.findTopByHotDealTitleOrderByHotDealIdDesc(hotDealMessageContent.getTitle())
                         .ifPresent(hotDeal -> beforeHotDeal.setProduct(hotDeal.getProduct()));
                 HotDeal hotDeal = hotDealRepository.save(beforeHotDeal);
 
