@@ -65,7 +65,7 @@ public class HotDeal {
                 .hotDealTitle(hotDealMessageContent.getTitle())
                 .hotDealOriginalPrice(hotDealMessageContent.getOriginalPrice())
                 .sourceSite(hotDealMessageContent.getSourceSite())
-                .hotDealThumbnailUrl(hotDealMessageContent.getHotDealThumbnailUrl())
+                .hotDealThumbnailUrl(hotDealMessageContent.getHotDealThumbnailUrl().replace("http://","https://"))
                 .build();
     }
 
