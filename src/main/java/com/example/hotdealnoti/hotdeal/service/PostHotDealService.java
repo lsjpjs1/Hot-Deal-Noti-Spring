@@ -4,11 +4,13 @@ import com.example.hotdealnoti.auth.domain.Account;
 import com.example.hotdealnoti.exception.CustomException;
 import com.example.hotdealnoti.exception.ErrorCode;
 import com.example.hotdealnoti.hotdeal.domain.FavoriteHotDeal;
+import com.example.hotdealnoti.hotdeal.domain.RecommendationHotDeal;
 import com.example.hotdealnoti.hotdeal.dto.HotDealDto;
 import com.example.hotdealnoti.messagequeue.domain.HotDeal;
 import com.example.hotdealnoti.messagequeue.dto.HotDealMessageDto;
 import com.example.hotdealnoti.repository.jpa.JpaFavoriteHotDealRepository;
 import com.example.hotdealnoti.repository.jpa.JpaHotDealRepository;
+import com.example.hotdealnoti.repository.jpa.JpaRecommendationHotDeal;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +33,7 @@ public class PostHotDealService {
     private final ObjectMapper objectMapper;
 
     private final JpaFavoriteHotDealRepository jpaFavoriteHotDealRepository;
+    private final JpaRecommendationHotDeal jpaRecommendationHotDeal;
 
     @Transactional
     public void insertHotDealQueue(HotDealMessageDto.HotDealMessageContent hotDealMessageContent) {
@@ -78,6 +81,20 @@ public class PostHotDealService {
             jpaFavoriteHotDealRepository.save(favoriteHotDeal);
         }
 
+
+    }
+
+    @Transactional
+    public void postRecommendationHotDeal(Long hotDealId){
+        Optional<RecommendationHotDeal> optionalRecommendationHotDeal = jpaRecommendationHotDeal.findByHotDeal(HotDeal.builder().hotDealId(hotDealId).build());
+        if (optionalRecommendationHotDeal.isEmpty()){
+            RecommendationHotDeal recommendationHotDeal = RecommendationHotDeal.builder()
+                    .hotDeal(HotDeal.builder()
+                            .hotDealId(hotDealId)
+                            .build())
+                    .build();
+            jpaRecommendationHotDeal.save(recommendationHotDeal);
+        }
 
     }
 

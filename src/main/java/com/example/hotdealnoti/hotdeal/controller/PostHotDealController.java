@@ -50,5 +50,16 @@ public class PostHotDealController {
                 .build();
     }
 
+    @PostMapping("/hot-deals/{hotDealId}/recommendation")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity postRecommendationHotDeal(@PathVariable Long hotDealId) {
+
+        postHotDealService.postRecommendationHotDeal(hotDealId);
+
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
+    }
+
 
 }
