@@ -27,9 +27,14 @@ public class KeywordService {
         if(jpaKeywordNotificationRepository.findByAccountIdAndIsDelete(account.getAccountId(), false).size()>=5){
             throw new CustomException(ErrorCode.NOTIFICATION_KEYWORD_COUNT_LIMIT);
         }
+        if (postKeywordRequest.getKeyword().length()<2){
+            throw new CustomException(ErrorCode.NOTIFICATION_KEYWORD_LENGTH_TOO_SHORT);
+        }
         KeywordNotification keywordNotification = KeywordNotification.builder()
                 .keywordNotificationBody(postKeywordRequest.getKeyword())
                 .accountId(account.getAccountId())
+                .minPrice(postKeywordRequest.getMinPrice())
+                .maxPrice(postKeywordRequest.getMaxPrice())
                 .build();
         jpaKeywordNotificationRepository.save(keywordNotification);
     }
@@ -44,6 +49,8 @@ public class KeywordService {
                                 .keywordNotificationId(keywordNotification.getKeywordNotificationId())
                                 .keywordNotificationTime(keywordNotification.getKeywordNotificationTime())
                                 .keywordNotificationBody(keywordNotification.getKeywordNotificationBody())
+                                .minPrice(keywordNotification.getMinPrice())
+                                .maxPrice(keywordNotification.getMaxPrice())
                                 .build()
                 ).toList();
         return NotificationDto.GetKeywordsResponse.builder().keywords(keywords).build();

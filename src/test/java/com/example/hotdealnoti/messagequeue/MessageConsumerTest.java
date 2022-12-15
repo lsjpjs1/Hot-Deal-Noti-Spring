@@ -26,7 +26,12 @@ class MessageConsumerTest {
                         Arrays.asList(
                                 HotDealMessageDto.HotDealMessageContent.builder()
                                         .url("http://item.gmarket.co.kr/Item?goodscode=2379255209")
-                                        .title("초특가Redis    Test")
+                                        .title("keywordcarbon")
+                                        .discountPrice(19900)
+                                        .hotDealThumbnailUrl("http://localhost:3000/static/media/IMG_0385_2.2e43eb8351c182a4f669.png")
+                                        .sourceSite("쿠팡")
+                                        .originalPrice(1100000)
+                                        .discountRate(10)
                                         .build()
                         )
                 )

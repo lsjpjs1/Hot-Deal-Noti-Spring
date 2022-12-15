@@ -18,20 +18,15 @@ import javax.persistence.*;
 @Setter
 @DynamicInsert
 @ToString
-public class Account {
+public class EmailVerification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long emailVerificationId;
+
     private Long accountId;
 
-    @Convert(converter = AccountTypeConverter.class)
-    private AccountType accountType;
-
-    private Long oauthId;
-
-    @Convert(converter = RoleConverter.class)
-    private Role accountRole;
-
-    private String notificationToken;
+    private String emailVerificationCode;
 
     private String email;
+
 }

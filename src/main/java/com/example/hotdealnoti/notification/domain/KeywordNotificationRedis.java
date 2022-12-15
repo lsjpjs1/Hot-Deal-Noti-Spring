@@ -27,6 +27,9 @@ public class KeywordNotificationRedis {
 
     private Boolean isDelete;
 
+    private Integer minPrice;
+    private Integer maxPrice;
+
     public static KeywordNotificationRedis from(KeywordNotification keywordNotification){
         return KeywordNotificationRedis.builder()
                 .keywordNotificationId(keywordNotification.getKeywordNotificationId())
@@ -34,6 +37,8 @@ public class KeywordNotificationRedis {
                 .accountId(keywordNotification.getAccountId())
                 .keywordNotificationTime(keywordNotification.getKeywordNotificationTime())
                 .isDelete(keywordNotification.getIsDelete())
+                .minPrice(keywordNotification.getMinPrice())
+                .maxPrice(keywordNotification.getMaxPrice())
                 .build();
     }
 }

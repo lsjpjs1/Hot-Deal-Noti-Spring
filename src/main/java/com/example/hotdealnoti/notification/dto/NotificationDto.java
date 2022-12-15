@@ -10,6 +10,7 @@ import javax.persistence.Convert;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -23,6 +24,8 @@ public class NotificationDto {
     @ToString
     public static class PostKeywordRequest{
         private String keyword;
+        private Integer minPrice;
+        private Integer maxPrice;
     }
 
     @Getter
@@ -35,6 +38,8 @@ public class NotificationDto {
         private Long keywordNotificationId;
         private String keywordNotificationBody;
         private Timestamp keywordNotificationTime;
+        private Integer minPrice;
+        private Integer maxPrice;
     }
 
     @Getter

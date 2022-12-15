@@ -15,6 +15,18 @@ mq:
     classify-queue: ENC(96zbAHLH+BS3+ZkqrR+g3b59wICY6Rc7j98SVKNDce0=)
     hot-deal-queue: ENC(r9eisc/OmDuVTXdni5HT617fttinfgeo)
 
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: whendiscount@gmail.com
+    password: ENC(sUAUl/ziOchUm5Q+VTLXdwtxLNTKZAUqYOR/hgQebtA=)
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 ---
 
 spring:

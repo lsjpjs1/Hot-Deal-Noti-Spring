@@ -15,6 +15,7 @@ public enum ErrorCode {
     NO_PERMISSION(HttpStatus.FORBIDDEN, "권한이 없습니다."),
 
     USER_INFO_NOT_FOUND(HttpStatus.NOT_FOUND, "User information cannot found from token. Please sign in again."),
+    ACCOUNT_NOT_FOUND(HttpStatus.NOT_FOUND, "유저 정보를 찾을 수 없습니다."),
     USER_ID_NOT_FOUND(HttpStatus.NOT_FOUND,"UserId cannot found."),
     USER_EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND,"UserEmail cannot found."),
     USER_PROFILE_NOT_FOUND(HttpStatus.NOT_FOUND,"UserProfile cannot found."),
@@ -25,7 +26,8 @@ public enum ErrorCode {
     POST_NOT_FOUND(HttpStatus.NOT_FOUND,"Post cannot found."),
     POST_DELETED(HttpStatus.NOT_FOUND,"Post was deleted"),
     POST_WRITER_BLOCKED(HttpStatus.NOT_FOUND,"Writer of post was blocked"),
-    VERIFICATION_CODE_WRONG(HttpStatus.NOT_FOUND,"VerificationCode is wrong"),
+    VERIFICATION_CODE_WRONG(HttpStatus.NOT_FOUND,"인증번호가 잘못되었습니다."),
+    VERIFICATION_CODE_NOT_EXIST(HttpStatus.NOT_FOUND,"인증번호 정보가 없습니다. 인증 메일을 먼저 발송해주세요."),
     JOB_NOT_FOUND(HttpStatus.NOT_FOUND,"Job cannot found."),
     JOB_FAVORITE_NOT_FOUND(HttpStatus.NOT_FOUND,"JobFavorite cannot found."),
     CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND,"Category cannot found."),
@@ -49,6 +51,7 @@ public enum ErrorCode {
     PARTY_MEMBER_TOO_SMALL(HttpStatus.NOT_ACCEPTABLE,"The number of people should be more than 5."),
     PARTY_CANCELED(HttpStatus.NOT_ACCEPTABLE,"This party was canceled"),
     NOTIFICATION_KEYWORD_COUNT_LIMIT(HttpStatus.NOT_ACCEPTABLE,"키워드는 최대 5개까지만 등록할 수 있습니다."),
+    NOTIFICATION_KEYWORD_LENGTH_TOO_SHORT(HttpStatus.NOT_ACCEPTABLE,"키워드는 두 글자 이상 입력해주세요."),
 
 
     DUPLICATE_RESOURCE(HttpStatus.CONFLICT, "Data already exists."),
@@ -57,7 +60,7 @@ public enum ErrorCode {
     ALREADY_CLUB_MEMBER(HttpStatus.CONFLICT, "You are already club member"),
     PARTY_ALREADY_EXIST(HttpStatus.CONFLICT, "Party already exists on that date."),
 
-    SEND_EMAIL_FAIL(HttpStatus.INTERNAL_SERVER_ERROR,"Fail to send email"),
+    SEND_EMAIL_FAIL(HttpStatus.INTERNAL_SERVER_ERROR,"이메일 전송 실패"),
     PAYMENT_FAIL(HttpStatus.INTERNAL_SERVER_ERROR,"Fail to payment"),
     LOGIN_FAIL(HttpStatus.INTERNAL_SERVER_ERROR,"로그인 실패")
         ;

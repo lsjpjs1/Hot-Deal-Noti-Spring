@@ -31,4 +31,7 @@ public class KeywordNotification {
     private Boolean isDelete;
 
     private Boolean isOnRedis;
+
+    private Integer minPrice;
+    private Integer maxPrice;
 }
