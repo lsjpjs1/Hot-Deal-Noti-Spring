@@ -26,10 +26,10 @@ class MessageConsumerTest {
                         Arrays.asList(
                                 HotDealMessageDto.HotDealMessageContent.builder()
                                         .url("http://item.gmarket.co.kr/Item?goodscode=2379255209")
-                                        .title("keywordcarbon")
+                                        .title("HP 2022 노트북 17s, cu0016TU, WIN11 Home, 8GB, 256GB, 코어i3, 네추럴 실버")
                                         .discountPrice(19900)
                                         .hotDealThumbnailUrl("http://localhost:3000/static/media/IMG_0385_2.2e43eb8351c182a4f669.png")
-                                        .sourceSite("쿠팡")
+                                        .sourceSite("G마켓")
                                         .originalPrice(1100000)
                                         .discountRate(10)
                                         .build()
