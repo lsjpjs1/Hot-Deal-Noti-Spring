@@ -15,6 +15,11 @@ mq:
     classify-queue: ENC(96zbAHLH+BS3+ZkqrR+g3b59wICY6Rc7j98SVKNDce0=)
     hot-deal-queue: ENC(r9eisc/OmDuVTXdni5HT617fttinfgeo)
 
+coupang-parters:
+  access-key: ENC(pcDwomyXFctERhjcxo1uO3s+lXnLzHdvNQJqNkWnVdzpazpueWA7Z9LRbzwyopF4)
+  secret-key: ENC(gE4wXTZrD27BOJwE1YwejeHV1npuS/1UtkoVk/sAxjWcLSH3uqwC6uuyV0mjavyc5SwapXTpN8U=)
+
+
 spring:
   mail:
     host: smtp.gmail.com

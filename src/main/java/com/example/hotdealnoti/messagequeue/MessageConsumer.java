@@ -32,12 +32,6 @@ public class MessageConsumer {
             for(HotDealMessageDto.HotDealMessageContent hotDealMessageContent: hotDealMessageWrapper.getHotDealMessages()) {
                 Optional<HotDeal> optionalHotDeal = hotDealRepository.findTopByHotDealTitleAndHotDealDiscountPrice(hotDealMessageContent.getTitle(),hotDealMessageContent.getDiscountPrice());
 
-                if (hotDealMessageContent.getSourceSite().equals("쿠팡")){
-                    Optional<HotDeal> optionalCoupangHotDeal = hotDealRepository.findTopByHotDealTitleOrderByHotDealIdDesc(hotDealMessageContent.getTitle());
-                    optionalCoupangHotDeal.ifPresent(hotDeal -> {
-                        hotDealMessageContent.setUrl(hotDeal.getHotDealLink());
-                    });
-                }
 
                 if(optionalHotDeal.isPresent()){
                     HotDeal hotDeal = optionalHotDeal.get();
