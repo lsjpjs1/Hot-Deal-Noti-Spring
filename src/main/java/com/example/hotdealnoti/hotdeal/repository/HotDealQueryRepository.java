@@ -197,6 +197,22 @@ public class HotDealQueryRepository {
 
     }
 
+    public List<HotDealDto.HotDealPreview> findEntireWeeklyPopularHotDeal() {
+
+        return jpaQueryFactory
+                .select(
+                        getHotDealPreviewConstructorExpression()
+                )
+                .from(hotDeal)
+                .where(
+                        getWeeklyPopularCondition()
+                )
+                .fetch();
+
+
+
+    }
+
     private BooleanExpression getWeeklyPopularCondition() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_WEEK,-7);
