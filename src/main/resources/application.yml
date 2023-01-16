@@ -16,8 +16,8 @@ mq:
     hot-deal-queue: ENC(r9eisc/OmDuVTXdni5HT617fttinfgeo)
 
 coupang-parters:
-  access-key: ENC(pcDwomyXFctERhjcxo1uO3s+lXnLzHdvNQJqNkWnVdzpazpueWA7Z9LRbzwyopF4)
-  secret-key: ENC(gE4wXTZrD27BOJwE1YwejeHV1npuS/1UtkoVk/sAxjWcLSH3uqwC6uuyV0mjavyc5SwapXTpN8U=)
+  access-key: ENC(q04tVPJPpHqV5ibtx9NZDiW9eiVIMVUpaZ3ng1oCwTID5jJrrXm5ZXjtyy4PNox1)
+  secret-key: ENC(f5tffJdCe1Uvm+vjKtm84GpSriwmjFD9T2SXPm9GG1DJoZcAz17+Y6KiBssdgE0kTt/O4YGPo70=)
 
 
 spring:
