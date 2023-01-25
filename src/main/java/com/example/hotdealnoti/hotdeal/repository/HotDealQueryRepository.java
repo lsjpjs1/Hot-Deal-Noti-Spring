@@ -240,7 +240,12 @@ public class HotDealQueryRepository {
 
                 hotDeal.isDelete,
 
-                hotDeal.hotDealThumbnailUrl
+                hotDeal.hotDealThumbnailUrl,
+
+                hotDeal.returnItem.returnItemId,
+                hotDeal.returnItem.returnItemQuality,
+                hotDeal.returnItem.returnItemQualityDetail,
+                hotDeal.returnItem.returnItemSaleStatus
         );
     }
 

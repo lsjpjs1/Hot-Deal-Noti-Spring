@@ -106,6 +106,12 @@ public class HotDealDto {
         private Boolean isDelete;
 
         private String hotDealThumbnailUrl;
+
+        private Long returnItemId;
+        private String returnItemQuality;
+        private String returnItemQualityDetail;
+        private String returnItemSaleStatus;
+
     }
 
 

@@ -52,6 +52,10 @@ public class HotDeal {
 
     private String hotDealThumbnailUrl;
 
+    @ManyToOne(targetEntity = ReturnItem.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "return_item_id")
+    private ReturnItem returnItem;
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(targetEntity = Product.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
@@ -69,16 +73,4 @@ public class HotDeal {
                 .build();
     }
 
-    public static HotDeal from(HotDealRedis hotDealRedis){
-        return HotDeal.builder()
-                .hotDealDiscountPrice(hotDealRedis.getHotDealDiscountPrice())
-                .hotDealDiscountRate(hotDealRedis.getHotDealDiscountRate())
-                .hotDealLink(hotDealRedis.getHotDealLink())
-                .hotDealTitle(hotDealRedis.getHotDealTitle())
-                .hotDealOriginalPrice(hotDealRedis.getHotDealOriginalPrice())
-                .hotDealUploadTime(hotDealRedis.getHotDealUploadTime())
-                .hotDealViewCount(hotDealRedis.getHotDealViewCount())
-                .hotDealId(Long.parseLong(hotDealRedis.getHotDealId()))
-                .build();
-    }
 }

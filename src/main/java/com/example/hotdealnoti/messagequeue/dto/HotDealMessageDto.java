@@ -30,6 +30,9 @@ public class HotDealMessageDto {
         private String url;
         private String sourceSite;
         private String hotDealThumbnailUrl;
+        private String returnItemQuality;
+        private String returnItemQualityDetail;
+        private String returnItemSaleStatus;
 
         public Boolean nullCheck(){
             if (discountRate==null) return true;
