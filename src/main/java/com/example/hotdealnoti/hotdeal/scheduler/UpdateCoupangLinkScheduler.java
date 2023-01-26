@@ -22,10 +22,10 @@ public class UpdateCoupangLinkScheduler {
     private final JpaHotDealRepository jpaHotDealRepository;
 
     private final CoupangPartnersLinkGenerator coupangPartnersLinkGenerator;
-    @Scheduled(cron = "0 0/10 * * * ?")
+    @Scheduled(cron = "0 0/1 * * * ?")
     @Transactional
     public void hotDealViewHistoryInsertSchedule() {
-        List<HotDeal> coupangHotDeals = jpaHotDealRepository.findBySourceSiteAndIsDelete("쿠팡", false);
+        List<HotDeal> coupangHotDeals = jpaHotDealRepository.findTop40BySourceSiteAndIsDelete("쿠팡", false);
         coupangHotDeals.forEach(
                 coupangHotDeal -> {
                     if (!coupangHotDeal.getHotDealLink().matches(".*link.*")){
