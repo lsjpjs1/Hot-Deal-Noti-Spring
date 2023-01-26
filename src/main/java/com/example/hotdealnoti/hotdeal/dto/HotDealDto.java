@@ -19,6 +19,7 @@ public class HotDealDto {
         private List<String> sourceSites;
         private Long manufacturerId;
         private Long productPurposeId;
+        private Boolean isShowReturnItem;
     }
 
     @Getter

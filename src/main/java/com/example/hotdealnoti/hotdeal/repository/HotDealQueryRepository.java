@@ -259,7 +259,8 @@ public class HotDealQueryRepository {
                 .and(getSearchCondition(getHotDealsRequest.getSearchBody()))
                 .and(getSourceSitesCondition(getHotDealsRequest.getSourceSites()))
                 .and(getManufacturerCondition(getHotDealsRequest.getManufacturerId()))
-                .and(getProductPurposeCondition(getHotDealsRequest.getProductPurposeId()));
+                .and(getProductPurposeCondition(getHotDealsRequest.getProductPurposeId()))
+                .and(getShowReturnItemCondition(getHotDealsRequest.getIsShowReturnItem()));
     }
 
     private BooleanExpression getManufacturerCondition(Long manufacturerId) {
@@ -298,6 +299,17 @@ public class HotDealQueryRepository {
             return null;
         }
         return hotDeal.sourceSite.in(sourceSites);
+    }
+
+    private BooleanExpression getShowReturnItemCondition(Boolean isShowReturnItem) {
+        if (isShowReturnItem == null) {
+            return hotDeal.returnItem.returnItemId.eq(0l);
+        }
+        if (isShowReturnItem) {
+            return hotDeal.returnItem.returnItemId.eq(0l).not();
+        }else{
+            return hotDeal.returnItem.returnItemId.eq(0l);
+        }
     }
 
     private List<OrderSpecifier> getAllOrderSpecifiers(Pageable pageable) {
