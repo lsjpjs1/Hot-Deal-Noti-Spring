@@ -15,7 +15,7 @@ public interface JpaHotDealRepository extends JpaRepository<HotDeal, Long> {
     List<HotDeal> findByHotDealScrapingTimeBeforeAndIsDelete(Timestamp timestamp, Boolean isDelete);
     List<HotDeal> findByHotDealScrapingTimeBeforeAndIsDeleteAndReturnItemNot(Timestamp timestamp, Boolean isDelete, ReturnItem returnItem);
     List<HotDeal> findTop30ByProductAndIsDelete(Product product, Boolean isDelete);
-    List<HotDeal> findTop40BySourceSiteAndIsDelete(String sourceSite, Boolean isDelete);
+    List<HotDeal> findTop40BySourceSiteAndIsDeleteAndHotDealLinkNotLike(String sourceSite, Boolean isDelete, String re);
     HotDeal findFirstByOrderByHotDealScrapingTimeDesc();
 
 }

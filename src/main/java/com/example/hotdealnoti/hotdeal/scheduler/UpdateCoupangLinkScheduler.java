@@ -25,18 +25,17 @@ public class UpdateCoupangLinkScheduler {
     @Scheduled(cron = "0 0/1 * * * ?")
     @Transactional
     public void hotDealViewHistoryInsertSchedule() {
-        List<HotDeal> coupangHotDeals = jpaHotDealRepository.findTop40BySourceSiteAndIsDelete("쿠팡", false);
+        List<HotDeal> coupangHotDeals = jpaHotDealRepository.findTop40BySourceSiteAndIsDeleteAndHotDealLinkNotLike( "쿠팡", false,"%link%");
         coupangHotDeals.forEach(
                 coupangHotDeal -> {
-                    if (!coupangHotDeal.getHotDealLink().matches(".*link.*")){
                         try {
                             String generateLink = coupangPartnersLinkGenerator.generateLink(coupangHotDeal.getHotDealLink());
                             coupangHotDeal.setHotDealLink(generateLink);
+                            jpaHotDealRepository.save(coupangHotDeal);
+                            log.info(generateLink+"변환성공");
                         } catch (Exception e){
                             e.printStackTrace();
                         }
-                    }
-                    jpaHotDealRepository.save(coupangHotDeal);
                 }
         );
     }
