@@ -41,7 +41,7 @@ public class DeleteHotDealScheduler {
     @Transactional
     public void deleteReturnItems() {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.HOUR,-3);
+        calendar.add(Calendar.HOUR,-24);
         List<HotDeal> hotDeals = jpaHotDealRepository.findByHotDealScrapingTimeBeforeAndIsDeleteAndReturnItemNot(new Timestamp(calendar.getTimeInMillis()), false, ReturnItem.builder().returnItemId(0l).build());
         hotDeals.stream()
                 .forEach(
