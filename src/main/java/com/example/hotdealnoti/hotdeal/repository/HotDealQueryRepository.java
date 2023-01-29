@@ -7,6 +7,7 @@ import com.example.hotdealnoti.hotdeal.dto.HotDealDto;
 import com.example.hotdealnoti.messagequeue.domain.QHotDeal;
 import com.example.hotdealnoti.messagequeue.domain.QHotDealCandidate;
 import com.example.hotdealnoti.product.domain.QProduct;
+import com.example.hotdealnoti.product.domain.QProductRanking;
 import com.querydsl.core.types.ConstructorExpression;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
@@ -37,12 +38,14 @@ public class HotDealQueryRepository {
     private final QProduct product = QProduct.product;
     private final QRecommendationHotDeal recommendationHotDeal = QRecommendationHotDeal.recommendationHotDeal;
     private final QFavoriteHotDeal favoriteHotDeal = QFavoriteHotDeal.favoriteHotDeal;
+    private final QProductRanking productRanking = QProductRanking.productRanking;
     public Page<HotDealDto.HotDealPreview> findHotDeals(HotDealDto.GetHotDealsRequest getHotDealsRequest, Pageable pageable) {
         List<HotDealDto.HotDealPreview> hotDealPreviews = jpaQueryFactory
                 .select(
                         getHotDealPreviewConstructorExpression()
                 )
                 .from(hotDeal)
+                .leftJoin(productRanking).on(productRanking.product.productId.eq(hotDeal.product.productId))
                 .where(
                         getCondition(getHotDealsRequest)
                 )
@@ -68,6 +71,7 @@ public class HotDealQueryRepository {
                 )
                 .from(recommendationHotDeal)
                 .leftJoin(hotDeal).on(recommendationHotDeal.hotDeal.hotDealId.eq(hotDeal.hotDealId))
+                .leftJoin(productRanking).on(productRanking.product.productId.eq(hotDeal.product.productId))
                 .where(
                         hotDeal.isDelete.eq(false)
                 )
@@ -84,6 +88,7 @@ public class HotDealQueryRepository {
                 )
                 .from(favoriteHotDeal)
                 .leftJoin(hotDeal).on(favoriteHotDeal.hotDeal.hotDealId.eq(hotDeal.hotDealId))
+                .leftJoin(productRanking).on(productRanking.product.productId.eq(hotDeal.product.productId))
                 .where(
                         favoriteHotDeal.isDelete.eq(false),
                         favoriteHotDeal.account.accountId.eq(account.getAccountId())
@@ -129,6 +134,7 @@ public class HotDealQueryRepository {
                         getHotDealPreviewConstructorExpression()
                 )
                 .from(hotDeal)
+                .leftJoin(productRanking).on(productRanking.product.productId.eq(hotDeal.product.productId))
                 .where(
                         hotDeal.hotDealId.eq(hotDealId)
                 )
@@ -148,6 +154,7 @@ public class HotDealQueryRepository {
                 .where(
                         getProductIdCondition(productId)
                 )
+                .leftJoin(productRanking).on(productRanking.product.productId.eq(hotDeal.product.productId))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(Arrays.asList(new OrderSpecifier(Order.ASC, hotDeal.isDelete),new OrderSpecifier(Order.ASC,hotDeal.hotDealDiscountPrice)).stream().toArray(OrderSpecifier[]::new))
@@ -183,6 +190,7 @@ public class HotDealQueryRepository {
                 .where(
                         getWeeklyPopularCondition()
                 )
+                .leftJoin(productRanking).on(productRanking.product.productId.eq(hotDeal.product.productId))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(getAllOrderSpecifiers(pageable).stream().toArray(OrderSpecifier[]::new))
@@ -205,6 +213,7 @@ public class HotDealQueryRepository {
                         getHotDealPreviewConstructorExpression()
                 )
                 .from(hotDeal)
+                .leftJoin(productRanking).on(productRanking.product.productId.eq(hotDeal.product.productId))
                 .where(
                         getWeeklyPopularCondition()
                 )
@@ -246,7 +255,10 @@ public class HotDealQueryRepository {
                 hotDeal.returnItem.returnItemId,
                 hotDeal.returnItem.returnItemQuality,
                 hotDeal.returnItem.returnItemQualityDetail,
-                hotDeal.returnItem.returnItemSaleStatus
+                hotDeal.returnItem.returnItemSaleStatus,
+
+                productRanking.productRankingNumber,
+                hotDeal.product.productPurpose.productPurposeId
         );
     }
 

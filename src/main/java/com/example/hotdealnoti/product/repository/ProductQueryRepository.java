@@ -4,6 +4,7 @@ import com.example.hotdealnoti.messagequeue.domain.QHotDeal;
 import com.example.hotdealnoti.messagequeue.domain.QHotDealCandidate;
 import com.example.hotdealnoti.product.domain.ProductFamily;
 import com.example.hotdealnoti.product.domain.QProduct;
+import com.example.hotdealnoti.product.domain.QProductRanking;
 import com.example.hotdealnoti.product.dto.ProductDto;
 import com.example.hotdealnoti.recommendation.dto.RecommendationDto;
 import com.querydsl.core.types.Projections;
@@ -26,6 +27,7 @@ public class ProductQueryRepository {
 
     private final QProduct product = QProduct.product;
     private final QHotDeal hotDeal = QHotDeal.hotDeal;
+    private final QProductRanking productRanking = QProductRanking.productRanking;
 
     public List<ProductDto.GetProductDTO> findProducts(ProductDto.GetProductRequest getProductRequest) {
         return jpaQueryFactory
@@ -40,6 +42,21 @@ public class ProductQueryRepository {
                 .from(product)
                 .where(getCondition(getProductRequest))
                 .orderBy(product.modelNameSearch.desc())
+                .fetch();
+    }
+
+    public List<ProductDto.GetProductsRankingDTO> findProductsRanking(ProductDto.GetProductsRankingRequest getProductsRankingRequest) {
+        return jpaQueryFactory
+                .select(Projections.constructor(ProductDto.GetProductsRankingDTO.class,
+                        productRanking.product.productId,
+                        productRanking.product.modelName,
+                        productRanking.product.productPurpose.productPurposeId,
+                        productRanking.product.productPurpose.productPurposeName,
+                        productRanking.productRankingNumber
+                ))
+                .from(productRanking)
+                .where(productRanking.productPurpose.productPurposeId.eq(getProductsRankingRequest.getProductPurposeId()))
+                .orderBy(productRanking.productRankingNumber.asc())
                 .fetch();
     }
 

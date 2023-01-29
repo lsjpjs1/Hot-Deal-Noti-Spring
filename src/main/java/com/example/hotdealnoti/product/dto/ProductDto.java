@@ -38,6 +38,16 @@ public class ProductDto {
     @NoArgsConstructor
     @Builder
     @ToString
+    public static class GetProductsRankingRequest{
+        private Long productPurposeId;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @ToString
     public static class ClassifyHotDealRequest{
         private Long hotDealId;
         private Long productId;
@@ -58,6 +68,30 @@ public class ProductDto {
         private List<GetProductDTO> products;
     }
 
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @ToString
+    public static class GetProductsRankingResponse{
+        private List<GetProductsRankingDTO> productsRankingDTOList;
+    }
+
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @ToString
+    public static class GetProductsRankingDTO{
+        private Long productId;
+        private String modelName;
+        private Long productPurposeId;
+        private String productPurpose;
+        private Integer productRankingNumber;
+    }
     @Getter
     @Setter
     @AllArgsConstructor

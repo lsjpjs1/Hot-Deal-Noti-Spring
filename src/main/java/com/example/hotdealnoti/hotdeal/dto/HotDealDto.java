@@ -113,6 +113,8 @@ public class HotDealDto {
         private String returnItemQualityDetail;
         private String returnItemSaleStatus;
 
+        private Integer productRanking;
+        private Long productPurposeId;
     }
 
 

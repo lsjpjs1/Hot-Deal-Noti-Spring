@@ -24,4 +24,12 @@ public class GetProductService {
                 .products(products)
                 .build();
     }
+
+    @Transactional
+    public ProductDto.GetProductsRankingResponse getProductsRanking(ProductDto.GetProductsRankingRequest getProductsRankingRequest) {
+        List<ProductDto.GetProductsRankingDTO> getProductsRankingDTOList = productQueryRepository.findProductsRanking(getProductsRankingRequest);
+        return ProductDto.GetProductsRankingResponse.builder()
+                .productsRankingDTOList(getProductsRankingDTOList)
+                .build();
+    }
 }

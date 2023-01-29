@@ -25,4 +25,13 @@ public class GetProductController {
                 .body(getProductService.getProducts(getProductRequest));
 
     }
+
+    @GetMapping(value = "/products/ranking")
+    public ResponseEntity<ProductDto.GetProductsRankingResponse> getProductsRanking(@ModelAttribute ProductDto.GetProductsRankingRequest getProductsRankingRequest) {
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(getProductService.getProductsRanking(getProductsRankingRequest));
+
+    }
 }
