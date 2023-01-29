@@ -4,6 +4,7 @@ import com.example.hotdealnoti.common.util.MailDTO;
 import com.example.hotdealnoti.common.util.MailUtil;
 import com.example.hotdealnoti.messagequeue.MessageConsumer;
 import com.example.hotdealnoti.messagequeue.dto.HotDealMessageDto;
+import com.example.hotdealnoti.repository.jpa.JpaProductRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ class CommonTest {
     @Autowired
     private MailUtil mailUtil;
 
+    @Autowired
+    private JpaProductRepository jpaProductRepository;
+
     @Test
     void sendMail(){
         try {
@@ -36,5 +40,9 @@ class CommonTest {
         }
     }
 
+    @Test
+    void queryTest(){
+        jpaProductRepository.findTop100RankingProduct(1l);
+    }
 
 }

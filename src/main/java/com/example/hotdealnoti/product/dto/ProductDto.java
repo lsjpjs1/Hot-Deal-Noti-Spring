@@ -72,5 +72,12 @@ public class ProductDto {
         private Long manufacturerId;
         private String fullModelName;
     }
+
+
+    public interface ProductRankingInfo{
+        Long getProductId();
+        Long getProductPurposeId();
+        Integer getProductRankingNumber();
+    }
 }
 
