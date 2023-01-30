@@ -20,6 +20,10 @@ public class HotDealDto {
         private Long manufacturerId;
         private Long productPurposeId;
         private Boolean isShowReturnItem;
+
+        private Integer minDiscountRate;
+        private Integer maxDiscountRate;
+
     }
 
     @Getter

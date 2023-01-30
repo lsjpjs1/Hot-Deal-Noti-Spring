@@ -118,7 +118,7 @@ public class HotDealQueryRepository {
                 .where(
                         hotDeal.isDelete.eq(false),
                         hotDeal.product.productId.eq(1l)
-//                        , hotDeal.returnItem.returnItemId.eq(0l)
+                        , hotDeal.returnItem.returnItemId.eq(0l)
                 )
                 .leftJoin(hotDealCandidate).on(hotDealCandidate.hotDealId.eq(hotDeal.hotDealId))
                 .leftJoin(product).on(product.productId.eq(hotDealCandidate.candidateProductId))
@@ -273,7 +273,24 @@ public class HotDealQueryRepository {
                 .and(getSourceSitesCondition(getHotDealsRequest.getSourceSites()))
                 .and(getManufacturerCondition(getHotDealsRequest.getManufacturerId()))
                 .and(getProductPurposeCondition(getHotDealsRequest.getProductPurposeId()))
-                .and(getShowReturnItemCondition(getHotDealsRequest.getIsShowReturnItem()));
+                .and(getShowReturnItemCondition(getHotDealsRequest.getIsShowReturnItem()))
+                .and(getDiscountRateCondition(getHotDealsRequest.getMinDiscountRate(),getHotDealsRequest.getMaxDiscountRate()));
+    }
+
+    private BooleanExpression getDiscountRateCondition(Integer minDiscountRate, Integer maxDiscountRate) {
+        Integer minQueryDiscountRate = 15;
+        Integer maxQueryDiscountRate = 100;
+
+        if (minDiscountRate!=null){
+            minQueryDiscountRate  = minDiscountRate;
+        }
+
+        if (maxDiscountRate!=null){
+            maxQueryDiscountRate = maxDiscountRate;
+        }
+
+        return hotDeal.hotDealDiscountRate.goe(minQueryDiscountRate)
+                .and(hotDeal.hotDealDiscountRate.loe(maxQueryDiscountRate));
     }
 
     private BooleanExpression getManufacturerCondition(Long manufacturerId) {
