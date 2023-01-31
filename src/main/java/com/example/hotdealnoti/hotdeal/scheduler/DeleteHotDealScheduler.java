@@ -26,7 +26,7 @@ public class DeleteHotDealScheduler {
     public void deleteHotDeals() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.HOUR,-8);
-        List<HotDeal> hotDeals = jpaHotDealRepository.findByHotDealScrapingTimeBeforeAndIsDelete(new Timestamp(calendar.getTimeInMillis()), false);
+        List<HotDeal> hotDeals = jpaHotDealRepository.findByHotDealScrapingTimeBeforeAndIsDeleteAndReturnItem(new Timestamp(calendar.getTimeInMillis()), false, ReturnItem.builder().returnItemId(0l).build());
         hotDeals.stream()
                 .forEach(
                         hotDeal -> {
