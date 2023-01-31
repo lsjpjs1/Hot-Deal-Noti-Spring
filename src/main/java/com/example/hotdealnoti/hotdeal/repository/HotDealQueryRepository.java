@@ -278,7 +278,7 @@ public class HotDealQueryRepository {
     }
 
     private BooleanExpression getDiscountRateCondition(Integer minDiscountRate, Integer maxDiscountRate) {
-        Integer minQueryDiscountRate = 15;
+        Integer minQueryDiscountRate = 0;
         Integer maxQueryDiscountRate = 100;
 
         if (minDiscountRate!=null){
