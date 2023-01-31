@@ -37,8 +37,8 @@ public class DeleteHotDealScheduler {
 
     }
 
-//    @Scheduled(cron = "0 0/10 * * * ?")
-    @Scheduled(cron = "0 0 10 * * ?")
+    @Scheduled(cron = "0 0/10 * * * ?")
+//    @Scheduled(cron = "0 0 20 * * ?")
     @Transactional
     public void deleteReturnItems() {
         Calendar calendar = Calendar.getInstance();
