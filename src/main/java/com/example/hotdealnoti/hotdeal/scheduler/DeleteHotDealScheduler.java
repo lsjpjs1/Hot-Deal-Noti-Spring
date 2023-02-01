@@ -21,21 +21,21 @@ public class DeleteHotDealScheduler {
     private final RedisHotDealRepository redisHotDealRepository;
     private final JpaHotDealRepository jpaHotDealRepository;
 
-    @Scheduled(cron = "0 50 0/3 * * ?")
-    @Transactional
-    public void deleteHotDeals() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.HOUR,-8);
-        List<HotDeal> hotDeals = jpaHotDealRepository.findByHotDealScrapingTimeBeforeAndIsDeleteAndReturnItem(new Timestamp(calendar.getTimeInMillis()), false, ReturnItem.builder().returnItemId(0l).build());
-        hotDeals.stream()
-                .forEach(
-                        hotDeal -> {
-                            hotDeal.setIsDelete(Boolean.TRUE);
-                            jpaHotDealRepository.save(hotDeal);
-                        }
-                );
-
-    }
+//    @Scheduled(cron = "0 50 0/3 * * ?")
+//    @Transactional
+//    public void deleteHotDeals() {
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.add(Calendar.HOUR,-8);
+//        List<HotDeal> hotDeals = jpaHotDealRepository.findByHotDealScrapingTimeBeforeAndIsDeleteAndReturnItem(new Timestamp(calendar.getTimeInMillis()), false, ReturnItem.builder().returnItemId(0l).build());
+//        hotDeals.stream()
+//                .forEach(
+//                        hotDeal -> {
+//                            hotDeal.setIsDelete(Boolean.TRUE);
+//                            jpaHotDealRepository.save(hotDeal);
+//                        }
+//                );
+//
+//    }
 
 //    @Scheduled(cron = "0 0/10 * * * ?")
 //    @Transactional
