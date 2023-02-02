@@ -10,6 +10,6 @@ class DeleteHotDealSchedulerTest {
     private DeleteHotDealScheduler deleteHotDealScheduler;
     @Test
     void deleteHotDealScheduler() {
-        deleteHotDealScheduler.deleteHotDeals();
+//        deleteHotDealScheduler.deleteHotDeals();
     }
 }

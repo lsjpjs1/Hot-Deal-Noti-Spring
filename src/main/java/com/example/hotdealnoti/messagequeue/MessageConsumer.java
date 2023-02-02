@@ -64,6 +64,10 @@ public class MessageConsumer {
                     ReturnItem persistReturnItem = jpaReturnItemRepository.save(returnItem);
                     beforeHotDeal.setReturnItem(persistReturnItem);
                 }
+                //수동 틍록인 경우
+                if (hotDealMessageContent.getManualDeleteMode()!=null){
+                    beforeHotDeal.setManualDeleteMode(hotDealMessageContent.getManualDeleteMode());
+                }
                 HotDeal hotDeal = hotDealRepository.save(beforeHotDeal);
 
                 // 지동 분류 큐에 추가하는 로직

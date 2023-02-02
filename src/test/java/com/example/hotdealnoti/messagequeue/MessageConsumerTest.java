@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
@@ -25,13 +26,14 @@ class MessageConsumerTest {
                 .hotDealMessages(
                         Arrays.asList(
                                 HotDealMessageDto.HotDealMessageContent.builder()
-                                        .url("https://www.coupang.com/vp/products/6631142902?itemId=15116999746&vendorItemId=82338784800&sourceType=CATEGORY&categoryId=497035")
-                                        .title("델 2022 에일리언웨어 M15 R7 AMD 15.6, 1024GB, WIN11 Pro, DAWM15R7A-WP01KR, 다크 사이드 오브 더 문, 라이젠7, 16GB")
-                                        .discountPrice(2699000)
-                                        .hotDealThumbnailUrl("http://localhost:3000/static/media/IMG_0385_2.2e43eb8351c182a4f669.png")
-                                        .sourceSite("쿠팡")
-                                        .originalPrice(2999000)
-                                        .discountRate(10)
+                                        .url("삼성갤럭시북2 프로 S.E NT950XFT-A51A 13세대 i5-1340P/16GB/256GB/15인치 신제품출시 노트북")
+                                        .title("삼성전자 갤럭시북2 프로 S.E NT950XFG-K71A")
+                                        .discountPrice(1190000)
+                                        .hotDealThumbnailUrl("https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/pd/v2/2/7/2/5/4/2/rqRKy/5431272542_B.jpg")
+                                        .sourceSite("11번가")
+                                        .originalPrice(1599000)
+                                        .discountRate(26)
+                                        .manualDeleteMode(true)
                                         .build()
                         )
                 )

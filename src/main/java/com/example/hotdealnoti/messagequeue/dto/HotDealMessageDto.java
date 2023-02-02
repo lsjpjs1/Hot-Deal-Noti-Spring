@@ -33,6 +33,7 @@ public class HotDealMessageDto {
         private String returnItemQuality;
         private String returnItemQualityDetail;
         private String returnItemSaleStatus;
+        private Boolean manualDeleteMode;
 
         public Boolean nullCheck(){
             if (discountRate==null) return true;

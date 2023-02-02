@@ -22,20 +22,23 @@ public class DeleteHotDealScheduler {
     private final JpaHotDealRepository jpaHotDealRepository;
 
 //    @Scheduled(cron = "0 50 0/3 * * ?")
-//    @Transactional
-//    public void deleteHotDeals() {
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.add(Calendar.HOUR,-8);
-//        List<HotDeal> hotDeals = jpaHotDealRepository.findByHotDealScrapingTimeBeforeAndIsDeleteAndReturnItem(new Timestamp(calendar.getTimeInMillis()), false, ReturnItem.builder().returnItemId(0l).build());
-//        hotDeals.stream()
-//                .forEach(
-//                        hotDeal -> {
-//                            hotDeal.setIsDelete(Boolean.TRUE);
-//                            jpaHotDealRepository.save(hotDeal);
-//                        }
-//                );
-//
-//    }
+    @Scheduled(cron = "0 0/1 * * * ?")
+    @Transactional
+    public void deleteHotDeals() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.HOUR,-8);
+        List<HotDeal> hotDeals = jpaHotDealRepository.findByHotDealScrapingTimeBeforeAndIsDeleteAndReturnItemAndManualDeleteMode(
+                new Timestamp(calendar.getTimeInMillis()), false, ReturnItem.builder().returnItemId(0l).build(), false
+        );
+        hotDeals.stream()
+                .forEach(
+                        hotDeal -> {
+                            hotDeal.setIsDelete(Boolean.TRUE);
+                            jpaHotDealRepository.save(hotDeal);
+                        }
+                );
+
+    }
 
 //    @Scheduled(cron = "0 0/10 * * * ?")
 //    @Transactional

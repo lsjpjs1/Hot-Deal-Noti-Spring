@@ -52,6 +52,8 @@ public class HotDeal {
 
     private String hotDealThumbnailUrl;
 
+    private Boolean manualDeleteMode;
+
     @ManyToOne(targetEntity = ReturnItem.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "return_item_id")
     private ReturnItem returnItem;
