@@ -75,6 +75,7 @@ public class HotDealQueryRepository {
                 .where(
                         hotDeal.isDelete.eq(false)
                 )
+                .orderBy(hotDeal.hotDealUploadTime.desc())
                 .fetch();
 
 

@@ -25,7 +25,7 @@ public class AddRecommendationHotDealScheduler {
     private final JpaHotDealRepository jpaHotDealRepository;
     private final JpaRecommendationHotDeal jpaRecommendationHotDeal;
     private final HotDealQueryRepository hotDealQueryRepository;
-    @Scheduled(cron = "0 0/30 * * * ?")
+    @Scheduled(cron = "0 0/14 * * * ?")
     @Transactional
     public void addRecommendationHotDeal() {
         List<HotDealDto.HotDealPreview> entireWeeklyPopularHotDeals = hotDealQueryRepository.findEntireWeeklyPopularHotDeal();
