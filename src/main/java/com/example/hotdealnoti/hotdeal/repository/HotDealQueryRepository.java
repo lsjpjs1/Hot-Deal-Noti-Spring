@@ -228,7 +228,7 @@ public class HotDealQueryRepository {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_WEEK,-7);
         return hotDeal.isDelete.eq(Boolean.FALSE)
-                .and(hotDeal.hotDealViewCount.goe(4))
+                .and(hotDeal.hotDealViewCount.goe(10))
                 .and(hotDeal.hotDealUploadTime.after(new Timestamp(calendar.getTimeInMillis())));
     }
 
