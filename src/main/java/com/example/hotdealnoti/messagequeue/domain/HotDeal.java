@@ -54,6 +54,8 @@ public class HotDeal {
 
     private Boolean manualDeleteMode;
 
+    private Boolean isCandidateProduct;
+
     @ManyToOne(targetEntity = ReturnItem.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "return_item_id")
     private ReturnItem returnItem;

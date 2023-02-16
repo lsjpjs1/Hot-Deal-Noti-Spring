@@ -259,7 +259,9 @@ public class HotDealQueryRepository {
                 hotDeal.returnItem.returnItemSaleStatus,
 
                 productRanking.productRankingNumber,
-                hotDeal.product.productPurpose.productPurposeId
+                hotDeal.product.productPurpose.productPurposeId,
+
+                hotDeal.isCandidateProduct
         );
     }
 

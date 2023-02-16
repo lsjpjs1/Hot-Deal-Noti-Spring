@@ -2,10 +2,13 @@ package com.example.hotdealnoti.messagequeue;
 
 import com.example.hotdealnoti.hotdeal.dto.HotDealDto;
 import com.example.hotdealnoti.hotdeal.service.InsertClassifyQueueService;
+import com.example.hotdealnoti.messagequeue.domain.HotDealCandidate;
 import com.example.hotdealnoti.messagequeue.domain.ReturnItem;
 import com.example.hotdealnoti.notification.service.SendNotificationService;
 import com.example.hotdealnoti.messagequeue.domain.HotDeal;
 import com.example.hotdealnoti.messagequeue.dto.HotDealMessageDto;
+import com.example.hotdealnoti.product.domain.Product;
+import com.example.hotdealnoti.repository.jpa.JpaHotDealCandidateRepository;
 import com.example.hotdealnoti.repository.jpa.JpaHotDealRepository;
 import com.example.hotdealnoti.repository.jpa.JpaReturnItemRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,6 +31,7 @@ public class MessageConsumer {
     private final SendNotificationService sendNotificationService;
     private final InsertClassifyQueueService insertClassifyQueueService;
     private final JpaReturnItemRepository jpaReturnItemRepository;
+
     @RabbitListener(queues = "hotDeal")
     public void receiveMessage(String message) {
         try {
@@ -52,7 +56,10 @@ public class MessageConsumer {
 
                 HotDeal beforeHotDeal = HotDeal.from(hotDealMessageContent);
                 hotDealRepository.findTopByHotDealTitleOrderByHotDealIdDesc(hotDealMessageContent.getTitle())
-                        .ifPresent(hotDeal -> beforeHotDeal.setProduct(hotDeal.getProduct()));
+                        .ifPresent(hotDeal -> {
+                            beforeHotDeal.setProduct(hotDeal.getProduct());
+                            beforeHotDeal.setIsCandidateProduct(false);
+                        });
                 //반품 상품인 경우 반품 정보 등록하고 반품 아이템 아이디 추가하기
                 log.info(hotDealMessageContent.getReturnItemQuality());
                 if (hotDealMessageContent.getReturnItemQuality()!=null){
@@ -68,15 +75,12 @@ public class MessageConsumer {
                 if (hotDealMessageContent.getManualDeleteMode()!=null){
                     beforeHotDeal.setManualDeleteMode(hotDealMessageContent.getManualDeleteMode());
                 }
+                //후보 상품명 등록
+                if (hotDealMessageContent.getCandidateProductId()!=null){
+                    beforeHotDeal.setProduct(Product.builder().productId(hotDealMessageContent.getCandidateProductId()).build());
+                }
                 HotDeal hotDeal = hotDealRepository.save(beforeHotDeal);
 
-                // 지동 분류 큐에 추가하는 로직
-                insertClassifyQueueService.insertClassifyQueue(
-                        HotDealDto.InsertClassifyQueueRequest.builder()
-                                .hotDealId(hotDeal.getHotDealId())
-                                .hotDealTitle(hotDealMessageContent.getTitle())
-                                .build()
-                );
 
                 sendNotificationService.sendKeywordNotification(hotDeal);
             }

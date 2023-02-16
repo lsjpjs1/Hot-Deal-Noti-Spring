@@ -119,6 +119,8 @@ public class HotDealDto {
 
         private Integer productRanking;
         private Long productPurposeId;
+
+        private Boolean isCandidateProduct;
     }
 
 

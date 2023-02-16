@@ -25,17 +25,17 @@ public class AddRecommendationHotDealScheduler {
     private final JpaHotDealRepository jpaHotDealRepository;
     private final JpaRecommendationHotDeal jpaRecommendationHotDeal;
     private final HotDealQueryRepository hotDealQueryRepository;
-    @Scheduled(cron = "0 0/14 * * * ?")
+    @Scheduled(cron = "0 0/1 * * * ?")
     @Transactional
     public void addRecommendationHotDeal() {
-        List<HotDealDto.HotDealPreview> entireWeeklyPopularHotDeals = hotDealQueryRepository.findEntireWeeklyPopularHotDeal();
-        entireWeeklyPopularHotDeals.forEach((weeklyPopularHotDeal)->{
-            if (!jpaRecommendationHotDeal.findByHotDeal(HotDeal.builder().hotDealId(weeklyPopularHotDeal.getHotDealId()).build()).isPresent()){
-                RecommendationHotDeal recommendationHotDeal = RecommendationHotDeal.builder()
-                        .hotDeal(HotDeal.builder().hotDealId(weeklyPopularHotDeal.getHotDealId()).build())
-                        .build();
-                jpaRecommendationHotDeal.save(recommendationHotDeal);
-            }
-        });
+//        List<HotDealDto.HotDealPreview> entireWeeklyPopularHotDeals = hotDealQueryRepository.findEntireWeeklyPopularHotDeal();
+//        entireWeeklyPopularHotDeals.forEach((weeklyPopularHotDeal)->{
+//            if (!jpaRecommendationHotDeal.findByHotDeal(HotDeal.builder().hotDealId(weeklyPopularHotDeal.getHotDealId()).build()).isPresent()){
+//                RecommendationHotDeal recommendationHotDeal = RecommendationHotDeal.builder()
+//                        .hotDeal(HotDeal.builder().hotDealId(weeklyPopularHotDeal.getHotDealId()).build())
+//                        .build();
+//                jpaRecommendationHotDeal.save(recommendationHotDeal);
+//            }
+//        });
     }
 }
