@@ -37,6 +37,7 @@ public class ClassifyProductService {
     @Transactional
     public void classifyHotDeal(ProductDto.ClassifyHotDealRequest classifyHotDealRequest) {
         HotDeal hotDeal = jpaHotDealRepository.findById(classifyHotDealRequest.getHotDealId()).get();
+        hotDeal.setIsCandidateProduct(false);
         if(classifyHotDealRequest.getProductId()!=null){
             hotDeal.setProduct(jpaProductRepository.findById(classifyHotDealRequest.getProductId()).get());
             jpaHotDealRepository.save(hotDeal);
@@ -69,5 +70,14 @@ public class ClassifyProductService {
 
         }
 
+    }
+
+    @Transactional
+    public void passHotDeal(Long hotDealId) {
+
+        jpaHotDealRepository.findById(hotDealId).ifPresent(hotDeal -> {
+            hotDeal.setIsCandidateProduct(false);
+            jpaHotDealRepository.save(hotDeal);
+        });
     }
 }

@@ -55,11 +55,17 @@ public class MessageConsumer {
                 }
 
                 HotDeal beforeHotDeal = HotDeal.from(hotDealMessageContent);
-                hotDealRepository.findTopByHotDealTitleOrderByHotDealIdDesc(hotDealMessageContent.getTitle())
-                        .ifPresent(hotDeal -> {
-                            beforeHotDeal.setProduct(hotDeal.getProduct());
-                            beforeHotDeal.setIsCandidateProduct(false);
-                        });
+                //후보 상품명 등록
+                if (hotDealRepository.findTopByHotDealTitleOrderByHotDealIdDesc(hotDealMessageContent.getTitle()).isPresent()){
+                    HotDeal hotDeal = hotDealRepository.findTopByHotDealTitleOrderByHotDealIdDesc(hotDealMessageContent.getTitle()).get();
+                    beforeHotDeal.setProduct(hotDeal.getProduct());
+                    beforeHotDeal.setIsCandidateProduct(false);
+                }else {
+                    if (hotDealMessageContent.getCandidateProductId()!=null){
+                        beforeHotDeal.setProduct(Product.builder().productId(hotDealMessageContent.getCandidateProductId()).build());
+                    }
+                }
+
                 //반품 상품인 경우 반품 정보 등록하고 반품 아이템 아이디 추가하기
                 log.info(hotDealMessageContent.getReturnItemQuality());
                 if (hotDealMessageContent.getReturnItemQuality()!=null){
@@ -75,10 +81,8 @@ public class MessageConsumer {
                 if (hotDealMessageContent.getManualDeleteMode()!=null){
                     beforeHotDeal.setManualDeleteMode(hotDealMessageContent.getManualDeleteMode());
                 }
-                //후보 상품명 등록
-                if (hotDealMessageContent.getCandidateProductId()!=null){
-                    beforeHotDeal.setProduct(Product.builder().productId(hotDealMessageContent.getCandidateProductId()).build());
-                }
+
+
                 HotDeal hotDeal = hotDealRepository.save(beforeHotDeal);
 
 

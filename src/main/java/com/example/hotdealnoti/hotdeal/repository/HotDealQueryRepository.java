@@ -118,11 +118,11 @@ public class HotDealQueryRepository {
                 .from(hotDeal)
                 .where(
                         hotDeal.isDelete.eq(false),
-                        hotDeal.product.productId.eq(1l)
+                        hotDeal.product.productId.ne(1l)
                         , hotDeal.returnItem.returnItemId.eq(0l)
+                        , hotDeal.isCandidateProduct.eq(true)
                 )
-                .leftJoin(hotDealCandidate).on(hotDealCandidate.hotDealId.eq(hotDeal.hotDealId))
-                .leftJoin(product).on(product.productId.eq(hotDealCandidate.candidateProductId))
+                .leftJoin(product).on(product.productId.eq(hotDeal.product.productId))
                 .orderBy(hotDeal.hotDealId.desc())
                 .limit(30)
                 .fetch();

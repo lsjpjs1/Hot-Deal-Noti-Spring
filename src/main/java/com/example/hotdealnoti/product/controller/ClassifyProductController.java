@@ -38,4 +38,13 @@ public class ClassifyProductController {
                 .build();
 
     }
+
+    @PatchMapping(value = "/hot-deals/{hotDealId}/pass")
+    public ResponseEntity passHotDeal(@PathVariable Long hotDealId) {
+        classifyProductService.passHotDeal(hotDealId);
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
+
+    }
 }
