@@ -58,8 +58,14 @@ public class MessageConsumer {
                 //후보 상품명 등록
                 if (hotDealRepository.findTopByHotDealTitleOrderByHotDealIdDesc(hotDealMessageContent.getTitle()).isPresent()){
                     HotDeal hotDeal = hotDealRepository.findTopByHotDealTitleOrderByHotDealIdDesc(hotDealMessageContent.getTitle()).get();
-                    beforeHotDeal.setProduct(hotDeal.getProduct());
-                    beforeHotDeal.setIsCandidateProduct(false);
+                    if (!hotDeal.getProduct().getProductId().equals(1l)){
+                        beforeHotDeal.setProduct(hotDeal.getProduct());
+                        beforeHotDeal.setIsCandidateProduct(false);
+                    }else {
+                        if (hotDealMessageContent.getCandidateProductId()!=null){
+                            beforeHotDeal.setProduct(Product.builder().productId(hotDealMessageContent.getCandidateProductId()).build());
+                        }
+                    }
                 }else {
                     if (hotDealMessageContent.getCandidateProductId()!=null){
                         beforeHotDeal.setProduct(Product.builder().productId(hotDealMessageContent.getCandidateProductId()).build());
