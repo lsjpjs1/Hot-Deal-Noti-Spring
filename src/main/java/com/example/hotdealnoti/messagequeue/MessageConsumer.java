@@ -43,9 +43,10 @@ public class MessageConsumer {
                 if(optionalHotDeal.isPresent()){
                     HotDeal hotDeal = optionalHotDeal.get();
 
+                    hotDeal.setHotDealScrapingTime(new Timestamp(System.currentTimeMillis()));
                     //영구삭제 아닌 경우
                     if (!hotDeal.getIsPermanentDelete()){
-                        hotDeal.setHotDealScrapingTime(new Timestamp(System.currentTimeMillis()));
+
                         hotDeal.setHotDealThumbnailUrl(hotDealMessageContent.getHotDealThumbnailUrl());
                         hotDeal.setIsDelete(false);
                         hotDealRepository.save(hotDeal);
