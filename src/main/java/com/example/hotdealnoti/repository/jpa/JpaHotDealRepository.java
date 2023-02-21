@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface JpaHotDealRepository extends JpaRepository<HotDeal, Long> {
-    Optional<HotDeal> findTopByHotDealTitleOrderByHotDealIdDesc(String hotDealTitle);
+    Optional<HotDeal> findTopByHotDealTitleAndIsCandidateProductOrderByHotDealIdDesc(String hotDealTitle,Boolean isCandidateProduct);
     Optional<HotDeal> findTopByHotDealTitleAndHotDealDiscountPrice(String hotDealTitle,Integer discountPrice);
     List<HotDeal> findByHotDealScrapingTimeBeforeAndIsDeleteAndReturnItemAndManualDeleteMode(Timestamp timestamp, Boolean isDelete, ReturnItem returnItem, Boolean manualDeleteMode);
     List<HotDeal> findByHotDealScrapingTimeBeforeAndIsDeleteAndReturnItemNot(Timestamp timestamp, Boolean isDelete, ReturnItem returnItem);

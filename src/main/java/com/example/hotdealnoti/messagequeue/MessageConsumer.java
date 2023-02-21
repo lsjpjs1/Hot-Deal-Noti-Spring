@@ -57,8 +57,8 @@ public class MessageConsumer {
 
                 HotDeal beforeHotDeal = HotDeal.from(hotDealMessageContent);
                 //후보 상품명 등록
-                if (hotDealRepository.findTopByHotDealTitleOrderByHotDealIdDesc(hotDealMessageContent.getTitle()).isPresent()){
-                    HotDeal hotDeal = hotDealRepository.findTopByHotDealTitleOrderByHotDealIdDesc(hotDealMessageContent.getTitle()).get();
+                if (hotDealRepository.findTopByHotDealTitleAndIsCandidateProductOrderByHotDealIdDesc(hotDealMessageContent.getTitle(),false).isPresent()){
+                    HotDeal hotDeal = hotDealRepository.findTopByHotDealTitleAndIsCandidateProductOrderByHotDealIdDesc(hotDealMessageContent.getTitle(),false).get();
                     if (!hotDeal.getProduct().getProductId().equals(1l)){
                         beforeHotDeal.setProduct(hotDeal.getProduct());
                         beforeHotDeal.setIsCandidateProduct(false);
