@@ -117,10 +117,10 @@ public class HotDealQueryRepository {
                 )
                 .from(hotDeal)
                 .where(
-                        hotDeal.isDelete.eq(false),
-                        hotDeal.product.productId.ne(1l)
-                        , hotDeal.returnItem.returnItemId.eq(0l)
-                        , hotDeal.isCandidateProduct.eq(true)
+//                        hotDeal.isDelete.eq(false),
+//                        hotDeal.product.productId.ne(1l)
+//                        , hotDeal.returnItem.returnItemId.eq(0l)
+                         hotDeal.isCandidateProduct.eq(true)
                 )
                 .leftJoin(product).on(product.productId.eq(hotDeal.product.productId))
                 .orderBy(hotDeal.hotDealId.desc())

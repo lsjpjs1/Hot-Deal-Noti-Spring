@@ -47,4 +47,13 @@ public class ClassifyProductController {
                 .build();
 
     }
+
+    @PatchMapping(value = "/hot-deals/{hotDealId}/not-classify")
+    public ResponseEntity notClassifyHotDeal(@PathVariable Long hotDealId) {
+        classifyProductService.notClassifyHotDeal(hotDealId);
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
+
+    }
 }

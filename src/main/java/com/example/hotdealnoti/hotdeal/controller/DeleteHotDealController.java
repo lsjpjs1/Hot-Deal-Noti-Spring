@@ -53,6 +53,16 @@ public class DeleteHotDealController {
                 .build();
     }
 
+    @DeleteMapping("/hot-deals/{hotDealId}/product")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity deleteProductIdHotDeal(@PathVariable Long hotDealId) {
+
+        deleteHotDealService.deleteProductIdHotDeal(hotDealId);
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
+    }
+
 
 
 

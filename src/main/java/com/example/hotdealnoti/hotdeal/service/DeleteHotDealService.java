@@ -5,6 +5,7 @@ import com.example.hotdealnoti.exception.ErrorCode;
 import com.example.hotdealnoti.hotdeal.domain.FavoriteHotDeal;
 import com.example.hotdealnoti.hotdeal.dto.HotDealDto;
 import com.example.hotdealnoti.messagequeue.domain.HotDeal;
+import com.example.hotdealnoti.product.domain.Product;
 import com.example.hotdealnoti.repository.jpa.JpaFavoriteHotDealRepository;
 import com.example.hotdealnoti.repository.jpa.JpaHotDealRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,10 @@ public class DeleteHotDealService {
         HotDeal hotDeal = jpaHotDealRepository.findById(hotDealId).get();
         hotDeal.setIsDelete(true);
         hotDeal.setIsPermanentDelete(true);
+        if (hotDeal.getIsCandidateProduct()){
+            hotDeal.setProduct(Product.builder().productId(1l).build());
+            hotDeal.setIsCandidateProduct(false);
+        }
         jpaHotDealRepository.save(hotDeal);
     }
 
@@ -32,6 +37,10 @@ public class DeleteHotDealService {
 
         HotDeal hotDeal = jpaHotDealRepository.findById(hotDealId).get();
         hotDeal.setIsDelete(true);
+        if (hotDeal.getIsCandidateProduct()){
+            hotDeal.setProduct(Product.builder().productId(1l).build());
+            hotDeal.setIsCandidateProduct(false);
+        }
         jpaHotDealRepository.save(hotDeal);
     }
 
@@ -43,5 +52,16 @@ public class DeleteHotDealService {
         favoriteHotDeal.setIsDelete(true);
         jpaFavoriteHotDealRepository.save(favoriteHotDeal);
     }
+
+    @Transactional
+    public void deleteProductIdHotDeal(Long hotDealId) {
+
+        HotDeal hotDeal = jpaHotDealRepository.findById(hotDealId).get();
+        hotDeal.setProduct(Product.builder().productId(1l).build());
+        hotDeal.setIsCandidateProduct(true);
+        jpaHotDealRepository.save(hotDeal);
+    }
+
+
 
 }

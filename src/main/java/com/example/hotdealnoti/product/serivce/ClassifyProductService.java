@@ -80,4 +80,14 @@ public class ClassifyProductService {
             jpaHotDealRepository.save(hotDeal);
         });
     }
+
+    @Transactional
+    public void notClassifyHotDeal(Long hotDealId) {
+
+        jpaHotDealRepository.findById(hotDealId).ifPresent(hotDeal -> {
+            hotDeal.setIsCandidateProduct(false);
+            hotDeal.setProduct(Product.builder().productId(1l).build());
+            jpaHotDealRepository.save(hotDeal);
+        });
+    }
 }
