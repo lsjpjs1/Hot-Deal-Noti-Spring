@@ -14,6 +14,7 @@ public class HotDealMessageDto {
     @ToString
     public static class HotDealMessageWrapper{
         private List<HotDealMessageContent> hotDealMessages;
+        private Long productTypeId;
     }
 
     @Getter
