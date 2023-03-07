@@ -1,11 +1,11 @@
 package com.example.hotdealnoti.hotdeal.dto;
 
-import com.example.hotdealnoti.hotdeal.repository.HotDealQueryRepository;
-import com.example.hotdealnoti.messagequeue.domain.HotDeal;
 import com.example.hotdealnoti.product.domain.Product;
+import com.example.hotdealnoti.product.dto.ProductDto;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HotDealDto {
@@ -89,8 +89,9 @@ public class HotDealDto {
 
     @Getter
     @Setter
-    @AllArgsConstructor
     @ToString
+    @AllArgsConstructor
+    @NoArgsConstructor
     @Builder
     public static class HotDealPreview {
         private Long hotDealId;
@@ -121,6 +122,35 @@ public class HotDealDto {
         private Long productPurposeId;
 
         private Boolean isCandidateProduct;
+
+        //얘는 항시 맨 밑에 두고 필드 추가되면 아래 생성자에 추가해줘야 함
+        private List<ProductDto.ProductAdditionalFunctionDTO> productAdditionalFunctionDTOList = new ArrayList<>();
+
+
+        public HotDealPreview(Long hotDealId, String title, Integer originalPrice, Integer discountPrice, Integer discountRate, String link, Timestamp uploadTime, Integer viewCount, String sourceSite, Long productId, String modelName, String manufacturer, String productPurpose, Boolean isDelete, String hotDealThumbnailUrl, Long returnItemId, String returnItemQuality, String returnItemQualityDetail, String returnItemSaleStatus, Integer productRanking, Long productPurposeId, Boolean isCandidateProduct) {
+            this.hotDealId = hotDealId;
+            this.title = title;
+            this.originalPrice = originalPrice;
+            this.discountPrice = discountPrice;
+            this.discountRate = discountRate;
+            this.link = link;
+            this.uploadTime = uploadTime;
+            this.viewCount = viewCount;
+            this.sourceSite = sourceSite;
+            this.productId = productId;
+            this.modelName = modelName;
+            this.manufacturer = manufacturer;
+            this.productPurpose = productPurpose;
+            this.isDelete = isDelete;
+            this.hotDealThumbnailUrl = hotDealThumbnailUrl;
+            this.returnItemId = returnItemId;
+            this.returnItemQuality = returnItemQuality;
+            this.returnItemQualityDetail = returnItemQualityDetail;
+            this.returnItemSaleStatus = returnItemSaleStatus;
+            this.productRanking = productRanking;
+            this.productPurposeId = productPurposeId;
+            this.isCandidateProduct = isCandidateProduct;
+        }
     }
 
 

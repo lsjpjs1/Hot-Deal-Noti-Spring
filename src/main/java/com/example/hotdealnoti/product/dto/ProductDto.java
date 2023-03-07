@@ -107,11 +107,25 @@ public class ProductDto {
         private String fullModelName;
     }
 
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @ToString
+    public static class ProductAdditionalFunctionDTO{
+        private Long productFunctionTypeId;
+        private Long productFunctionId;
+        private String productFunctionTypeName;
+        private String productFunctionName;
+    }
+
 
     public interface ProductRankingInfo{
         Long getProductId();
         Long getProductPurposeId();
         Integer getProductRankingNumber();
     }
+
 }
 

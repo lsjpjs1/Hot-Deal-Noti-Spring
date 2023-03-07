@@ -7,12 +7,15 @@ import com.example.hotdealnoti.hotdeal.dto.HotDealDto;
 import com.example.hotdealnoti.messagequeue.domain.QHotDeal;
 import com.example.hotdealnoti.messagequeue.domain.QHotDealCandidate;
 import com.example.hotdealnoti.product.domain.QProduct;
+import com.example.hotdealnoti.product.domain.QProductAdditionalFunction;
 import com.example.hotdealnoti.product.domain.QProductRanking;
+import com.example.hotdealnoti.product.dto.ProductDto;
 import com.querydsl.core.types.ConstructorExpression;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +31,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import static com.querydsl.core.types.dsl.Expressions.list;
+import static com.querydsl.core.types.dsl.Expressions.nullExpression;
+
 @Repository
 @RequiredArgsConstructor
 @Slf4j
@@ -39,6 +45,30 @@ public class HotDealQueryRepository {
     private final QRecommendationHotDeal recommendationHotDeal = QRecommendationHotDeal.recommendationHotDeal;
     private final QFavoriteHotDeal favoriteHotDeal = QFavoriteHotDeal.favoriteHotDeal;
     private final QProductRanking productRanking = QProductRanking.productRanking;
+    private final QProductAdditionalFunction productAdditionalFunction = QProductAdditionalFunction.productAdditionalFunction;
+    public <T extends Iterable<HotDealDto.HotDealPreview>> T setAdditionalFunction(Class<T> typeToken, T iterableObject) {
+        iterableObject.forEach(hotDealPreview -> {
+            hotDealPreview.setProductAdditionalFunctionDTOList(findProductAdditionalFunctions(hotDealPreview.getProductId()));
+        });
+        return typeToken.cast(iterableObject);
+    }
+
+    public List<ProductDto.ProductAdditionalFunctionDTO> findProductAdditionalFunctions(Long productId){
+        return jpaQueryFactory
+                .select(
+                        Projections.constructor(
+                                ProductDto.ProductAdditionalFunctionDTO.class,
+                                productAdditionalFunction.productFunction.productFunctionType.productFunctionTypeId,
+                                productAdditionalFunction.productFunction.productFunctionId,
+                                productAdditionalFunction.productFunction.productFunctionType.productFunctionTypeName,
+                                productAdditionalFunction.productFunction.productFunctionName
+                        )
+                )
+                .from(productAdditionalFunction)
+                .where(productAdditionalFunction.product.productId.eq(productId))
+                .fetch();
+    }
+
     public Page<HotDealDto.HotDealPreview> findHotDeals(HotDealDto.GetHotDealsRequest getHotDealsRequest, Pageable pageable) {
         List<HotDealDto.HotDealPreview> hotDealPreviews = jpaQueryFactory
                 .select(
@@ -59,13 +89,14 @@ public class HotDealQueryRepository {
                 .from(hotDeal)
                 .where(getCondition(getHotDealsRequest))
                 .fetchOne();
-
-        return new PageImpl(hotDealPreviews, pageable, count);
+        Page<HotDealDto.HotDealPreview> hotDeals = new PageImpl(hotDealPreviews, pageable, count);
+        Page page = setAdditionalFunction(Page.class, hotDeals);
+        return hotDeals;
 
     }
 
     public List<HotDealDto.HotDealPreview> findRecommendationHotDeals() {
-        return jpaQueryFactory
+        List<HotDealDto.HotDealPreview> hotDealPreviews = jpaQueryFactory
                 .select(
                         getHotDealPreviewConstructorExpression()
                 )
@@ -77,13 +108,13 @@ public class HotDealQueryRepository {
                 )
                 .orderBy(hotDeal.hotDealUploadTime.desc())
                 .fetch();
-
+        return setAdditionalFunction(List.class, hotDealPreviews);
 
     }
 
 
     public List<HotDealDto.HotDealPreview> findFavoriteHotDeals(Account account) {
-        return jpaQueryFactory
+        List<HotDealDto.HotDealPreview> hotDealPreviews = jpaQueryFactory
                 .select(
                         getHotDealPreviewConstructorExpression()
                 )
@@ -96,11 +127,11 @@ public class HotDealQueryRepository {
                 )
                 .fetch();
 
-
+        return setAdditionalFunction(List.class, hotDealPreviews);
     }
 
 
-    public List<HotDealDto.NotClassifiedHotDeal> findNotClassifiedHotDeals(){
+    public List<HotDealDto.NotClassifiedHotDeal> findNotClassifiedHotDeals() {
 
         return jpaQueryFactory
                 .select(
@@ -113,14 +144,14 @@ public class HotDealQueryRepository {
                                 hotDeal.hotDealLink,
                                 hotDeal.hotDealUploadTime,
                                 product.modelName
-                                )
+                        )
                 )
                 .from(hotDeal)
                 .where(
 //                        hotDeal.isDelete.eq(false),
 //                        hotDeal.product.productId.ne(1l)
-//                        , hotDeal.returnItem.returnItemId.eq(0l)
-                         hotDeal.isCandidateProduct.eq(true)
+                        hotDeal.returnItem.returnItemId.eq(0l)
+                        , hotDeal.isCandidateProduct.eq(true)
                 )
                 .leftJoin(product).on(product.productId.eq(hotDeal.product.productId))
                 .orderBy(hotDeal.hotDealId.desc())
@@ -130,7 +161,7 @@ public class HotDealQueryRepository {
     }
 
     public HotDealDto.HotDealPreview findHotDealByHotDealId(Long hotDealId) {
-        return jpaQueryFactory
+        HotDealDto.HotDealPreview hotDealPreview = jpaQueryFactory
                 .select(
                         getHotDealPreviewConstructorExpression()
                 )
@@ -141,7 +172,8 @@ public class HotDealQueryRepository {
                 )
                 .fetchOne();
 
-
+        hotDealPreview.setProductAdditionalFunctionDTOList(findProductAdditionalFunctions(hotDealPreview.getProductId()));
+        return hotDealPreview;
 
     }
 
@@ -158,7 +190,7 @@ public class HotDealQueryRepository {
                 .leftJoin(productRanking).on(productRanking.product.productId.eq(hotDeal.product.productId))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(Arrays.asList(new OrderSpecifier(Order.ASC, hotDeal.isDelete),new OrderSpecifier(Order.ASC,hotDeal.hotDealDiscountPrice)).stream().toArray(OrderSpecifier[]::new))
+                .orderBy(Arrays.asList(new OrderSpecifier(Order.ASC, hotDeal.isDelete), new OrderSpecifier(Order.ASC, hotDeal.hotDealDiscountPrice)).stream().toArray(OrderSpecifier[]::new))
                 .fetch();
 
         Long count = jpaQueryFactory
@@ -167,7 +199,8 @@ public class HotDealQueryRepository {
                 .where(getProductIdCondition(productId))
                 .fetchOne();
 
-        return new PageImpl(hotDealPreviews, pageable, count);
+        Page page = new PageImpl(hotDealPreviews, pageable, count);
+        return setAdditionalFunction(Page.class, page);
 
     }
 
@@ -203,13 +236,15 @@ public class HotDealQueryRepository {
                 .where(getWeeklyPopularCondition())
                 .fetchOne();
 
-        return new PageImpl(hotDealPreviews, pageable, count);
+
+        Page page = new PageImpl(hotDealPreviews, pageable, count);
+        return setAdditionalFunction(Page.class, page);
 
     }
 
     public List<HotDealDto.HotDealPreview> findEntireWeeklyPopularHotDeal() {
 
-        return jpaQueryFactory
+        List<HotDealDto.HotDealPreview> hotDealPreviews = jpaQueryFactory
                 .select(
                         getHotDealPreviewConstructorExpression()
                 )
@@ -220,13 +255,12 @@ public class HotDealQueryRepository {
                 )
                 .fetch();
 
-
-
+        return setAdditionalFunction(List.class, hotDealPreviews);
     }
 
     private BooleanExpression getWeeklyPopularCondition() {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_WEEK,-7);
+        calendar.add(Calendar.DAY_OF_WEEK, -7);
         return hotDeal.isDelete.eq(Boolean.FALSE)
                 .and(hotDeal.hotDealViewCount.goe(10))
                 .and(hotDeal.hotDealUploadTime.after(new Timestamp(calendar.getTimeInMillis())));
@@ -277,18 +311,18 @@ public class HotDealQueryRepository {
                 .and(getManufacturerCondition(getHotDealsRequest.getManufacturerId()))
                 .and(getProductPurposeCondition(getHotDealsRequest.getProductPurposeId()))
                 .and(getShowReturnItemCondition(getHotDealsRequest.getIsShowReturnItem()))
-                .and(getDiscountRateCondition(getHotDealsRequest.getMinDiscountRate(),getHotDealsRequest.getMaxDiscountRate()));
+                .and(getDiscountRateCondition(getHotDealsRequest.getMinDiscountRate(), getHotDealsRequest.getMaxDiscountRate()));
     }
 
     private BooleanExpression getDiscountRateCondition(Integer minDiscountRate, Integer maxDiscountRate) {
         Integer minQueryDiscountRate = 0;
         Integer maxQueryDiscountRate = 100;
 
-        if (minDiscountRate!=null){
-            minQueryDiscountRate  = minDiscountRate;
+        if (minDiscountRate != null) {
+            minQueryDiscountRate = minDiscountRate;
         }
 
-        if (maxDiscountRate!=null){
+        if (maxDiscountRate != null) {
             maxQueryDiscountRate = maxDiscountRate;
         }
 
@@ -340,7 +374,7 @@ public class HotDealQueryRepository {
         }
         if (isShowReturnItem) {
             return hotDeal.returnItem.returnItemId.eq(0l).not();
-        }else{
+        } else {
             return hotDeal.returnItem.returnItemId.eq(0l);
         }
     }
