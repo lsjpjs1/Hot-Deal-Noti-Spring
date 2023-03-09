@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -32,6 +33,15 @@ public class GetProductController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(getProductService.getProductsRanking(getProductsRankingRequest));
+
+    }
+
+    @GetMapping(value = "/product-function-types/product-type/{productTypeId}")
+    public ResponseEntity<ProductDto.GetProductFunctionTypesResponse> getProductFunctionTypes(@PathVariable Long productTypeId) {
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(getProductService.getProductFunctionTypes(productTypeId));
 
     }
 }

@@ -74,6 +74,39 @@ public class ProductDto {
     @NoArgsConstructor
     @Builder
     @ToString
+    public static class GetProductFunctionTypesResponse{
+        private List<GetProductFunctionTypeDTO> productFunctionTypes;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @ToString
+    public static class GetProductFunctionTypeDTO{
+        private Long productFunctionTypeId;
+        private String productFunctionTypeName;
+        private List<GetProductFunctionDTO> productFunctions;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @ToString
+    public static class GetProductFunctionDTO{
+        private Long productFunctionId;
+        private String productFunctionName;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @ToString
     public static class GetProductsRankingResponse{
         private List<GetProductsRankingDTO> productsRankingDTOList;
     }

@@ -14,6 +14,7 @@ public class HotDealDto {
     @AllArgsConstructor
     @ToString
     @Builder
+    @NoArgsConstructor
     public static class GetHotDealsRequest {
         private String searchBody;
         private List<String> sourceSites;
@@ -24,6 +25,31 @@ public class HotDealDto {
         private Integer minDiscountRate;
         private Integer maxDiscountRate;
 
+        private String productFunctionFiltersJsonString;
+        private List<ProductFunctionFilter> productFunctionFilters;
+
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @ToString
+    @Builder
+    @NoArgsConstructor
+    public static class ProductFunctionFiltersWrapper {
+        private List<ProductFunctionFilter> productFunctionFilters;
+
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @ToString
+    @Builder
+    @NoArgsConstructor
+    public static class ProductFunctionFilter {
+        private Long productFunctionTypeId;
+        private List<Long> productFunctionIdList;
     }
 
     @Getter
