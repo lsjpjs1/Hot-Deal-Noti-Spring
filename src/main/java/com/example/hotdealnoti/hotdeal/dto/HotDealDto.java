@@ -49,6 +49,7 @@ public class HotDealDto {
     @NoArgsConstructor
     public static class ProductFunctionFilter {
         private Long productFunctionTypeId;
+        private Boolean isAndFilter;
         private List<Long> productFunctionIdList;
     }
 

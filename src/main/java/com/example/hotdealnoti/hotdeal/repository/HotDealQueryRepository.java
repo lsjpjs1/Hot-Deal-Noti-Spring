@@ -362,15 +362,28 @@ public class HotDealQueryRepository {
                 if (productFunctionFilter.getProductFunctionIdList().isEmpty()){
                     continue;
                 }
-                BooleanExpression innerBooleanExpression = Expressions.asBoolean(false).isTrue();
+
+                BooleanExpression innerBooleanExpression = productFunctionFilter.getIsAndFilter()? Expressions.asBoolean(true).isTrue():Expressions.asBoolean(false).isTrue();
+
                 for (Long productFunctionId: productFunctionFilter.getProductFunctionIdList()){
-                    innerBooleanExpression = innerBooleanExpression.or(
-                            new CaseBuilder()
-                                    .when(productAdditionalFunction.productFunction.productFunctionId.eq(productFunctionId)).then(1)
-                                    .otherwise(0)
-                                    .max()
-                                    .eq(1)
-                    );
+                    if (productFunctionFilter.getIsAndFilter()){
+                        innerBooleanExpression = innerBooleanExpression.and(
+                                new CaseBuilder()
+                                        .when(productAdditionalFunction.productFunction.productFunctionId.eq(productFunctionId)).then(1)
+                                        .otherwise(0)
+                                        .max()
+                                        .eq(1)
+                        );
+                    }else {
+                        innerBooleanExpression = innerBooleanExpression.or(
+                                new CaseBuilder()
+                                        .when(productAdditionalFunction.productFunction.productFunctionId.eq(productFunctionId)).then(1)
+                                        .otherwise(0)
+                                        .max()
+                                        .eq(1)
+                        );
+                    }
+
                 }
                 booleanExpression = booleanExpression.and(innerBooleanExpression);
             }
