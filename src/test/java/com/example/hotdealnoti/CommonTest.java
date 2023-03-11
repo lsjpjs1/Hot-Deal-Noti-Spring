@@ -23,7 +23,6 @@ import java.util.List;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("prod")
 class CommonTest {
     @Autowired
     private MailUtil mailUtil;

@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -47,7 +46,7 @@ public class GetProductService {
         List<ProductFunctionType> productFunctionTypes = jpaProductFunctionTypeRepository.findByProductTypeAndIsDisplay(ProductType.builder().productTypeId(productTypeId).build(),true);
         List<ProductDto.GetProductFunctionTypeDTO> getProductFunctionTypeDTOS = productFunctionTypes.stream()
                 .map(productFunctionType -> {
-                    List<ProductFunction> productFunctions = jpaProductFunctionRepository.findByProductFunctionType(ProductFunctionType.builder().productFunctionTypeId(productFunctionType.getProductFunctionTypeId()).build());
+                    List<ProductFunction> productFunctions = jpaProductFunctionRepository.findByProductFunctionTypeOrderByProductFunctionNameDesc(ProductFunctionType.builder().productFunctionTypeId(productFunctionType.getProductFunctionTypeId()).build());
                     List<ProductDto.GetProductFunctionDTO> getProductFunctionDTOS = productFunctions.stream()
                             .map(productFunction -> ProductDto.GetProductFunctionDTO.builder().productFunctionId(productFunction.getProductFunctionId()).productFunctionName(productFunction.getProductFunctionName()).build())
                             .toList();
