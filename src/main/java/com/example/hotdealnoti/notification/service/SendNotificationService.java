@@ -9,10 +9,12 @@ import com.example.hotdealnoti.exception.CustomException;
 import com.example.hotdealnoti.exception.ErrorCode;
 import com.example.hotdealnoti.hotdeal.domain.ConnectionHistoryRedis;
 import com.example.hotdealnoti.messagequeue.domain.HotDeal;
+import com.example.hotdealnoti.notification.domain.KeywordNotification;
 import com.example.hotdealnoti.notification.domain.KeywordNotificationRedis;
 import com.example.hotdealnoti.notification.domain.Notification;
 import com.example.hotdealnoti.repository.jpa.JpaAccountRepository;
 import com.example.hotdealnoti.repository.jpa.JpaConnectionHistoryRepository;
+import com.example.hotdealnoti.repository.jpa.JpaKeywordNotificationRepository;
 import com.example.hotdealnoti.repository.jpa.JpaNotificationRepository;
 import com.example.hotdealnoti.repository.redis.RedisConnectionHistoryRepository;
 import com.example.hotdealnoti.repository.redis.RedisKeywordNotificationRepository;
@@ -36,16 +38,17 @@ public class SendNotificationService {
 
     private final JpaNotificationRepository jpaNotificationRepository;
     private final RedisKeywordNotificationRepository redisKeywordNotificationRepository;
+    private final JpaKeywordNotificationRepository jpaKeywordNotificationRepository;
     private final JpaAccountRepository jpaAccountRepository;
     private final FCMNotificationService fcmNotificationService;
     private final MailUtil mailUtil;
     @Transactional
     public void sendKeywordNotification(HotDeal hotDeal) {
         //해당 핫딜 키워드로 등록해놓은 user 찾기
-        Iterable<KeywordNotificationRedis> keywordNotificationRedisAll = redisKeywordNotificationRepository.findAll();
+        List<KeywordNotification> keywordNotifications = jpaKeywordNotificationRepository.findByIsDelete(false);
 
-        log.info(keywordNotificationRedisAll.toString());
-        keywordNotificationRedisAll.forEach(keywordNotificationRedis -> {
+
+        keywordNotifications.forEach(keywordNotificationRedis -> {
 
             if (hotDeal.getHotDealTitle().toLowerCase().replace(" ","").contains(keywordNotificationRedis.getKeywordNotificationBody().toLowerCase().replace(" ",""))){
 

@@ -11,5 +11,6 @@ import java.util.Optional;
 public interface JpaKeywordNotificationRepository extends JpaRepository<KeywordNotification,Long> {
     List<KeywordNotification> findByAccountIdAndIsDelete(Long accountId,Boolean isDelete);
     List<KeywordNotification> findByIsDeleteAndIsOnRedis(Boolean isDelete,Boolean isOnRedis);
+    List<KeywordNotification> findByIsDelete(Boolean isDelete);
     List<KeywordNotification> findByIsOnRedis(Boolean isOnRedis);
 }
