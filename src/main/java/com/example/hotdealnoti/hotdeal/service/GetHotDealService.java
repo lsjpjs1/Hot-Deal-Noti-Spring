@@ -1,13 +1,11 @@
 package com.example.hotdealnoti.hotdeal.service;
 
 import com.example.hotdealnoti.auth.domain.Account;
-import com.example.hotdealnoti.hotdeal.domain.HotDealViewHistory;
 import com.example.hotdealnoti.hotdeal.domain.HotDealViewHistoryRedis;
 import com.example.hotdealnoti.hotdeal.dto.HotDealDto;
 import com.example.hotdealnoti.hotdeal.repository.HotDealQueryRepository;
 import com.example.hotdealnoti.product.domain.Product;
 import com.example.hotdealnoti.repository.jpa.JpaHotDealRepository;
-import com.example.hotdealnoti.repository.jpa.JpaHotDealViewHistoryRepository;
 import com.example.hotdealnoti.repository.jpa.JpaProductRepository;
 import com.example.hotdealnoti.repository.redis.RedisHotDealViewHistoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @RequiredArgsConstructor
@@ -52,15 +51,24 @@ public class GetHotDealService {
     }
 
     @Transactional
-    public Page<HotDealDto.HotDealPreview> getHotDealsByProductId(Long productId, Pageable pageable, String userIp) {
+    public HotDealDto.GetHotDealByProductIdResponse getHotDealsByProductId(Long productId, Pageable pageable, String userIp) {
         HotDealViewHistoryRedis hotDealViewHistoryRedis = HotDealViewHistoryRedis.builder()
                 .userIp(userIp)
                 .searchBody(jpaProductRepository.findById(productId).get().getModelName())
                 .sortCondition(pageable.getSort().toString())
                 .hotDealViewTime(new Timestamp(System.currentTimeMillis()))
                 .build();
+
+        AtomicReference<Integer> historicalLowPrice= new AtomicReference<>(0);
+        jpaHotDealRepository.findTop1ByProductAndIsCandidateProductOrderByHotDealDiscountPriceAsc(Product.builder().productId(productId).build(),false)
+                        .ifPresent((hotDeal -> {
+                            historicalLowPrice.set(hotDeal.getHotDealDiscountPrice());}));
         redisHotDealViewHistoryRepository.save(hotDealViewHistoryRedis);
-        return hotDealQueryRepository.findHotDealsByProductId(productId, pageable);
+        HotDealDto.GetHotDealByProductIdResponse getHotDealByProductIdResponse = HotDealDto.GetHotDealByProductIdResponse.builder()
+                .hotDeals(hotDealQueryRepository.findHotDealsByProductId(productId, pageable))
+                .historicalLowPrice(historicalLowPrice.get())
+                .build();
+        return getHotDealByProductIdResponse;
     }
 
     @Transactional

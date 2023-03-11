@@ -59,7 +59,7 @@ public class GetHotDealController {
     }
 
     @GetMapping(value = "/hot-deals/{productId}")
-    public ResponseEntity<Page<HotDealDto.HotDealPreview>> getHotDealsByProductId(Pageable pageable, HttpServletRequest httpServletRequest, @PathVariable Long productId) {
+    public ResponseEntity<HotDealDto.GetHotDealByProductIdResponse> getHotDealsByProductId(Pageable pageable, HttpServletRequest httpServletRequest, @PathVariable Long productId) {
 
         String ip = getIpFromRequest(httpServletRequest);
         return ResponseEntity

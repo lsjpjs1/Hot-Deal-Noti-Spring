@@ -3,6 +3,7 @@ package com.example.hotdealnoti.hotdeal.dto;
 import com.example.hotdealnoti.product.domain.Product;
 import com.example.hotdealnoti.product.dto.ProductDto;
 import lombok.*;
+import org.springframework.data.domain.Page;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -180,6 +181,16 @@ public class HotDealDto {
         }
     }
 
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @ToString
+    @Builder
+    public static class GetHotDealByProductIdResponse {
+        private Page<HotDealPreview> hotDeals;
+        private Integer historicalLowPrice;
+
+    }
 
     @Getter
     @Setter

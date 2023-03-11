@@ -85,7 +85,7 @@ public class HotDealQueryRepository {
                 .where(
                         getCondition(getHotDealsRequest)
                 )
-                .groupBy(hotDeal.hotDealId,hotDeal.hotDealUploadTime,hotDeal.hotDealViewCount,hotDeal.hotDealDiscountPrice,hotDeal.hotDealUploadTime)
+                .groupBy(hotDeal.hotDealId,hotDeal.hotDealUploadTime,hotDeal.hotDealViewCount,hotDeal.hotDealDiscountPrice,hotDeal.hotDealUploadTime, hotDeal.hotDealDiscountRate)
                 .having(getHavingCondition(getHotDealsRequest))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -96,7 +96,7 @@ public class HotDealQueryRepository {
                 .select(hotDeal.hotDealId.count())
                 .from(hotDeal)
                 .leftJoin(productAdditionalFunction).on(hotDeal.product.productId.eq(productAdditionalFunction.product.productId))
-                .groupBy(hotDeal.hotDealId,hotDeal.hotDealUploadTime,hotDeal.hotDealViewCount,hotDeal.hotDealDiscountPrice,hotDeal.hotDealUploadTime)
+                .groupBy(hotDeal.hotDealId,hotDeal.hotDealUploadTime,hotDeal.hotDealViewCount,hotDeal.hotDealDiscountPrice,hotDeal.hotDealUploadTime, hotDeal.hotDealDiscountRate)
                 .having(getHavingCondition(getHotDealsRequest))
                 .where(getCondition(getHotDealsRequest))
                 .fetch();
@@ -118,7 +118,7 @@ public class HotDealQueryRepository {
                 .where(
                         hotDeal.isDelete.eq(false)
                 )
-                .groupBy(hotDeal.hotDealId,hotDeal.hotDealUploadTime,hotDeal.hotDealViewCount,hotDeal.hotDealDiscountPrice,hotDeal.hotDealUploadTime)
+                .groupBy(hotDeal.hotDealId,hotDeal.hotDealUploadTime,hotDeal.hotDealViewCount,hotDeal.hotDealDiscountPrice,hotDeal.hotDealUploadTime, hotDeal.hotDealDiscountRate)
                 .orderBy(hotDeal.hotDealUploadTime.desc())
                 .fetch();
         return setAdditionalFunction(List.class, hotDealPreviews);
@@ -138,7 +138,7 @@ public class HotDealQueryRepository {
                         favoriteHotDeal.isDelete.eq(false),
                         favoriteHotDeal.account.accountId.eq(account.getAccountId())
                 )
-                .groupBy(hotDeal.hotDealId,hotDeal.hotDealUploadTime,hotDeal.hotDealViewCount,hotDeal.hotDealDiscountPrice,hotDeal.hotDealUploadTime)
+                .groupBy(hotDeal.hotDealId,hotDeal.hotDealUploadTime,hotDeal.hotDealViewCount,hotDeal.hotDealDiscountPrice,hotDeal.hotDealUploadTime, hotDeal.hotDealDiscountRate)
                 .fetch();
 
         return setAdditionalFunction(List.class, hotDealPreviews);
@@ -184,7 +184,7 @@ public class HotDealQueryRepository {
                 .where(
                         hotDeal.hotDealId.eq(hotDealId)
                 )
-                .groupBy(hotDeal.hotDealId,hotDeal.hotDealUploadTime,hotDeal.hotDealViewCount,hotDeal.hotDealDiscountPrice,hotDeal.hotDealUploadTime)
+                .groupBy(hotDeal.hotDealId,hotDeal.hotDealUploadTime,hotDeal.hotDealViewCount,hotDeal.hotDealDiscountPrice,hotDeal.hotDealUploadTime, hotDeal.hotDealDiscountRate)
                 .fetchOne();
 
         hotDealPreview.setProductAdditionalFunctionDTOList(findProductAdditionalFunctions(hotDealPreview.getProductId()));
@@ -206,7 +206,7 @@ public class HotDealQueryRepository {
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(Arrays.asList(new OrderSpecifier(Order.ASC, hotDeal.isDelete), new OrderSpecifier(Order.ASC, hotDeal.hotDealDiscountPrice)).stream().toArray(OrderSpecifier[]::new))
-                .groupBy(hotDeal.hotDealId,hotDeal.hotDealUploadTime,hotDeal.hotDealViewCount,hotDeal.hotDealDiscountPrice,hotDeal.hotDealUploadTime)
+                .groupBy(hotDeal.hotDealId,hotDeal.hotDealUploadTime,hotDeal.hotDealViewCount,hotDeal.hotDealDiscountPrice,hotDeal.hotDealUploadTime, hotDeal.hotDealDiscountRate)
                 .fetch();
 
         Long count = jpaQueryFactory
@@ -244,7 +244,7 @@ public class HotDealQueryRepository {
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(getAllOrderSpecifiers(pageable).stream().toArray(OrderSpecifier[]::new))
-                .groupBy(hotDeal.hotDealId,hotDeal.hotDealUploadTime,hotDeal.hotDealViewCount,hotDeal.hotDealDiscountPrice,hotDeal.hotDealUploadTime)
+                .groupBy(hotDeal.hotDealId,hotDeal.hotDealUploadTime,hotDeal.hotDealViewCount,hotDeal.hotDealDiscountPrice,hotDeal.hotDealUploadTime, hotDeal.hotDealDiscountRate)
                 .fetch();
 
         Long count = jpaQueryFactory
@@ -270,7 +270,7 @@ public class HotDealQueryRepository {
                 .where(
                         getWeeklyPopularCondition()
                 )
-                .groupBy(hotDeal.hotDealId,hotDeal.hotDealUploadTime,hotDeal.hotDealViewCount,hotDeal.hotDealDiscountPrice,hotDeal.hotDealUploadTime)
+                .groupBy(hotDeal.hotDealId,hotDeal.hotDealUploadTime,hotDeal.hotDealViewCount,hotDeal.hotDealDiscountPrice,hotDeal.hotDealUploadTime, hotDeal.hotDealDiscountRate)
                 .fetch();
 
         return setAdditionalFunction(List.class, hotDealPreviews);
