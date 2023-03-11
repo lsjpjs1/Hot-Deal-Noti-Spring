@@ -26,4 +26,6 @@ public class ProductFunctionType {
     private ProductType productType;
 
     private String productFunctionTypeName;
+
+    private Boolean isDisplay;
 }

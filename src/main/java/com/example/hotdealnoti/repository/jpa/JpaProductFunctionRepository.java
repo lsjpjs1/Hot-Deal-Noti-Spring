@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface JpaProductFunctionRepository extends JpaRepository<ProductFunction,Long> {
     List<ProductFunction> findByProductFunctionType(ProductFunctionType productFunctionType);
+    ProductFunction findByProductFunctionName(String productFunctionName);
 }

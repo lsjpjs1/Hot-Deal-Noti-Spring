@@ -2,8 +2,11 @@ package com.example.hotdealnoti;
 
 import com.example.hotdealnoti.common.util.MailDTO;
 import com.example.hotdealnoti.common.util.MailUtil;
+import com.example.hotdealnoti.hotdeal.scheduler.PlayGroundScheduler;
 import com.example.hotdealnoti.messagequeue.MessageConsumer;
 import com.example.hotdealnoti.messagequeue.dto.HotDealMessageDto;
+import com.example.hotdealnoti.product.domain.ProductAdditionalFunction;
+import com.example.hotdealnoti.repository.jpa.JpaProductAdditionalFunctionRepository;
 import com.example.hotdealnoti.repository.jpa.JpaProductRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
@@ -12,12 +15,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.test.context.ActiveProfiles;
 
 import javax.mail.MessagingException;
 import java.util.Arrays;
+import java.util.List;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles("prod")
 class CommonTest {
     @Autowired
     private MailUtil mailUtil;
@@ -25,6 +31,12 @@ class CommonTest {
     @Autowired
     private JpaProductRepository jpaProductRepository;
 
+    @Autowired
+    private PlayGroundScheduler playGroundScheduler;
+
+
+    @Autowired
+    private JpaProductAdditionalFunctionRepository jpaProductAdditionalFunctionRepository;
     @Test
     void sendMail(){
         try {
@@ -43,6 +55,11 @@ class CommonTest {
     @Test
     void queryTest(){
         jpaProductRepository.findTop100RankingProduct(1l);
+    }
+
+    @Test
+    void playGround() {
+        playGroundScheduler.playGround();
     }
 
 }

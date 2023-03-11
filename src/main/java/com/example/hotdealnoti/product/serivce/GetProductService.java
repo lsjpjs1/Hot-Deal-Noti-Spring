@@ -44,7 +44,7 @@ public class GetProductService {
 
     @Transactional
     public ProductDto.GetProductFunctionTypesResponse getProductFunctionTypes(Long productTypeId) {
-        List<ProductFunctionType> productFunctionTypes = jpaProductFunctionTypeRepository.findByProductType(ProductType.builder().productTypeId(productTypeId).build());
+        List<ProductFunctionType> productFunctionTypes = jpaProductFunctionTypeRepository.findByProductTypeAndIsDisplay(ProductType.builder().productTypeId(productTypeId).build(),true);
         List<ProductDto.GetProductFunctionTypeDTO> getProductFunctionTypeDTOS = productFunctionTypes.stream()
                 .map(productFunctionType -> {
                     List<ProductFunction> productFunctions = jpaProductFunctionRepository.findByProductFunctionType(ProductFunctionType.builder().productFunctionTypeId(productFunctionType.getProductFunctionTypeId()).build());
