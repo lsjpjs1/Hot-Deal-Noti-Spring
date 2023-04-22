@@ -1,6 +1,7 @@
 package com.example.hotdealnoti.hotdeal.repository;
 
 import com.example.hotdealnoti.auth.domain.Account;
+import com.example.hotdealnoti.config.CustomCacheConfig;
 import com.example.hotdealnoti.hotdeal.domain.QFavoriteHotDeal;
 import com.example.hotdealnoti.hotdeal.domain.QRecommendationHotDeal;
 import com.example.hotdealnoti.hotdeal.dto.HotDealDto;
@@ -10,7 +11,6 @@ import com.example.hotdealnoti.product.domain.QProduct;
 import com.example.hotdealnoti.product.domain.QProductAdditionalFunction;
 import com.example.hotdealnoti.product.domain.QProductRanking;
 import com.example.hotdealnoti.product.dto.ProductDto;
-import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.ConstructorExpression;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
@@ -18,10 +18,10 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.Expressions;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -74,6 +74,8 @@ public class HotDealQueryRepository {
                 .fetch();
     }
 
+
+    @Cacheable(value = CustomCacheConfig.FIND_HOT_DEALS, key = "#getHotDealsRequest.toString()+#pageable.pageNumber+#pageable.sort.toString()+#pageable.offset")
     public Page<HotDealDto.HotDealPreview> findHotDeals(HotDealDto.GetHotDealsRequest getHotDealsRequest, Pageable pageable) {
         List<HotDealDto.HotDealPreview> hotDealPreviews = jpaQueryFactory
                 .select(
@@ -85,7 +87,7 @@ public class HotDealQueryRepository {
                 .where(
                         getCondition(getHotDealsRequest)
                 )
-                .groupBy(hotDeal.hotDealId,hotDeal.hotDealUploadTime,hotDeal.hotDealViewCount,hotDeal.hotDealDiscountPrice,hotDeal.hotDealUploadTime, hotDeal.hotDealDiscountRate, hotDeal.isDelete)
+                .groupBy(hotDeal.hotDealId,hotDeal.hotDealUploadTime)
                 .having(getHavingCondition(getHotDealsRequest))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -96,7 +98,7 @@ public class HotDealQueryRepository {
                 .select(hotDeal.hotDealId.count())
                 .from(hotDeal)
                 .leftJoin(productAdditionalFunction).on(hotDeal.product.productId.eq(productAdditionalFunction.product.productId))
-                .groupBy(hotDeal.hotDealId,hotDeal.hotDealUploadTime,hotDeal.hotDealViewCount,hotDeal.hotDealDiscountPrice,hotDeal.hotDealUploadTime, hotDeal.hotDealDiscountRate, hotDeal.isDelete)
+                .groupBy(hotDeal.hotDealId,hotDeal.hotDealUploadTime)
                 .having(getHavingCondition(getHotDealsRequest))
                 .where(getCondition(getHotDealsRequest))
                 .fetch();
